@@ -1,7 +1,10 @@
 import { Address, log } from '@graphprotocol/graph-ts'
 import { loadAppConfig } from './helpers'
 
-const APP_IDS: string[] = []
+const APP_IDS: string[] = [
+  // '0x18ce74b30150639f7fc9fe8c791a9d0c56a8b094d163acf86292374cf2e4f24e', //  marketplace-presale.open.aragonpm.eth
+  '0x5de9bbdeaf6584c220c7b7f1922383bcd8bbcd4b48832080afd9d5ebf9a04df5', // presale.aragonpm.eth
+]
 /*
  * Called when an app proxy is detected.
  *
@@ -13,10 +16,10 @@ const APP_IDS: string[] = []
  */
 export function getTemplateForApp(appId: string): string | null {
   const isIncluded = APP_IDS.includes(appId)
-  log.debug(
-    'Getting data source template name for appId: {}. Matches: {}',
-    [appId, isIncluded ? 'yes' : 'no']
-  )
+  log.debug('Getting data source template name for appId: {}. Matches: {}', [
+    appId,
+    isIncluded ? 'yes' : 'no',
+  ])
 
   if (isIncluded) {
     return 'Presale'
@@ -27,10 +30,7 @@ export function getTemplateForApp(appId: string): string | null {
 
 export function onOrgTemplateCreated(orgAddress: Address): void {}
 export function onAppTemplateCreated(appAddress: Address, appId: string): void {
-  log.debug(
-    'Loading app config of app: {} ',
-    [appAddress.toHexString()]
-  )
+  log.debug('Loading app config of app: {} ', [appAddress.toHexString()])
 
   loadAppConfig(appAddress)
 }

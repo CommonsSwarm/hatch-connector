@@ -4,10 +4,8 @@ import {
   Contribution as ContributionEntity,
   Token as TokenEntity,
 } from '../generated/schema'
-import {
-  Presale as PresaleContract,
-  Token as TokenContract,
-} from '../generated/templates/Presale/Presale'
+import { Presale as PresaleContract } from '../generated/templates/Presale/Presale'
+import { Token as TokenContract } from '../generated/templates/Presale/Token'
 import { getStateByKey } from './presale-states'
 
 const ETH = '0x0000000000000000000000000000000000000000'
@@ -41,7 +39,7 @@ export function getOrgAddress(appAddress: Address): Address {
   return presale.kernel()
 }
 
-export function getPresaleState(appAddress: Address): string {
+export function getPresaleState(appAddress: Address): i32 {
   const presale = PresaleContract.bind(appAddress)
   return presale.state()
 }
@@ -145,6 +143,6 @@ export function loadAppConfig(appAddress: Address): void {
   config.totalRaised = presale.totalRaised()
   config.stateInt = presale.state()
   config.state = getStateByKey(config.stateInt)
-  
+
   config.save()
 }

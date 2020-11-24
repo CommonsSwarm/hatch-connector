@@ -1,8 +1,8 @@
 type Config @entity {
   id: ID!
   token: Token!
-  reserve: Address!
-  beneficiary: Address!
+  reserve: Bytes!
+  beneficiary: Bytes!
   contributionToken: Token!
   goal:  BigInt!
   period: BigInt!
@@ -15,18 +15,20 @@ type Config @entity {
   vestingCliffDate: BigInt!
   vestingCompleteDate: BigInt!
   totalRaised: BigInt!
-  appAddress: Bytes!
-  orgAddress: Bytes!
   state: PresaleState
   stateInt: Int!
+  appAddress: Bytes!
+  orgAddress: Bytes!
 }
 
 type Contribution @entity {
   id: ID!
-  contributor: Address!
+  contributor: Bytes!
   value: BigInt!
   amount: BigInt!
   vestedPurchaseId: BigInt!
+  appAddress: Bytes!
+  orgAddress: Bytes!
 }
 
 type Token @entity {

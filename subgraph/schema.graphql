@@ -1,5 +1,45 @@
 type Config @entity {
   id: ID!
+  token: Token!
+  reserve: Address!
+  beneficiary: Address!
+  contributionToken: Token!
+  goal:  BigInt!
+  period: BigInt!
+  exchangeRate: BigInt!
+  vestingCliffPeriod: BigInt!
+  vestingCompletePeriod: BigInt!
+  supplyOfferedPct: BigInt!
+  fundingForBeneficiaryPct: BigInt!
+  openDate: BigInt!
+  vestingCliffDate: BigInt!
+  vestingCompleteDate: BigInt!
+  totalRaised: BigInt!
   appAddress: Bytes!
   orgAddress: Bytes!
+  state: PresaleState
+  stateInt: Int!
+}
+
+type Contribution @entity {
+  id: ID!
+  contributor: Address!
+  value: BigInt!
+  amount: BigInt!
+  vestedPurchaseId: BigInt!
+}
+
+type Token @entity {
+  id:ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}
+
+enum PresaleState {
+  Pending
+  Funding
+  Refunding
+  GoalReached
+  Closed
 }

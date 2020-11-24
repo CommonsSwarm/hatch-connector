@@ -26,9 +26,8 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Config
-        - Task
-        - User
-        - UserRejectedTask
+        - Contribution
+        - Token
       abis:
         - name: Presale
           file: ./abis/Presale.json

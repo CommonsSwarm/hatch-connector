@@ -22,6 +22,8 @@
     entities:
       - NoEnt
     abis:
+      - name: Token
+        file: ./abis/Token.json
       - name: Presale
         file: ./abis/Presale.json
       - name: DAOFactory

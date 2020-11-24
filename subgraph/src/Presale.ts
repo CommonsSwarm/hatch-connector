@@ -4,7 +4,7 @@ import {
   Close as CloseEvent,
   Contribute as ContributeEvent,
   Refund as RefundEvent,
-} from '../generated/templates/RoundRobinApp/RoundRobinApp'
+} from '../generated/templates/Presale/Presale'
 import {
   getConfigEntity,
   getContributionEntity,
@@ -54,9 +54,9 @@ export function handleContribute(event: ContributeEvent): void {
     'Contribute event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
     [
       params.contributor.toHexString(),
-      params.value.toI32(),
-      params.amount.toI32(),
-      params.vestedPurchaseId.toI32(),
+      params.value.toString(),
+      params.amount.toString(),
+      params.vestedPurchaseId.toString(),
     ]
   )
 
@@ -75,9 +75,9 @@ export function handleRefund(event: RefundEvent): void {
     'Refund event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
     [
       params.contributor.toHexString(),
-      params.value.toI32(),
-      params.amount.toI32(),
-      params.vestedPurchaseId.toI32(),
+      params.value.toString(),
+      params.amount.toString(),
+      params.vestedPurchaseId.toString(),
     ]
   )
 

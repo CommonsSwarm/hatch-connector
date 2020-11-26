@@ -7,6 +7,7 @@ import {
 import Presale from './models/Presale'
 import PresaleConnectorTheGraph, {
   subgraphUrlFromChainId,
+  APP_NAMES,
 } from './thegraph/connector'
 
 type Config = {
@@ -18,14 +19,14 @@ export default createAppConnector<Presale, Config>(
   ({ app, config, connector, network, orgConnector, verbose }) => {
     if (connector !== 'thegraph') {
       throw new ErrorInvalidConnector(
-        `Connector unsupported: ${connector}. Please use thegraph.`
+        `Connector unsupported: ${connector}. Please use a The Graph connector.`
       )
     }
 
-    if (app.name !== '<appName>') {
+    if (!app.name || !APP_NAMES.includes(app.name)) {
       throw new ErrorInvalidApp(
-        `This app (${app.name}) is not compatible with this round robin connector. ` +
-          `Please use an app instance of the <appName>.aragonpm.eth repo.`
+        `This app (${app.name}) is not compatible with this marketplace presale connector. ` +
+          `Please use an app instance of the presale.aragonpm.eth repo.`
       )
     }
 

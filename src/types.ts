@@ -27,26 +27,26 @@ export interface ConfigData {
   reserve: string
   beneficiary: string
   contributionToken: TokenData
-  goal: number
+  goal: string
   period: number
-  exchangeRate: number
+  exchangeRate: string
   vestingCliffPeriod: number
   vestingCompletePeriod: number
-  supplyOfferedPct: number
-  fundingForBeneficiaryPct: number
-  openDate: number
+  supplyOfferedPct: string
+  fundingForBeneficiaryPct: string
+  openDate: string
   vestingCliffDate: number
   vestingCompleteDate: number
-  totalRaised: number
+  totalRaised: string
   state: string
 }
 
 export interface ContributionData {
   id: string
   contributor: string
-  value: number
-  amount: number
-  vestedPurchaseId: number
+  value: string
+  amount: string
+  vestedPurchaseId: string
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix

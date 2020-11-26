@@ -7,17 +7,17 @@ export default class Config {
   readonly reserve: string
   readonly beneficiary: string
   readonly contributionToken: Token
-  readonly goal: number
+  readonly goal: string
   readonly period: number
-  readonly exchangeRate: number
+  readonly exchangeRate: string
   readonly vestingCliffPeriod: number
   readonly vestingCompletePeriod: number
-  readonly supplyOfferedPct: number
-  readonly fundingForBeneficiaryPct: number
-  readonly openDate: number
+  readonly supplyOfferedPct: string
+  readonly fundingForBeneficiaryPct: string
+  readonly openDate: string
   readonly vestingCliffDate: number
   readonly vestingCompleteDate: number
-  readonly totalRaised: number
+  readonly totalRaised: string
   readonly state: string
 
   constructor(data: ConfigData) {
@@ -29,8 +29,8 @@ export default class Config {
     this.goal = data.goal
     this.period = data.period
     this.exchangeRate = data.exchangeRate
-    this.vestingCliffPeriod = data.vestingCliffDate
-    this.vestingCompletePeriod = data.vestingCompleteDate
+    this.vestingCliffPeriod = data.vestingCliffPeriod
+    this.vestingCompletePeriod = data.vestingCompletePeriod
     this.supplyOfferedPct = data.supplyOfferedPct
     this.fundingForBeneficiaryPct = data.fundingForBeneficiaryPct
     this.openDate = data.openDate

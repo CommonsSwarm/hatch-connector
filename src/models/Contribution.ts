@@ -1,17 +1,13 @@
-import { ContributionData, IPresaleConnector } from '../types'
+import { ContributionData } from '../types'
 
 export default class Contribution {
-  #connector: IPresaleConnector
-
   readonly id: string
   readonly contributor: string
-  readonly value: number
-  readonly amount: number
-  readonly vestedPurchaseId: number
+  readonly value: string
+  readonly amount: string
+  readonly vestedPurchaseId: string
 
-  constructor(data: ContributionData, connector: IPresaleConnector) {
-    this.#connector = connector
-
+  constructor(data: ContributionData) {
     this.id = data.id
     this.contributor = data.contributor
     this.value = data.value

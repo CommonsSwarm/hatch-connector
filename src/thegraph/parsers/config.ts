@@ -14,6 +14,7 @@ export function parseConfig(result: QueryResult): Config {
    */
   const configData: ConfigData = {
     ...config,
+    openDate: Number(config.openDate),
     period: Number(config.period),
     vestingCliffPeriod: Number(config.vestingCliffPeriod),
     vestingCompletePeriod: Number(config.vestingCompletePeriod),

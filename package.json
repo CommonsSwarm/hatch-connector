@@ -1,8 +1,8 @@
 {
-  "name": "@tecommons/hath-connector",
-  "version": "1.0.0-beta.1",
+  "name": "@tecommons/connect-hatch",
+  "version": "0.1.0",
   "license": "GPL-3.0",
-  "description": "Aragon connector to access and interact with marketplace presale contracts",
+  "description": "Aragon connector to access and interact with the hatch contract",
   "author": "TECommons",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -1,8 +1,8 @@
 {
-  "name": "@tecommons/subgraph-presale",
-  "version": "1.0.0-beta.1",
+  "name": "@tecommons/subgraph-hatch",
+  "version": "0.1.0",
   "license": "GPL-3.0",
-  "description": "Marketplace presale subgraph used by the connector",
+  "description": "Hatch subgraph used by the connector",
   "author": "TECommons",
   "scripts": {
     "codegen": "rm -rf generated; graph codegen",

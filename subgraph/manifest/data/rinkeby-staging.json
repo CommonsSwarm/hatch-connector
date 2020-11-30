@@ -6,6 +6,10 @@
         "name": "tecommons",
         "address": "0xf64d6de6aDEEA18d5b7b2897bFA258425f065aD4",
         "startBlock": "7415507"
+      }, {
+        "name": "Hatch tech test",
+        "address": "0x32903274A4489a29D26a6901Bfae3Cb36db66F03",
+        "startBlock": "7639746"
       }
     ],
     "OrganizationFactories": [],

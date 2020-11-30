@@ -13,6 +13,8 @@ import {
 import {
   STATE_CLOSED,
   STATE_CLOSED_NUM,
+  STATE_GOAL_REACHED,
+  STATE_GOAL_REACHED_NUM,
   getIntStateByKey,
   getStateByKey,
 } from './presale-states'
@@ -21,6 +23,9 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
   const config = getConfigEntity(event.address)
   const stateKey = getPresaleState(event.address)
 
+  log.debug('SetOpenDate event received. date: {}', [
+    event.params.date.toString(),
+  ])
   config.openDate = event.params.date
   config.state = getStateByKey(stateKey)
   config.stateInt = getIntStateByKey(stateKey)
@@ -46,6 +51,14 @@ export function handleContribute(event: ContributeEvent): void {
     params.contributor,
     params.vestedPurchaseId
   )
+  const config = getConfigEntity(event.address)
+
+  config.totalRaised = config.totalRaised.plus(params.value)
+
+  if (config.totalRaised.ge(config.goal)) {
+    config.state = STATE_GOAL_REACHED
+    config.stateInt = STATE_GOAL_REACHED_NUM
+  }
 
   contribution.value = params.value
   contribution.amount = params.amount
@@ -60,6 +73,7 @@ export function handleContribute(event: ContributeEvent): void {
     ]
   )
 
+  config.save()
   contribution.save()
 }
 

@@ -58,13 +58,19 @@ export interface IPresaleConnector {
   ): SubscriptionHandler
   contributions(
     appAddress: string,
+    contributor: string,
     first: number,
-    skip: number
+    skip: number,
+    orderBy: string,
+    orderDirection: string
   ): Promise<Contribution[]>
   onContributions(
     appAddress: string,
+    contributor: string,
     first: number,
     skip: number,
+    orderBy: string,
+    orderDirection: string,
     callback: SubscriptionCallback<Contribution[]>
   ): SubscriptionHandler
 }

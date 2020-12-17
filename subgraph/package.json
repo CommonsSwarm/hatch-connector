@@ -1,6 +1,6 @@
 {
   "name": "@tecommons/subgraph-hatch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "GPL-3.0",
   "description": "Hatch subgraph used by the connector",
   "author": "TECommons",
@@ -12,11 +12,11 @@
     "manifest-rinkeby": "scripts/build-manifest.sh rinkeby",
     "manifest-rinkeby-staging": "env STAGING=true scripts/build-manifest.sh rinkeby",
     "manifest-xdai": "scripts/build-manifest.sh xdai",
-    "deploy-mainnet": "scripts/deploy.sh tecommons presale mainnet",
+    "deploy-mainnet": "scripts/deploy.sh tecommons hatch mainnet",
     "deploy-mainnet-staging": "env STAGING=true scripts/deploy.sh tecommons presale mainnet",
-    "deploy-rinkeby": "scripts/deploy.sh tecommons presale rinkeby",
-    "deploy-rinkeby-staging": "env STAGING=true scripts/deploy.sh tecommons presale rinkeby",
-    "deploy-xdai": "scripts/deploy.sh tecommons presale xdai"
+    "deploy-rinkeby": "scripts/deploy.sh tecommons hatch rinkeby",
+    "deploy-rinkeby-staging": "env STAGING=true scripts/deploy.sh tecommons hatch rinkeby",
+    "deploy-xdai": "scripts/deploy.sh tecommons hatch xdai"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.18.0",

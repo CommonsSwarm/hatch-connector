@@ -17,6 +17,8 @@ import {
   STATE_GOAL_REACHED_NUM,
   getIntStateByKey,
   getStateByKey,
+  STATE_REFUNDING,
+  STATE_REFUNDING_NUM,
 } from './presale-states'
 
 export function handleSetOpenDate(event: SetOpenDateEvent): void {
@@ -79,11 +81,15 @@ export function handleContribute(event: ContributeEvent): void {
 
 export function handleRefund(event: RefundEvent): void {
   const params = event.params
+  const config = getConfigEntity(event.address)
   const contribution = getContributionEntity(
     event.address,
     params.contributor,
     params.vestedPurchaseId
   )
+
+  config.state = STATE_REFUNDING
+  config.stateInt = STATE_REFUNDING_NUM
 
   log.debug(
     'Refund event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
@@ -95,5 +101,6 @@ export function handleRefund(event: RefundEvent): void {
     ]
   )
 
+  config.save()
   store.remove('Contribution', contribution.id)
 }

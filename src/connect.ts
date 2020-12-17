@@ -26,7 +26,7 @@ export default createAppConnector<Presale, Config>(
     if (!app.name || !APP_NAMES.includes(app.name)) {
       throw new ErrorInvalidApp(
         `This app (${app.name}) is not compatible with this marketplace presale connector. ` +
-          `Please use an app instance of the presale.aragonpm.eth repo.`
+          `Please use an app instance of these repos: ${APP_NAMES.toString()}.`
       )
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "@tecommons/connect-hatch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "GPL-3.0",
   "description": "Aragon connector to access and interact with the hatch contract",
   "author": "TECommons",

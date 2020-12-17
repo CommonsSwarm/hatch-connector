@@ -10,11 +10,11 @@ import { parseConfig, parseContributions } from './parsers'
 export function subgraphUrlFromChainId(chainId: number): string | null {
   // Rinkeby
   if (chainId === 4) {
-    return 'https://api.thegraph.com/subgraphs/name/tecommons/aragon-presale-rinkeby-staging'
+    return 'https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-rinkeby-staging'
   }
   // xDai
   if (chainId === 100) {
-    return 'https://thegraph.com/explorer/subgraph/tecommons/aragon-presale-xdai'
+    return 'https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-xdai'
   }
   return null
 }
@@ -60,25 +60,31 @@ export default class PresaleConnectorTheGraph implements IPresaleConnector {
 
   contributions(
     appAddress: string,
+    contributor: string,
     first: number,
-    skip: number
+    skip: number,
+    orderBy: string,
+    orderDirection: string
   ): Promise<Contribution[]> {
     return this.#gql.performQueryWithParser(
       queries.ALL_CONTRIBUTIONS('query'),
-      { appAddress, first, skip },
+      { appAddress, contributor, first, skip, orderBy, orderDirection },
       (result: QueryResult) => parseContributions(result)
     )
   }
 
   onContributions(
     appAddress: string,
+    contributor: string,
     first: number,
     skip: number,
+    orderBy: string,
+    orderDirection: string,
     callback: SubscriptionCallback<Contribution[]>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser(
       queries.ALL_CONTRIBUTIONS('subscription'),
-      { appAddress, first, skip },
+      { appAddress, contributor, first, skip, orderBy, orderDirection },
       callback,
       (result: QueryResult) => parseContributions(result)
     )

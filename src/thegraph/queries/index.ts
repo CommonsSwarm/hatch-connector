@@ -35,10 +35,11 @@ export const CONFIG = (type: string) => gql`
 `
 
 export const ALL_CONTRIBUTIONS = (type: string) => gql`
-  ${type} Contributions($appAddress: String!, $first: Int!, $skip: Int!) {
+  ${type} Contributions($appAddress: String!, $contributor: String!, $first: Int!, $skip: Int!, $orderBy: String!, $orderDirection: String!) {
     contributions(where: {
-      appAddress: $appAddress
-    }, first: $first, skip: $skip) {
+      appAddress: $appAddress,
+      contributor_contains: $contributor
+    }, first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection) {
       id
       contributor
       value

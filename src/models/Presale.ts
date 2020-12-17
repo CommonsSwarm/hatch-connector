@@ -20,18 +20,40 @@ export default class Presale {
     return this.#connector.onConfig(this.#appAddress, callback)
   }
 
-  contributions({ first = 1000, skip = 0 } = {}): Promise<Contribution[]> {
-    return this.#connector.contributions(this.#appAddress, first, skip)
+  contributions({
+    contributor = '',
+    first = 1000,
+    skip = 0,
+    orderBy = 'value',
+    orderDirection = 'desc',
+  } = {}): Promise<Contribution[]> {
+    return this.#connector.contributions(
+      this.#appAddress,
+      contributor,
+      first,
+      skip,
+      orderBy,
+      orderDirection
+    )
   }
 
   onContributions(
-    { first = 1000, skip = 0 } = {},
+    {
+      contributor = '',
+      first = 1000,
+      skip = 0,
+      orderBy = 'value',
+      orderDirection = 'desc',
+    } = {},
     callback: SubscriptionCallback<Contribution[]>
   ): SubscriptionHandler {
     return this.#connector.onContributions(
       this.#appAddress,
+      contributor,
       first,
       skip,
+      orderBy,
+      orderDirection,
       callback
     )
   }

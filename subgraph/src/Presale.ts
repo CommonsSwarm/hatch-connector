@@ -57,7 +57,7 @@ export function handleContribute(event: ContributeEvent): void {
 
   config.totalRaised = config.totalRaised.plus(params.value)
 
-  if (config.totalRaised.ge(config.goal)) {
+  if (config.totalRaised.ge(config.minGoal)) {
     config.state = STATE_GOAL_REACHED
     config.stateInt = STATE_GOAL_REACHED_NUM
   }

@@ -18,7 +18,8 @@ export const CONFIG = (type: string) => gql`
         symbol
         decimals
       }
-      goal
+      minGoal
+      maxGoal
       period
       exchangeRate
       vestingCliffPeriod

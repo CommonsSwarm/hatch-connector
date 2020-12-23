@@ -130,7 +130,8 @@ export function loadAppConfig(appAddress: Address): void {
   //Load presale params
   config.reserve = presale.reserve()
   config.beneficiary = presale.beneficiary()
-  config.goal = presale.goal()
+  config.minGoal = presale.minGoal()
+  config.maxGoal = presale.maxGoal()
   config.period = presale.period()
   config.exchangeRate = presale.exchangeRate()
   config.vestingCliffPeriod = presale.vestingCliffPeriod()

@@ -4,7 +4,8 @@ type Config @entity {
   reserve: Bytes!
   beneficiary: Bytes!
   contributionToken: Token!
-  goal:  BigInt!
+  minGoal: BigInt!
+  maxGoal: BigInt!
   period: BigInt!
   exchangeRate: BigInt!
   vestingCliffPeriod: BigInt!

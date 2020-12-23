@@ -27,7 +27,8 @@ export interface ConfigData {
   reserve: string
   beneficiary: string
   contributionToken: TokenData
-  goal: string
+  minGoal: string
+  maxGoal: string
   period: number
   exchangeRate: string
   vestingCliffPeriod: number

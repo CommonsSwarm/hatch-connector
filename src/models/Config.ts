@@ -7,7 +7,8 @@ export default class Config {
   readonly reserve: string
   readonly beneficiary: string
   readonly contributionToken: Token
-  readonly goal: string
+  readonly minGoal: string
+  readonly maxGoal: string
   readonly period: number
   readonly exchangeRate: string
   readonly vestingCliffPeriod: number
@@ -26,7 +27,8 @@ export default class Config {
     this.reserve = data.reserve
     this.beneficiary = data.beneficiary
     this.contributionToken = new Token(data.contributionToken)
-    this.goal = data.goal
+    this.minGoal = data.minGoal
+    this.maxGoal = data.maxGoal
     this.period = data.period
     this.exchangeRate = data.exchangeRate
     this.vestingCliffPeriod = data.vestingCliffPeriod

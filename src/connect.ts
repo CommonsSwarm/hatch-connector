@@ -7,7 +7,7 @@ import {
 import Presale from './models/Presale'
 import PresaleConnectorTheGraph, {
   subgraphUrlFromChainId,
-  APP_NAMES,
+  APP_NAMES_WHITELIST,
 } from './thegraph/connector'
 
 type Config = {
@@ -23,10 +23,10 @@ export default createAppConnector<Presale, Config>(
       )
     }
 
-    if (!app.name || !APP_NAMES.includes(app.name)) {
+    if (!app.name || !APP_NAMES_WHITELIST.includes(app.name)) {
       throw new ErrorInvalidApp(
         `This app (${app.name}) is not compatible with this marketplace presale connector. ` +
-          `Please use an app instance of these repos: ${APP_NAMES.toString()}.`
+          `Please use an app instance of one of these repos: ${APP_NAMES_WHITELIST.toString()}.`
       )
     }
 

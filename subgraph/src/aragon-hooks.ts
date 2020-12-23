@@ -2,8 +2,7 @@ import { Address, log } from '@graphprotocol/graph-ts'
 import { loadAppConfig } from './helpers'
 
 const APP_IDS: string[] = [
-  '0x18ce74b30150639f7fc9fe8c791a9d0c56a8b094d163acf86292374cf2e4f24e', // marketplace-presale.open.aragonpm.eth
-  '0x5de9bbdeaf6584c220c7b7f1922383bcd8bbcd4b48832080afd9d5ebf9a04df5', // presale.aragonpm.eth
+  '0x0733919f45ce3305724ccf3354aac9d84f477baa23fbeabcaca5d97ff39acd54', // marketplace-hatch.open.aragonpm.eth
 ]
 /*
  * Called when an app proxy is detected.

@@ -19,7 +19,7 @@ export function subgraphUrlFromChainId(chainId: number): string | null {
   return null
 }
 
-export const APP_NAMES = ['presale', 'marketplace-presale']
+export const APP_NAMES_WHITELIST = ['marketplace-hatch']
 
 type PresaleConnectorTheGraphConfig = {
   pollInterval?: number

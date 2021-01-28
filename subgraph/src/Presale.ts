@@ -8,6 +8,7 @@ import {
 import {
   getConfigEntity,
   getContributionEntity,
+  getContributorEntity,
   getPresaleState,
 } from './helpers'
 import {
@@ -28,6 +29,7 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
   log.debug('SetOpenDate event received. date: {}', [
     event.params.date.toString(),
   ])
+
   config.openDate = event.params.date
   config.state = getStateByKey(stateKey)
   config.stateInt = getIntStateByKey(stateKey)
@@ -53,8 +55,11 @@ export function handleContribute(event: ContributeEvent): void {
     params.contributor,
     params.vestedPurchaseId
   )
+  const contributor = getContributorEntity(event.address, params.contributor)
   const config = getConfigEntity(event.address)
 
+  contributor.totalValue = contributor.totalValue.plus(params.value)
+  contributor.totalAmount = contributor.totalAmount.plus(params.amount)
   config.totalRaised = config.totalRaised.plus(params.value)
 
   if (config.totalRaised.ge(config.minGoal)) {
@@ -64,6 +69,7 @@ export function handleContribute(event: ContributeEvent): void {
 
   contribution.value = params.value
   contribution.amount = params.amount
+  contribution.createdAt = event.block.timestamp
 
   log.debug(
     'Contribute event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
@@ -76,12 +82,14 @@ export function handleContribute(event: ContributeEvent): void {
   )
 
   config.save()
+  contributor.save()
   contribution.save()
 }
 
 export function handleRefund(event: RefundEvent): void {
   const params = event.params
   const config = getConfigEntity(event.address)
+  const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,
     params.contributor,
@@ -90,6 +98,8 @@ export function handleRefund(event: RefundEvent): void {
 
   config.state = STATE_REFUNDING
   config.stateInt = STATE_REFUNDING_NUM
+  contributor.totalValue = contributor.totalValue.minus(params.value)
+  contributor.totalAmount = contributor.totalAmount.minus(params.amount)
 
   log.debug(
     'Refund event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
@@ -102,5 +112,6 @@ export function handleRefund(event: RefundEvent): void {
   )
 
   config.save()
+  contributor.save()
   store.remove('Contribution', contribution.id)
 }

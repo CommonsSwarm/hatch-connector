@@ -5,7 +5,12 @@
       {
         "name": "tecommons",
         "address": "0x83b60d521da97431bb4464fd16ea1bc6ad8ad02e",
-        "startBlock": "12986701"
+        "startBlock": "13656239"
+      },
+      {
+        "name": "new dao",
+        "address": "0x96705fc7c4742e5b97719f9870efaa5b041127e9",
+        "startBlock": "14112409"
       }
     ],
     "OrganizationFactories": [],

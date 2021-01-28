@@ -1,6 +1,7 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
 import {
   Config as ConfigEntity,
+  Contributor as ContributorEntity,
   Contribution as ContributionEntity,
   Token as TokenEntity,
 } from '../generated/schema'
@@ -14,6 +15,19 @@ const ETH = '0x0000000000000000000000000000000000000000'
 
 function getConfigEntityId(appAddress: Address): string {
   return appAddress.toHexString()
+}
+
+export function getContributorEntityId(
+  appAddress: Address,
+  contributor: Address
+): string {
+  return (
+    'appAddress:' +
+    appAddress.toHexString() +
+    '-' +
+    'contributor:' +
+    contributor.toHexString()
+  )
 }
 
 function getContributionEntityId(
@@ -60,6 +74,26 @@ export function getConfigEntity(appAddress: Address): ConfigEntity | null {
   return config
 }
 
+export function getContributorEntity(
+  appAddress: Address,
+  contributor: Address
+): ContributorEntity | null {
+  const contributorEntityId = getContributorEntityId(appAddress, contributor)
+  let contributorEntity = ContributorEntity.load(contributorEntityId)
+
+  if (!contributorEntity) {
+    contributorEntity = new ContributorEntity(contributorEntityId)
+
+    contributorEntity.account = contributor
+    contributorEntity.totalValue = BigInt.fromI32(0)
+    contributorEntity.totalAmount = BigInt.fromI32(0)
+    contributorEntity.appAddress = appAddress
+    contributorEntity.orgAddress = getOrgAddress(appAddress)
+  }
+
+  return contributorEntity
+}
+
 export function getContributionEntity(
   appAddress: Address,
   contributor: Address,
@@ -74,7 +108,7 @@ export function getContributionEntity(
 
   if (!contribution) {
     contribution = new ContributionEntity(contributionEntityId)
-    contribution.contributor = contributor
+    contribution.contributor = getContributorEntityId(appAddress, contributor)
     contribution.value = BigInt.fromI32(0)
     contribution.amount = BigInt.fromI32(0)
     contribution.vestedPurchaseId = vestedPurchaseId

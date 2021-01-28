@@ -1,6 +1,6 @@
 {
   "name": "@tecommons/connect-hatch",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "license": "GPL-3.0",
   "description": "Aragon connector to access and interact with the hatch contract",
   "author": "TECommons",
@@ -38,8 +38,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@aragon/connect-core": "^0.7.0",
-    "@aragon/connect-thegraph": "^0.7.0",
+    "@aragon/connect-core": "^0.8.0-alpha.6",
+    "@aragon/connect-thegraph": "^0.8.0-alpha.6",
+    "ethers": "^5.0.23",
     "graphql-tag": "^2.10.3"
   },
   "keywords": [

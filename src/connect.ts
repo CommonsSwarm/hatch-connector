@@ -49,11 +49,12 @@ export default createAppConnector<Presale, Config>(
     }
 
     const connectorTheGraph = new PresaleConnectorTheGraph({
+      appAddress: app.address,
       pollInterval,
       subgraphUrl,
       verbose,
     })
 
-    return new Presale(connectorTheGraph, app.address)
+    return new Presale(connectorTheGraph, app)
   }
 )

@@ -1,6 +1,7 @@
 import { SubscriptionHandler } from '@aragon/connect-core'
 import Config from './models/Config'
 import Contribution from './models/Contribution'
+import Contributor from './models/Contributor'
 
 /**
  * Pending
@@ -12,7 +13,6 @@ import Contribution from './models/Contribution'
 export const PRESALE_STATES = [0, 1, 2, 3, 4]
 
 export type SubscriptionCallback<T> = (error: Error | null, data?: T) => void
-export type Address = string
 
 export interface TokenData {
   id: string
@@ -42,20 +42,49 @@ export interface ConfigData {
   state: string
 }
 
+export interface ContributorData {
+  id: string
+  account: string
+  totalAmount: string
+  totalValue: string
+}
+
 export interface ContributionData {
   id: string
-  contributor: string
+  contributorId: string
   value: string
   amount: string
   vestedPurchaseId: string
+  createdAt: string
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IPresaleConnector {
   disconnect(): Promise<void>
+  config(appAddress: string): Promise<Config>
   onConfig(
     appAddress: string,
     callback: SubscriptionCallback<Config>
+  ): SubscriptionHandler
+  contributors(
+    appAddress: string,
+    first: number,
+    skip: number,
+    orderBy: string,
+    orderDirection: string
+  ): Promise<Contributor[]>
+  onContributors(
+    appAddress: string,
+    first: number,
+    skip: number,
+    orderBy: string,
+    orderDirection: string,
+    callback: SubscriptionCallback<Contributor[]>
+  ): SubscriptionHandler
+  contributor(id: string): Promise<Contributor>
+  onContributor(
+    id: string,
+    callback: SubscriptionCallback<Contributor>
   ): SubscriptionHandler
   contributions(
     appAddress: string,

@@ -22,12 +22,23 @@ type Config @entity {
   orgAddress: Bytes!
 }
 
+type Contributor @entity {
+  id: ID!
+  account: Bytes!
+  totalAmount: BigInt!
+  totalValue: BigInt!
+  contributions: [Contribution!] @derivedFrom(field: "contributor")
+  appAddress: Bytes!
+  orgAddress: Bytes!
+}
+
 type Contribution @entity {
   id: ID!
-  contributor: Bytes!
+  contributor: Contributor!
   value: BigInt!
   amount: BigInt!
   vestedPurchaseId: BigInt!
+  createdAt: BigInt!
   appAddress: Bytes!
   orgAddress: Bytes!
 }

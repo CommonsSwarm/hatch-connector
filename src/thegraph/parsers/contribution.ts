@@ -10,17 +10,16 @@ export function parseContributions(result: QueryResult): Contribution[] {
     throw new ErrorUnexpectedResult('Unable to parse contributions')
   }
 
-  const datas = contributions.map(
-    (c: any): ContributionData => {
-      return {
-        id: c.id,
-        contributor: c.contributor,
-        value: c.value,
-        amount: c.amount,
-        vestedPurchaseId: c.vestedPurchaseId,
-      }
+  const datas = contributions.map((c: any) => {
+    return {
+      id: c.id,
+      contributorId: c.contributor.id,
+      value: c.value,
+      amount: c.amount,
+      vestedPurchaseId: c.vestedPurchaseId,
+      createdAt: c.createdAt,
     }
-  )
+  })
 
   return datas.map((data: ContributionData) => new Contribution(data))
 }

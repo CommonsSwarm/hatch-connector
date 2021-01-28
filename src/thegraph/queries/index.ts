@@ -35,6 +35,30 @@ export const CONFIG = (type: string) => gql`
   }
 `
 
+export const ALL_CONTRIBUTORS = (type: string) => gql`
+  ${type} Contributors($appAddress: String!, $first: Int!, $skip: Int!, $orderBy: String!, $orderDirection: String!) {
+    contributors(where: {
+      appAddress: $appAddress,
+    }, first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection) {
+      id
+      account
+      totalAmount
+      totalValue
+    }
+  }
+`
+
+export const CONTRIBUTOR = (type: string) => gql`
+  ${type} Contributor($id: ID!) {
+    contributor(id: $id) {
+      id
+      account
+      totalAmount
+      totalValue
+    }
+  }
+`
+
 export const ALL_CONTRIBUTIONS = (type: string) => gql`
   ${type} Contributions($appAddress: String!, $contributor: String!, $first: Int!, $skip: Int!, $orderBy: String!, $orderDirection: String!) {
     contributions(where: {
@@ -42,10 +66,13 @@ export const ALL_CONTRIBUTIONS = (type: string) => gql`
       contributor_contains: $contributor
     }, first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection) {
       id
-      contributor
+      contributor {
+        id
+      }
       value
       amount
       vestedPurchaseId
+      createdAt
     }
   }
 `

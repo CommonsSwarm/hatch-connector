@@ -1,11 +1,14 @@
 import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
-import { SubscriptionHandler } from '@aragon/connect-core'
+import { SubscriptionHandler, Address } from '@aragon/connect-core'
 import { SubscriptionCallback, IPresaleConnector } from '../types'
 import Config from '../models/Config'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
 
-import { parseConfig, parseContributions } from './parsers'
+import { parseConfig, parseContributions, parseContributors } from './parsers'
+import { ErrorException } from '../errors'
+import Contributor from 'src/models/Contributor'
+import { parseContributor } from './parsers/contributor'
 
 export function subgraphUrlFromChainId(chainId: number): string | null {
   // Rinkeby
@@ -23,6 +26,7 @@ export const APP_NAMES_WHITELIST = ['marketplace-hatch']
 
 type PresaleConnectorTheGraphConfig = {
   pollInterval?: number
+  appAddress?: Address
   subgraphUrl?: string
   verbose?: boolean
 }
@@ -36,6 +40,13 @@ export default class PresaleConnectorTheGraph implements IPresaleConnector {
         'PresaleConnectorTheGraph requires subgraphUrl to be passed.'
       )
     }
+
+    if (!config.appAddress) {
+      throw new ErrorException(
+        'PresaleConnectorTheGraph requires appAddress to be passed.'
+      )
+    }
+
     this.#gql = new GraphQLWrapper(config.subgraphUrl, {
       pollInterval: config.pollInterval,
       verbose: config.verbose,
@@ -44,6 +55,14 @@ export default class PresaleConnectorTheGraph implements IPresaleConnector {
 
   async disconnect() {
     this.#gql.close()
+  }
+
+  config(id: string): Promise<Config> {
+    return this.#gql.performQueryWithParser(
+      queries.CONFIG('query'),
+      { id },
+      (result: QueryResult) => parseConfig(result)
+    )
   }
 
   onConfig(
@@ -55,6 +74,56 @@ export default class PresaleConnectorTheGraph implements IPresaleConnector {
       { id },
       callback,
       (result: QueryResult) => parseConfig(result)
+    )
+  }
+
+  contributors(
+    appAddress: string,
+    first: number,
+    skip: number,
+    orderBy: string,
+    orderDirection: string
+  ): Promise<Contributor[]> {
+    return this.#gql.performQueryWithParser(
+      queries.ALL_CONTRIBUTORS('query'),
+      { appAddress, first, skip, orderBy, orderDirection },
+      (result: QueryResult) => parseContributors(result)
+    )
+  }
+
+  onContributors(
+    appAddress: string,
+    first: number,
+    skip: number,
+    orderBy: string,
+    orderDirection: string,
+    callback: SubscriptionCallback<Contributor[]>
+  ): SubscriptionHandler {
+    return this.#gql.subscribeToQueryWithParser(
+      queries.ALL_CONTRIBUTORS('subscription'),
+      { appAddress, first, skip, orderBy, orderDirection },
+      callback,
+      (result: QueryResult) => parseContributors(result)
+    )
+  }
+
+  contributor(id: string): Promise<Contributor> {
+    return this.#gql.performQueryWithParser(
+      queries.CONTRIBUTOR('query'),
+      { id },
+      (result: QueryResult) => parseContributor(result)
+    )
+  }
+
+  onContributor(
+    id: string,
+    callback: SubscriptionCallback<Contributor>
+  ): SubscriptionHandler {
+    return this.#gql.subscribeToQueryWithParser(
+      queries.CONTRIBUTOR('subscription'),
+      { id },
+      callback,
+      (result: QueryResult) => parseContributor(result)
     )
   }
 

@@ -1,23 +1,34 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts'
 import {
-  Config as ConfigEntity,
+  GeneralConfig as GeneralConfigEntity,
+  PresaleConfig as PresaleConfigEntity,
+  PresaleOracleConfig as PresaleOracleConfigEntity,
   Contributor as ContributorEntity,
   Contribution as ContributionEntity,
   Token as TokenEntity,
 } from '../generated/schema'
 import { Presale as PresaleContract } from '../generated/templates/Presale/Presale'
 import { Token as TokenContract } from '../generated/templates/Presale/Token'
+import { PresaleOracle as PresaleOracleContract } from '../generated/templates/PresaleOracle/PresaleOracle'
 import { getStateByKey } from './presale-states'
 
-const ETH = '0x0000000000000000000000000000000000000000'
+// const ETH = '0x0000000000000000000000000000000000000000'
 
 // Entity Id Builders
 
-function getConfigEntityId(appAddress: Address): string {
+function getGeneralConfigEntityId(orgAddress: Address): string {
+  return orgAddress.toHexString()
+}
+
+function getPresaleConfigEntityId(appAddress: Address): string {
   return appAddress.toHexString()
 }
 
-export function getContributorEntityId(
+function getPresaleOracleConfigEntityId(appAddress: Address): string {
+  return appAddress.toHexString()
+}
+
+function getContributorEntityId(
   appAddress: Address,
   contributor: Address
 ): string {
@@ -60,18 +71,53 @@ export function getPresaleState(appAddress: Address): i32 {
 
 // TheGraph Entities Getters
 
-export function getConfigEntity(appAddress: Address): ConfigEntity | null {
-  const configEntityId = getConfigEntityId(appAddress)
-  let config = ConfigEntity.load(configEntityId)
+export function getGeneralConfigEntity(
+  orgAddress: Address
+): GeneralConfigEntity | null {
+  const generalConfigEntityId = getGeneralConfigEntityId(orgAddress)
+  let generalConfig = GeneralConfigEntity.load(generalConfigEntityId)
 
-  if (!config) {
-    config = new ConfigEntity(configEntityId)
-
-    config.appAddress = appAddress
-    config.orgAddress = getOrgAddress(appAddress)
+  if (!generalConfig) {
+    generalConfig = new GeneralConfigEntity(generalConfigEntityId)
   }
 
-  return config
+  return generalConfig
+}
+
+export function getPresaleConfigEntity(
+  appAddress: Address
+): PresaleConfigEntity | null {
+  const presaleConfigEntityId = getPresaleConfigEntityId(appAddress)
+  let presaleConfig = PresaleConfigEntity.load(presaleConfigEntityId)
+
+  if (!presaleConfig) {
+    presaleConfig = new PresaleConfigEntity(presaleConfigEntityId)
+
+    presaleConfig.appAddress = appAddress
+    presaleConfig.orgAddress = getOrgAddress(appAddress)
+  }
+
+  return presaleConfig
+}
+
+export function getPresaleOracleConfigEntity(
+  appAddress: Address
+): PresaleOracleConfigEntity | null {
+  const presaleOracleConfigEntityId = getPresaleOracleConfigEntityId(appAddress)
+  let presaleOracleConfig = PresaleOracleConfigEntity.load(
+    presaleOracleConfigEntityId
+  )
+
+  if (!presaleOracleConfig) {
+    presaleOracleConfig = new PresaleOracleConfigEntity(
+      presaleOracleConfigEntityId
+    )
+
+    presaleOracleConfig.appAddress = appAddress
+    presaleOracleConfig.orgAddress = getOrgAddress(appAddress)
+  }
+
+  return presaleOracleConfig
 }
 
 export function getContributorEntity(
@@ -88,7 +134,6 @@ export function getContributorEntity(
     contributorEntity.totalValue = BigInt.fromI32(0)
     contributorEntity.totalAmount = BigInt.fromI32(0)
     contributorEntity.appAddress = appAddress
-    contributorEntity.orgAddress = getOrgAddress(appAddress)
   }
 
   return contributorEntity
@@ -113,7 +158,6 @@ export function getContributionEntity(
     contribution.amount = BigInt.fromI32(0)
     contribution.vestedPurchaseId = vestedPurchaseId
     contribution.appAddress = appAddress
-    contribution.orgAddress = getOrgAddress(appAddress)
   }
 
   return contribution
@@ -121,7 +165,7 @@ export function getContributionEntity(
 
 // Loading functions
 
-function loadTokenData(address: Address): boolean {
+export function loadTokenData(address: Address): boolean {
   const tokenContract = TokenContract.bind(address)
 
   /* address may be ETH default address instead of token 
@@ -142,16 +186,17 @@ function loadTokenData(address: Address): boolean {
   return true
 }
 
-export function loadAppConfig(appAddress: Address): void {
-  const config = getConfigEntity(appAddress)
+export function loadPresaleConfig(appAddress: Address): void {
+  const generalConfig = getGeneralConfigEntity(getOrgAddress(appAddress))
+  const presaleConfig = getPresaleConfigEntity(appAddress)
   const presale = PresaleContract.bind(appAddress)
 
-  //Load token data
+  // Load token data
   const token = presale.token()
   const success = loadTokenData(token)
 
   if (success) {
-    config.token = token.toHexString()
+    presaleConfig.token = token.toHexString()
   }
 
   const contributionToken = presale.contributionToken()
@@ -159,25 +204,53 @@ export function loadAppConfig(appAddress: Address): void {
   // Contribution token can be either a token or ether so we dont
   // need to check loadTokenData() result
   loadTokenData(contributionToken)
-  config.contributionToken = contributionToken.toHexString()
+  presaleConfig.contributionToken = contributionToken.toHexString()
 
-  //Load presale params
-  config.reserve = presale.reserve()
-  config.beneficiary = presale.beneficiary()
-  config.minGoal = presale.minGoal()
-  config.maxGoal = presale.maxGoal()
-  config.period = presale.period()
-  config.exchangeRate = presale.exchangeRate()
-  config.vestingCliffPeriod = presale.vestingCliffPeriod()
-  config.vestingCompletePeriod = presale.vestingCompletePeriod()
-  config.supplyOfferedPct = presale.supplyOfferedPct()
-  config.fundingForBeneficiaryPct = presale.fundingForBeneficiaryPct()
-  config.openDate = presale.openDate()
-  config.vestingCliffDate = presale.vestingCliffDate()
-  config.vestingCompleteDate = presale.vestingCompleteDate()
-  config.totalRaised = presale.totalRaised()
-  config.stateInt = presale.state()
-  config.state = getStateByKey(config.stateInt)
+  // Load presale params
+  presaleConfig.reserve = presale.reserve()
+  presaleConfig.beneficiary = presale.beneficiary()
+  presaleConfig.minGoal = presale.minGoal()
+  presaleConfig.maxGoal = presale.maxGoal()
+  presaleConfig.period = presale.period()
+  presaleConfig.exchangeRate = presale.exchangeRate()
+  presaleConfig.vestingCliffPeriod = presale.vestingCliffPeriod()
+  presaleConfig.vestingCompletePeriod = presale.vestingCompletePeriod()
+  presaleConfig.supplyOfferedPct = presale.supplyOfferedPct()
+  presaleConfig.fundingForBeneficiaryPct = presale.fundingForBeneficiaryPct()
+  presaleConfig.openDate = presale.openDate()
+  presaleConfig.vestingCliffDate = presale.vestingCliffDate()
+  presaleConfig.vestingCompleteDate = presale.vestingCompleteDate()
+  presaleConfig.totalRaised = presale.totalRaised()
+  presaleConfig.stateInt = presale.state()
+  presaleConfig.state = getStateByKey(presaleConfig.stateInt)
+  presaleConfig.PPM = presale.PPM()
 
-  config.save()
+  // Set up general config data
+  generalConfig.presale = presaleConfig.id
+
+  generalConfig.save()
+  presaleConfig.save()
+}
+
+export function loadPresaleOracleConfig(appAddress: Address): void {
+  const generalConfig = getGeneralConfigEntity(getOrgAddress(appAddress))
+  const presaleOracleConfig = getPresaleOracleConfigEntity(appAddress)
+  const presaleOracle = PresaleOracleContract.bind(appAddress)
+
+  // Load token data
+  const scoreToken = presaleOracle.score()
+  const success = loadTokenData(scoreToken)
+
+  if (success) {
+    presaleOracleConfig.scoreToken = scoreToken.toHexString()
+  }
+
+  // Load presale oracle params
+  presaleOracleConfig.ratio = presaleOracle.ratio()
+
+  // Set up general config data
+  generalConfig.presaleOracle = presaleOracleConfig.id
+
+  generalConfig.save()
+  presaleOracleConfig.save()
 }

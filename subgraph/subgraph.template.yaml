@@ -13,33 +13,8 @@ dataSources:
 {{> TokenFactories.yaml}}
 {{> Tokens.yaml}}
 templates:
-  {{> Kernel.template.yaml}}
-  {{> MiniMeToken.template.yaml}}
-  - kind: ethereum/contract
-    name: Presale
-    network: {{network}}
-    source:
-      abi: Presale
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - Config
-        - Contribution
-        - Token
-      abis:
-        - name: Presale
-          file: ./abis/Presale.json
-        - name: Token
-          file: ./abis/Token.json
-      eventHandlers:
-        - event: SetOpenDate(uint64)
-          handler: handleSetOpenDate
-        - event: Close()
-          handler: handleClose
-        - event: Contribute(indexed address,uint256,uint256,uint256)
-          handler: handleContribute
-        - event: Refund(indexed address,uint256,uint256,uint256)
-          handler: handleRefund
-      file: ./src/Presale.ts
+{{> Kernel.template.yaml}}
+{{> MiniMeToken.template.yaml}}
+{{> Presale.template.yaml}}
+{{> PresaleOracle.template.yaml}}
+{{> ERC20.template.yaml}}

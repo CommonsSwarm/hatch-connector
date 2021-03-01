@@ -26,6 +26,8 @@
         file: ./abis/Token.json
       - name: Presale
         file: ./abis/Presale.json
+      - name: PresaleOracle
+        file: ./abis/PresaleOracle.json
       - name: DAOFactory
         file: ./abis/DAOFactory.json
       - name: DAOKit

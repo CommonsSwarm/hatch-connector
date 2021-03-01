@@ -1,4 +1,4 @@
-export { default as Config } from './models/Config'
+export { default as PresaleConfig } from './models/PresaleConfig'
 export { default as Contribution } from './models/Contribution'
 export { default as Token } from './models/Token'
 export { default as Presale } from './models/Presale'

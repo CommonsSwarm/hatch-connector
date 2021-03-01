@@ -1,7 +1,9 @@
 import { SubscriptionHandler } from '@aragon/connect-core'
-import Config from './models/Config'
+import PresaleConfig from './models/PresaleConfig'
 import Contribution from './models/Contribution'
 import Contributor from './models/Contributor'
+import PresaleOracleConfig from './models/PresaleOracleConfig'
+import GeneralConfig from './models/GeneralConfig'
 
 /**
  * Pending
@@ -21,7 +23,19 @@ export interface TokenData {
   decimals: number
 }
 
-export interface ConfigData {
+export interface GeneralConfigData {
+  id: string
+  presale: PresaleConfigData
+  presaleOracle: PresaleOracleConfigData
+}
+
+export interface PresaleOracleConfigData {
+  id: string
+  scoreToken: TokenData
+  ratio: number
+}
+
+export interface PresaleConfigData {
   id: string
   token: TokenData
   reserve: string
@@ -61,10 +75,10 @@ export interface ContributionData {
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IPresaleConnector {
   disconnect(): Promise<void>
-  config(appAddress: string): Promise<Config>
-  onConfig(
-    appAddress: string,
-    callback: SubscriptionCallback<Config>
+  generalConfig(orgAddress: string): Promise<GeneralConfig>
+  onGeneralConfig(
+    orgAddress: string,
+    callback: SubscriptionCallback<GeneralConfig>
   ): SubscriptionHandler
   contributors(
     appAddress: string,

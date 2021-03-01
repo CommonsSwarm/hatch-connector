@@ -11,6 +11,11 @@
         "name": "new dao",
         "address": "0x96705fc7c4742e5b97719f9870efaa5b041127e9",
         "startBlock": "14112409"
+      },
+      {
+        "name": "dao without ih",
+        "address": "0x016e745dfe569aa3a77b5cfbb15f04901fe132b2",
+        "startBlock": "13656239"
       }
     ],
     "OrganizationFactories": [],

@@ -1,36 +1,49 @@
 import gql from 'graphql-tag'
 
-export const CONFIG = (type: string) => gql`
-  ${type} Config($id: String!) {
-    config(id: $id) {
-      id
-      token {
+export const GENERAL_CONFIG = (type: string) => gql`
+  ${type} GeneralConfig($id: String!) {
+    generalConfig(id: $id) {
+      presale {
         id
-        name
-        symbol
-        decimals
+        token {
+          id
+          name
+          symbol
+          decimals
+        }
+        reserve
+        beneficiary
+        contributionToken {
+          id
+          name
+          symbol
+          decimals
+        }
+        minGoal
+        maxGoal
+        period
+        exchangeRate
+        vestingCliffPeriod
+        vestingCompletePeriod
+        supplyOfferedPct
+        fundingForBeneficiaryPct
+        openDate
+        vestingCliffDate
+        vestingCompleteDate
+        totalRaised
+        state
+        PPM
       }
-      reserve
-      beneficiary
-      contributionToken {
+      presaleOracle {
         id
-        name
-        symbol
-        decimals
+        ratio
+        scoreToken {
+          id
+          name
+          symbol
+          decimals
+        }
       }
-      minGoal
-      maxGoal
-      period
-      exchangeRate
-      vestingCliffPeriod
-      vestingCompletePeriod
-      supplyOfferedPct
-      fundingForBeneficiaryPct
-      openDate
-      vestingCliffDate
-      vestingCompleteDate
-      totalRaised
-      state
     }
   }
 `

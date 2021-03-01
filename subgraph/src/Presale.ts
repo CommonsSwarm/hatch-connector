@@ -6,7 +6,7 @@ import {
   Refund as RefundEvent,
 } from '../generated/templates/Presale/Presale'
 import {
-  getConfigEntity,
+  getPresaleConfigEntity,
   getContributionEntity,
   getContributorEntity,
   getPresaleState,
@@ -23,7 +23,7 @@ import {
 } from './presale-states'
 
 export function handleSetOpenDate(event: SetOpenDateEvent): void {
-  const config = getConfigEntity(event.address)
+  const config = getPresaleConfigEntity(event.address)
   const stateKey = getPresaleState(event.address)
 
   log.debug('SetOpenDate event received. date: {}', [
@@ -38,7 +38,7 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
 }
 
 export function handleClose(event: CloseEvent): void {
-  const config = getConfigEntity(event.address)
+  const config = getPresaleConfigEntity(event.address)
 
   log.debug('Closed event received.', [])
 
@@ -56,7 +56,7 @@ export function handleContribute(event: ContributeEvent): void {
     params.vestedPurchaseId
   )
   const contributor = getContributorEntity(event.address, params.contributor)
-  const config = getConfigEntity(event.address)
+  const config = getPresaleConfigEntity(event.address)
 
   contributor.totalValue = contributor.totalValue.plus(params.value)
   contributor.totalAmount = contributor.totalAmount.plus(params.amount)
@@ -88,7 +88,7 @@ export function handleContribute(event: ContributeEvent): void {
 
 export function handleRefund(event: RefundEvent): void {
   const params = event.params
-  const config = getConfigEntity(event.address)
+  const config = getPresaleConfigEntity(event.address)
   const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,

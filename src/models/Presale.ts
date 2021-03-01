@@ -1,4 +1,4 @@
-import { Contract, BigNumber } from 'ethers'
+import { BigNumber } from 'ethers'
 import {
   Address,
   App,
@@ -6,10 +6,13 @@ import {
   ForwardingPath,
 } from '@aragon/connect-core'
 import { SubscriptionCallback, IPresaleConnector } from '../types'
-import Config from './Config'
+import PresaleConfig from './PresaleConfig'
 import Contribution from './Contribution'
 import Contributor from './Contributor'
+import GeneralConfig from './GeneralConfig'
 import { buildContributorId } from '../helpers'
+
+const PRESALE_ORACLE_APP = 'hatch-oracle'
 
 export default class Presale {
   #app: App
@@ -24,8 +27,17 @@ export default class Presale {
     this.#connector.disconnect()
   }
 
-  onConfig(callback: SubscriptionCallback<Config>): SubscriptionHandler {
-    return this.#connector.onConfig(this.#app.address, callback)
+  generalConfig(): Promise<GeneralConfig> {
+    return this.#connector.generalConfig(this.#app.organization.address)
+  }
+
+  onGeneralConfig(
+    callback: SubscriptionCallback<GeneralConfig>
+  ): SubscriptionHandler {
+    return this.#connector.onGeneralConfig(
+      this.#app.organization.address,
+      callback
+    )
   }
 
   contributors({
@@ -127,8 +139,10 @@ export default class Presale {
       actAs: contributor,
     })
     const {
-      contributionToken: { id: tokenAddress },
-    } = await this.#connector.config(this.#app.address)
+      presaleConfig: {
+        contributionToken: { id: tokenAddress },
+      },
+    } = await this.#connector.generalConfig(this.#app.address)
     const preTransactions = []
 
     const collateralPreTransactions = await intent.buildApprovePreTransactions({
@@ -152,13 +166,18 @@ export default class Presale {
     })
   }
 
-  async tokenBalance(entity: Address): Promise<any> {
-    const presale = new Contract(
-      this.#app.address,
-      this.#app.abi,
-      this.#app.provider
-    )
+  async tokenBalance(entity: Address): Promise<BigNumber> {
+    const presale = this.#app.contract()
 
     return presale.balanceOf(entity)
+  }
+
+  async getAllowedContributionAmount(contributor: Address): Promise<BigNumber> {
+    const presaleOracleApp = await this.#app.organization.app(
+      PRESALE_ORACLE_APP
+    )
+    const presaleOracle = presaleOracleApp.contract()
+
+    return presaleOracle.allowance(contributor)
   }
 }

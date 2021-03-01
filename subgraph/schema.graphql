@@ -1,4 +1,10 @@
-type Config @entity {
+type GeneralConfig @entity {
+  id: ID!
+  presale: PresaleConfig
+  presaleOracle: PresaleOracleConfig
+}
+
+type PresaleConfig @entity {
   id: ID!
   token: Token!
   reserve: Bytes!
@@ -18,6 +24,15 @@ type Config @entity {
   totalRaised: BigInt!
   state: PresaleState
   stateInt: Int!
+  PPM: BigInt!
+  appAddress: Bytes!
+  orgAddress: Bytes!
+}
+
+type PresaleOracleConfig @entity {
+  id: ID!
+  scoreToken: Token!
+  ratio: BigInt!
   appAddress: Bytes!
   orgAddress: Bytes!
 }
@@ -29,7 +44,7 @@ type Contributor @entity {
   totalValue: BigInt!
   contributions: [Contribution!] @derivedFrom(field: "contributor")
   appAddress: Bytes!
-  orgAddress: Bytes!
+  orgAddress: Bytes! # Useful to get PresaleOracleCnofig entity using the GeneralConfig entity
 }
 
 type Contribution @entity {
@@ -40,7 +55,6 @@ type Contribution @entity {
   vestedPurchaseId: BigInt!
   createdAt: BigInt!
   appAddress: Bytes!
-  orgAddress: Bytes!
 }
 
 type Token @entity {

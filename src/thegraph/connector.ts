@@ -1,14 +1,18 @@
 import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
 import { SubscriptionHandler, Address } from '@aragon/connect-core'
 import { SubscriptionCallback, IPresaleConnector } from '../types'
-import Config from '../models/Config'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
 
-import { parseConfig, parseContributions, parseContributors } from './parsers'
+import {
+  parseContributions,
+  parseContributors,
+  parseContributor,
+  parseGeneralConfig,
+} from './parsers'
+import Contributor from '../models/Contributor'
 import { ErrorException } from '../errors'
-import Contributor from 'src/models/Contributor'
-import { parseContributor } from './parsers/contributor'
+import GeneralConfig from 'src/models/GeneralConfig'
 
 export function subgraphUrlFromChainId(chainId: number): string | null {
   // Rinkeby
@@ -53,27 +57,27 @@ export default class PresaleConnectorTheGraph implements IPresaleConnector {
     })
   }
 
-  async disconnect() {
+  async disconnect(): Promise<void> {
     this.#gql.close()
   }
 
-  config(id: string): Promise<Config> {
+  generalConfig(id: string): Promise<GeneralConfig> {
     return this.#gql.performQueryWithParser(
-      queries.CONFIG('query'),
+      queries.GENERAL_CONFIG('query'),
       { id },
-      (result: QueryResult) => parseConfig(result)
+      (result: QueryResult) => parseGeneralConfig(result)
     )
   }
 
-  onConfig(
+  onGeneralConfig(
     id: string,
-    callback: SubscriptionCallback<Config>
+    callback: SubscriptionCallback<GeneralConfig>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser(
-      queries.CONFIG('subscription'),
+      queries.GENERAL_CONFIG('subscription'),
       { id },
       callback,
-      (result: QueryResult) => parseConfig(result)
+      (result: QueryResult) => parseGeneralConfig(result)
     )
   }
 

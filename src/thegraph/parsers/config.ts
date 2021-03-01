@@ -1,26 +1,31 @@
 import { ErrorUnexpectedResult } from '../../errors'
 import { QueryResult } from '@aragon/connect-thegraph'
-import Config from '../../models/Config'
-import { ConfigData } from 'src/types'
+import { PresaleConfigData } from '../../types'
+import GeneralConfig from '../../models/GeneralConfig'
 
-export function parseConfig(result: QueryResult): Config {
-  const config = result.data.config
+export function parseGeneralConfig(result: QueryResult): GeneralConfig {
+  const generalConfig = result.data.generalConfig
+  const presaleConfig = generalConfig.presale
 
-  if (!config) throw new ErrorUnexpectedResult('Unable to parse config.')
+  if (!generalConfig) {
+    throw new ErrorUnexpectedResult('Unable to parse general config.')
+  }
 
   /**
    * BigInt values are always received as string. Need to convert some
    * of them to numbers
    */
-  const configData: ConfigData = {
-    ...config,
-    openDate: Number(config.openDate),
-    period: Number(config.period),
-    vestingCliffPeriod: Number(config.vestingCliffPeriod),
-    vestingCompletePeriod: Number(config.vestingCompletePeriod),
-    vestingCliffDate: Number(config.vestingCliffDate),
-    vestingCompleteDate: Number(config.vestingCompleteDate),
+  const presaleConfigData: PresaleConfigData = {
+    ...presaleConfig,
+    openDate: Number(presaleConfig.openDate),
+    period: Number(presaleConfig.period),
+    vestingCliffPeriod: Number(presaleConfig.vestingCliffPeriod),
+    vestingCompletePeriod: Number(presaleConfig.vestingCompletePeriod),
+    vestingCliffDate: Number(presaleConfig.vestingCliffDate),
+    vestingCompleteDate: Number(presaleConfig.vestingCompleteDate),
   }
 
-  return new Config(configData)
+  generalConfig.presaleConfig = presaleConfigData
+
+  return new GeneralConfig(generalConfig)
 }

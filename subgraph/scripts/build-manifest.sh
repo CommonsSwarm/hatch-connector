@@ -27,5 +27,7 @@ mustache \
   -p manifest/templates/contracts/Kernel.template.yaml \
   -p manifest/templates/contracts/MiniMeToken.template.yaml \
   -p manifest/templates/contracts/MiniMeTokenFactory.template.yaml \
+  -p manifest/templates/contracts/Presale.template.yaml \
+  -p manifest/templates/contracts/PresaleOracle.template.yaml \
   $DATA \
   subgraph.template.yaml > subgraph.yaml

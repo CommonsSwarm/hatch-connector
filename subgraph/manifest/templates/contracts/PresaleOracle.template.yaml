@@ -1,0 +1,24 @@
+# PresaleOracle
+- kind: ethereum/contract
+  name: PresaleOracle
+  network: {{network}}
+  source:
+    abi: PresaleOracle
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.1
+    language: wasm/assemblyscript
+    entities:
+      - PresaleOracleConfig
+      - Token
+    abis:
+      - name: PresaleOracle
+        file: ./abis/PresaleOracle.json
+      - name: Token
+        file: ./abis/Token.json
+    eventHandlers:
+      - event: ScoreTokenSet(address)
+        handler: handleScoreTokenSet
+      - event: RatioSet(uint256)
+        handler: handleRatioSet
+    file: ./src/PresaleOracle.ts

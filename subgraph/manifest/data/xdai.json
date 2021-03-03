@@ -16,6 +16,11 @@
         "name": "dao without ih",
         "address": "0x016e745dfe569aa3a77b5cfbb15f04901fe132b2",
         "startBlock": "13656239"
+      },
+      {
+        "name": "deployment with ih token",
+        "address": "0xc67303034639ad3f09342798b444e2a673060141",
+        "startBlock": "14729307"
       }
     ],
     "OrganizationFactories": [],

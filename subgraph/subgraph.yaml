@@ -118,6 +118,43 @@ dataSources:
         - event: NewAppProxy(address,bool,bytes32)
           handler: handleNewAppProxy
       file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: deployment with ih token
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0xc67303034639ad3f09342798b444e2a673060141'
+      startBlock: 14729307
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Presale
+          file: ./abis/Presale.json
+        - name: PresaleOracle
+          file: ./abis/PresaleOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
 # /Organizations
 # Organization factories
 # /Organization factories

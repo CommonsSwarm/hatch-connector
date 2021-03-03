@@ -134,6 +134,7 @@ export function getContributorEntity(
     contributorEntity.totalValue = BigInt.fromI32(0)
     contributorEntity.totalAmount = BigInt.fromI32(0)
     contributorEntity.appAddress = appAddress
+    contributorEntity.orgAddress = getOrgAddress(appAddress)
   }
 
   return contributorEntity

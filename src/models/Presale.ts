@@ -142,7 +142,7 @@ export default class Presale {
       presaleConfig: {
         contributionToken: { id: tokenAddress },
       },
-    } = await this.#connector.generalConfig(this.#app.address)
+    } = await this.#connector.generalConfig(this.#app.organization.address)
     const preTransactions = []
 
     const collateralPreTransactions = await intent.buildApprovePreTransactions({

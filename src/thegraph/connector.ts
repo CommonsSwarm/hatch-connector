@@ -1,6 +1,6 @@
 import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
 import { SubscriptionHandler, Address } from '@aragon/connect-core'
-import { SubscriptionCallback, IPresaleConnector } from '../types'
+import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
 
@@ -28,26 +28,26 @@ export function subgraphUrlFromChainId(chainId: number): string | null {
 
 export const APP_NAMES_WHITELIST = ['marketplace-hatch']
 
-type PresaleConnectorTheGraphConfig = {
+type HatchConnectorTheGraphConfig = {
   pollInterval?: number
   appAddress?: Address
   subgraphUrl?: string
   verbose?: boolean
 }
 
-export default class PresaleConnectorTheGraph implements IPresaleConnector {
+export default class HatchConnectorTheGraph implements IHatchConnector {
   #gql: GraphQLWrapper
 
-  constructor(config: PresaleConnectorTheGraphConfig) {
+  constructor(config: HatchConnectorTheGraphConfig) {
     if (!config.subgraphUrl) {
       throw new Error(
-        'PresaleConnectorTheGraph requires subgraphUrl to be passed.'
+        'HatchConnectorTheGraph requires subgraphUrl to be passed.'
       )
     }
 
     if (!config.appAddress) {
       throw new ErrorException(
-        'PresaleConnectorTheGraph requires appAddress to be passed.'
+        'HatchConnectorTheGraph requires appAddress to be passed.'
       )
     }
 

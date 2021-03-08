@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 export const GENERAL_CONFIG = (type: string) => gql`
   ${type} GeneralConfig($id: String!) {
     generalConfig(id: $id) {
-      presale {
+      hatch {
         id
         token {
           id
@@ -34,7 +34,7 @@ export const GENERAL_CONFIG = (type: string) => gql`
         state
         PPM
       }
-      presaleOracle {
+      hatchOracle {
         id
         ratio
         scoreToken {

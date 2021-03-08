@@ -4,34 +4,21 @@ import { Kernel as KernelTemplate } from '../../generated/templates'
 import { MiniMeToken as MiniMeTokenTemplate } from '../../generated/templates'
 import * as hooks from '../aragon-hooks'
 
-export function processOrg(orgAddress: Address): void {
-  if (!_isRegistered(orgAddress, 'org')) {
-    KernelTemplate.create(orgAddress)
-    hooks.onOrgTemplateCreated(orgAddress)
+function _getAragonInfo(): AragonInfoEntity {
+  const aragonId = 'THERE_CAN_ONLY_BE_ONE'
 
-    _registerEntity(orgAddress, 'org')
+  let aragon = AragonInfoEntity.load(aragonId)
+  if (!aragon) {
+    aragon = new AragonInfoEntity(aragonId)
+
+    aragon.orgs = []
+    aragon.apps = []
+    aragon.tokens = []
+
+    aragon.save()
   }
-}
 
-export function processApp(appAddress: Address, appId: string): void {
-  if (!_isRegistered(appAddress, 'app')) {
-    let templateType = hooks.getTemplateForApp(appId)
-    if (templateType) {
-      DataSourceTemplate.create(templateType, [appAddress.toHexString()])
-      hooks.onAppTemplateCreated(appAddress, appId)
-    }
-
-    _registerEntity(appAddress, 'app')
-  }
-}
-
-export function processToken(tokenAddress: Address): void {
-  if (!_isRegistered(tokenAddress, 'token')) {
-    MiniMeTokenTemplate.create(tokenAddress)
-    hooks.onTokenTemplateCreated(tokenAddress)
-
-    _registerEntity(tokenAddress, 'token')
-  }
+  return aragon!
 }
 
 function _isRegistered(address: Address, type: string): boolean {
@@ -52,18 +39,18 @@ function _isRegistered(address: Address, type: string): boolean {
 }
 
 function _registerEntity(address: Address, type: string): void {
-  let aragon = _getAragonInfo()
+  const aragon = _getAragonInfo()
 
   if (type == 'org') {
-    let entities = aragon.orgs
+    const entities = aragon.orgs
     entities.push(address)
     aragon.orgs = entities
   } else if (type == 'app') {
-    let entities = aragon.apps
+    const entities = aragon.apps
     entities.push(address)
     aragon.apps = entities
   } else if (type == 'token') {
-    let entities = aragon.tokens
+    const entities = aragon.tokens
     entities.push(address)
     aragon.tokens = entities
   } else {
@@ -73,19 +60,32 @@ function _registerEntity(address: Address, type: string): void {
   aragon.save()
 }
 
-function _getAragonInfo(): AragonInfoEntity {
-  let aragonId = 'THERE_CAN_ONLY_BE_ONE'
+export function processOrg(orgAddress: Address): void {
+  if (!_isRegistered(orgAddress, 'org')) {
+    KernelTemplate.create(orgAddress)
+    hooks.onOrgTemplateCreated(orgAddress)
 
-  let aragon = AragonInfoEntity.load(aragonId)
-  if (!aragon) {
-    aragon = new AragonInfoEntity(aragonId)
-
-    aragon.orgs = []
-    aragon.apps = []
-    aragon.tokens = []
-
-    aragon.save()
+    _registerEntity(orgAddress, 'org')
   }
+}
 
-  return aragon!
+export function processApp(appAddress: Address, appId: string): void {
+  if (!_isRegistered(appAddress, 'app')) {
+    const templateType = hooks.getTemplateForApp(appId)
+    if (templateType) {
+      DataSourceTemplate.create(templateType, [appAddress.toHexString()])
+      hooks.onAppTemplateCreated(appAddress, appId)
+    }
+
+    _registerEntity(appAddress, 'app')
+  }
+}
+
+export function processToken(tokenAddress: Address): void {
+  if (!_isRegistered(tokenAddress, 'token')) {
+    MiniMeTokenTemplate.create(tokenAddress)
+    hooks.onTokenTemplateCreated(tokenAddress)
+
+    _registerEntity(tokenAddress, 'token')
+  }
 }

@@ -4,8 +4,8 @@ import {
   ErrorInvalidConnector,
   ErrorInvalidNetwork,
 } from './errors'
-import Presale from './models/Presale'
-import PresaleConnectorTheGraph, {
+import Hatch from './models/Hatch'
+import HatchConnectorTheGraph, {
   subgraphUrlFromChainId,
   APP_NAMES_WHITELIST,
 } from './thegraph/connector'
@@ -15,7 +15,7 @@ type Config = {
   pollInterval?: number
 }
 
-export default createAppConnector<Presale, Config>(
+export default createAppConnector<Hatch, Config>(
   ({ app, config, connector, network, orgConnector, verbose }) => {
     if (connector !== 'thegraph') {
       throw new ErrorInvalidConnector(
@@ -25,7 +25,7 @@ export default createAppConnector<Presale, Config>(
 
     if (!app.name || !APP_NAMES_WHITELIST.includes(app.name)) {
       throw new ErrorInvalidApp(
-        `This app (${app.name}) is not compatible with this marketplace presale connector. ` +
+        `This app (${app.name}) is not compatible with this connector. ` +
           `Please use an app instance of one of these repos: ${APP_NAMES_WHITELIST.toString()}.`
       )
     }
@@ -48,13 +48,13 @@ export default createAppConnector<Presale, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
-    const connectorTheGraph = new PresaleConnectorTheGraph({
+    const connectorTheGraph = new HatchConnectorTheGraph({
       appAddress: app.address,
       pollInterval,
       subgraphUrl,
       verbose,
     })
 
-    return new Presale(connectorTheGraph, app)
+    return new Hatch(connectorTheGraph, app)
   }
 )

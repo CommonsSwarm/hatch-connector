@@ -1,0 +1,19 @@
+{
+    "network": "xdai",
+    "dataSources": {
+      "Organizations": [
+        {
+          "name": "tecHatch",
+          "address": "0xd022cf11617114c31fa80f73cc754e701d8c46b6",
+          "startBlock": "13634930"
+
+        }
+      ],
+      "OrganizationFactories": [],
+      "OrganizationTemplates": [],
+      "LegacyOrganizationTemplates": [],
+      "TokenFactories": [],
+      "Tokens": []
+    }
+  }
+  

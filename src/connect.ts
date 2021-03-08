@@ -4,9 +4,10 @@ import {
   ErrorInvalidConnector,
   ErrorInvalidNetwork,
 } from './errors'
-import Presale from './models/Presale'
-import PresaleConnectorTheGraph, {
+import Hatch from './models/Hatch'
+import HatchConnectorTheGraph, {
   subgraphUrlFromChainId,
+  APP_NAMES_WHITELIST,
 } from './thegraph/connector'
 
 type Config = {
@@ -14,18 +15,18 @@ type Config = {
   pollInterval?: number
 }
 
-export default createAppConnector<Presale, Config>(
+export default createAppConnector<Hatch, Config>(
   ({ app, config, connector, network, orgConnector, verbose }) => {
     if (connector !== 'thegraph') {
       throw new ErrorInvalidConnector(
-        `Connector unsupported: ${connector}. Please use thegraph.`
+        `Connector unsupported: ${connector}. Please use a The Graph connector.`
       )
     }
 
-    if (app.name !== '<appName>') {
+    if (!app.name || !APP_NAMES_WHITELIST.includes(app.name)) {
       throw new ErrorInvalidApp(
-        `This app (${app.name}) is not compatible with this round robin connector. ` +
-          `Please use an app instance of the <appName>.aragonpm.eth repo.`
+        `This app (${app.name}) is not compatible with this connector. ` +
+          `Please use an app instance of one of these repos: ${APP_NAMES_WHITELIST.toString()}.`
       )
     }
 
@@ -47,12 +48,13 @@ export default createAppConnector<Presale, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
-    const connectorTheGraph = new PresaleConnectorTheGraph({
+    const connectorTheGraph = new HatchConnectorTheGraph({
+      appAddress: app.address,
       pollInterval,
       subgraphUrl,
       verbose,
     })
 
-    return new Presale(connectorTheGraph, app.address)
+    return new Hatch(connectorTheGraph, app)
   }
 )

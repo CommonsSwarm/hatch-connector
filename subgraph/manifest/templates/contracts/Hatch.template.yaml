@@ -1,0 +1,29 @@
+# Hatch
+- kind: ethereum/contract
+  name: Hatch
+  network: {{network}}
+  source:
+    abi: Hatch
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.1
+    language: wasm/assemblyscript
+    entities:
+      - Config
+      - Contribution
+      - Token
+    abis:
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: Token
+        file: ./abis/Token.json
+    eventHandlers:
+      - event: SetOpenDate(uint64)
+        handler: handleSetOpenDate
+      - event: Close()
+        handler: handleClose
+      - event: Contribute(indexed address,uint256,uint256,uint256)
+        handler: handleContribute
+      - event: Refund(indexed address,uint256,uint256,uint256)
+        handler: handleRefund
+    file: ./src/Hatch.ts

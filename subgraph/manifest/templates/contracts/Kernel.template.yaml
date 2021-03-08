@@ -22,8 +22,12 @@
     entities:
       - NoEnt
     abis:
-      - name: Presale
-        file: ./abis/Presale.json
+      - name: Token
+        file: ./abis/Token.json
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
       - name: DAOFactory
         file: ./abis/DAOFactory.json
       - name: DAOKit

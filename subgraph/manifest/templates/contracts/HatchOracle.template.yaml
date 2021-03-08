@@ -1,0 +1,24 @@
+# HatchOracle
+- kind: ethereum/contract
+  name: HatchOracle
+  network: {{network}}
+  source:
+    abi: HatchOracle
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.1
+    language: wasm/assemblyscript
+    entities:
+      - HatchOracleConfig
+      - Token
+    abis:
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
+      - name: Token
+        file: ./abis/Token.json
+    eventHandlers:
+      - event: ScoreTokenSet(address)
+        handler: handleScoreTokenSet
+      - event: RatioSet(uint256)
+        handler: handleRatioSet
+    file: ./src/HatchOracle.ts

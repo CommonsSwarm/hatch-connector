@@ -1,15 +1,14 @@
 {
-  "name": "@tecommons/hath-connector",
-  "version": "1.0.0-beta.1",
+  "name": "@tecommons/connect-hatch",
+  "version": "2.0.2",
   "license": "GPL-3.0",
-  "description": "Aragon connector to access and interact with marketplace presale contracts",
+  "description": "Aragon connector to access and interact with the hatch contract",
   "author": "TECommons",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build:update-frontend": "yarn build && cp -fr ./dist ../../../task-allocation-frontend/src/",
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc --build",
     "build:cjs": "tsc --build ./tsconfig.cjs.json",
@@ -20,7 +19,8 @@
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ../../node_modules/jest/bin/jest.js --runInBand --watch",
     "clean": "rm -rf ./dist ./tsconfig.tsbuildinfo",
-    "lint": "eslint --ext .ts ./src"
+    "lint": "eslint --ext .ts ./src",
+    "publish-yalc-local-package": "yarn build && yalc push"
   },
   "files": [
     "dist"
@@ -39,8 +39,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@aragon/connect-core": "^0.7.0",
-    "@aragon/connect-thegraph": "^0.7.0",
+    "@aragon/connect-core": "^0.8.0-alpha.6",
+    "@aragon/connect-thegraph": "^0.8.0-alpha.6",
+    "ethers": "^5.0.23",
     "graphql-tag": "^2.10.3"
   },
   "keywords": [

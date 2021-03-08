@@ -1,20 +1,20 @@
 # Do not edit subgraph.yaml, this is a generated file.
 # Instead, edit subgraph.template.yaml and run `yarn manifest-<network>-[staging]`
 specVersion: 0.0.2
-description: Subgraph made by P2P Models for the Aragon task allocation prototype that follows a Round Robin allocation process.
-repository: https://github.com/aragon/connect
+description: Subgraph made by TECommons for the Aragon hatch contracts.
+repository: https://github.com/TECommons/hatch-connector
 schema:
   file: ./schema.graphql
 dataSources:
 # Organizations
   # Kernel
   - kind: ethereum/contract
-    name: taroundrobin
-    network: rinkeby
+    name: tecommons
+    network: xdai
     source:
       abi: Kernel
-      address: '0xd46B303B2276c8E6999e977B32816a7fC50B55Af'
-      startBlock: 7405195
+      address: '0x83b60d521da97431bb4464fd16ea1bc6ad8ad02e'
+      startBlock: 13656239
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -22,8 +22,197 @@ dataSources:
       entities:
         - NoEnt
       abis:
-        - name: RoundRobinApp
-          file: ./abis/RoundRobinApp.json
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: new dao
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0x96705fc7c4742e5b97719f9870efaa5b041127e9'
+      startBlock: 14112409
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: dao without ih
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0x016e745dfe569aa3a77b5cfbb15f04901fe132b2'
+      startBlock: 13656239
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: deployment with ih token
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0x050a0f7c5b1c5c003aba77ef1f8d065749e5a358'
+      startBlock: 14729307
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: 6-03 tDai Hatch
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0xc818827a8c978ff9a2a823415fd1f09c85e464b7'
+      startBlock: 14867956
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: 7-03 tDai Hatch
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0xc021e4b518ba03d60b712364190c626d6dbadebd'
+      startBlock: 14894422
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
         - name: DAOFactory
           file: ./abis/DAOFactory.json
         - name: DAOKit
@@ -52,105 +241,127 @@ dataSources:
 # Tokens
 # /Tokens
 templates:
-  # Kernel
-  - kind: ethereum/contract
-    name: Kernel
-    network: rinkeby
-    source:
-      abi: Kernel
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - NoEnt
-      abis:
-        - name: RoundRobinApp
-          file: ./abis/RoundRobinApp.json
-        - name: DAOFactory
-          file: ./abis/DAOFactory.json
-        - name: DAOKit
-          file: ./abis/DAOKit.json
-        - name: DAOTemplate
-          file: ./abis/DAOTemplate.json
-        - name: Kernel
-          file: ./abis/Kernel.json
-        - name: MiniMeToken
-          file: ./abis/MiniMeToken.json
-        - name: MiniMeTokenFactory
-          file: ./abis/MiniMeTokenFactory.json
-      eventHandlers:
-        - event: NewAppProxy(address,bool,bytes32)
-          handler: handleNewAppProxy
-      file: ./src/aragon/mappings/Kernel.ts
-  # MiniMeToken
-  - kind: ethereum/contract
-    name: MiniMeToken
-    network: rinkeby
-    source:
-      abi: MiniMeToken
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - NoEnt
-      abis:
-        - name: DAOFactory
-          file: ./abis/DAOFactory.json
-        - name: DAOKit
-          file: ./abis/DAOKit.json
-        - name: DAOTemplate
-          file: ./abis/DAOTemplate.json
-        - name: Kernel
-          file: ./abis/Kernel.json
-        - name: MiniMeToken
-          file: ./abis/MiniMeToken.json
-        - name: MiniMeTokenFactory
-          file: ./abis/MiniMeTokenFactory.json
-      eventHandlers:
-        - event: ClaimedTokens(indexed address,indexed address,uint256)
-          handler: handleClaimedTokens
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-        - event: NewCloneToken(indexed address,uint256)
-          handler: handleNewCloneToken
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-      file: ./src/aragon/mappings/MiniMeToken.ts
+# Kernel
+- kind: ethereum/contract
+  name: Kernel
+  network: xdai
+  source:
+    abi: Kernel
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.4
+    language: wasm/assemblyscript
+    entities:
+      - NoEnt
+    abis:
+      - name: Token
+        file: ./abis/Token.json
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
+      - name: DAOFactory
+        file: ./abis/DAOFactory.json
+      - name: DAOKit
+        file: ./abis/DAOKit.json
+      - name: DAOTemplate
+        file: ./abis/DAOTemplate.json
+      - name: Kernel
+        file: ./abis/Kernel.json
+      - name: MiniMeToken
+        file: ./abis/MiniMeToken.json
+      - name: MiniMeTokenFactory
+        file: ./abis/MiniMeTokenFactory.json
+    eventHandlers:
+      - event: NewAppProxy(address,bool,bytes32)
+        handler: handleNewAppProxy
+    file: ./src/aragon/mappings/Kernel.ts
+# MiniMeToken
+- kind: ethereum/contract
+  name: MiniMeToken
+  network: xdai
+  source:
+    abi: MiniMeToken
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.4
+    language: wasm/assemblyscript
+    entities:
+      - NoEnt
+    abis:
+      - name: DAOFactory
+        file: ./abis/DAOFactory.json
+      - name: DAOKit
+        file: ./abis/DAOKit.json
+      - name: DAOTemplate
+        file: ./abis/DAOTemplate.json
+      - name: Kernel
+        file: ./abis/Kernel.json
+      - name: MiniMeToken
+        file: ./abis/MiniMeToken.json
+      - name: MiniMeTokenFactory
+        file: ./abis/MiniMeTokenFactory.json
+    eventHandlers:
+      - event: ClaimedTokens(indexed address,indexed address,uint256)
+        handler: handleClaimedTokens
+      - event: Transfer(indexed address,indexed address,uint256)
+        handler: handleTransfer
+      - event: NewCloneToken(indexed address,uint256)
+        handler: handleNewCloneToken
+      - event: Approval(indexed address,indexed address,uint256)
+        handler: handleApproval
+    file: ./src/aragon/mappings/MiniMeToken.ts
 
-  - kind: ethereum/contract
-    name: RoundRobinApp
-    network: rinkeby
-    source:
-      abi: RoundRobinApp
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Config
-        - Task
-        - User
-        - UserRejectedTask
-      abis:
-        - name: RoundRobinApp
-          file: ./abis/RoundRobinApp.json
-      eventHandlers:
-        - event: TaskCreated(indexed bytes32)
-          handler: handleTaskCreated
-        - event: TaskDeleted(indexed bytes32)
-          handler: handleTaskDeleted
-        - event: TaskAccepted(indexed bytes32,indexed bytes32)
-          handler: handleTaskAccepted
-        - event: TaskRejected(indexed bytes32,indexed bytes32)
-          handler: handleTaskRejected
-        - event: TaskAllocated(indexed bytes32,indexed bytes32,bytes32)
-          handler: handleTaskAllocated
-        - event: UserRegistered(indexed bytes32)
-          handler: handleUserRegistered
-        - event: UserDeleted(indexed bytes32)
-          handler: handleUserDeleted
-        - event: RejecterDeleted(indexed bytes32,indexed bytes32)
-          handler: handleRejecterDeleted
-      file: ./src/RoundRobinApp.ts
+# Hatch
+- kind: ethereum/contract
+  name: Hatch
+  network: xdai
+  source:
+    abi: Hatch
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.4
+    language: wasm/assemblyscript
+    entities:
+      - Config
+      - Contribution
+      - Token
+    abis:
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: Token
+        file: ./abis/Token.json
+    eventHandlers:
+      - event: SetOpenDate(uint64)
+        handler: handleSetOpenDate
+      - event: Close()
+        handler: handleClose
+      - event: Contribute(indexed address,uint256,uint256,uint256)
+        handler: handleContribute
+      - event: Refund(indexed address,uint256,uint256,uint256)
+        handler: handleRefund
+    file: ./src/Hatch.ts
+# HatchOracle
+- kind: ethereum/contract
+  name: HatchOracle
+  network: xdai
+  source:
+    abi: HatchOracle
+  mapping:
+    kind: ethereum/events
+    apiVersion: 0.0.4
+    language: wasm/assemblyscript
+    entities:
+      - HatchOracleConfig
+      - Token
+    abis:
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
+      - name: Token
+        file: ./abis/Token.json
+    eventHandlers:
+      - event: ScoreTokenSet(address)
+        handler: handleScoreTokenSet
+      - event: RatioSet(uint256)
+        handler: handleRatioSet
+    file: ./src/HatchOracle.ts

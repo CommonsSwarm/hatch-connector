@@ -1,10 +1,17 @@
-type Config @entity {
+type GeneralConfig @entity {
+  id: ID!
+  hatch: HatchConfig
+  hatchOracle: HatchOracleConfig
+}
+
+type HatchConfig @entity {
   id: ID!
   token: Token!
-  reserve: Address!
-  beneficiary: Address!
+  reserve: Bytes!
+  beneficiary: Bytes!
   contributionToken: Token!
-  goal:  BigInt!
+  minGoal: BigInt!
+  maxGoal: BigInt!
   period: BigInt!
   exchangeRate: BigInt!
   vestingCliffPeriod: BigInt!
@@ -15,28 +22,56 @@ type Config @entity {
   vestingCliffDate: BigInt!
   vestingCompleteDate: BigInt!
   totalRaised: BigInt!
+  state: HatchState
+  stateInt: Int!
+  PPM: BigInt!
   appAddress: Bytes!
   orgAddress: Bytes!
-  state: PresaleState
-  stateInt: Int!
+}
+
+type HatchOracleConfig @entity {
+  id: ID!
+  scoreToken: Token!
+  ratio: BigInt!
+  appAddress: Bytes!
+  orgAddress: Bytes!
+}
+
+type Contributor @entity {
+  id: ID!
+  account: Bytes!
+  totalAmount: BigInt!
+  totalValue: BigInt!
+  contributions: [Contribution!] @derivedFrom(field: "contributor")
+  appAddress: Bytes!
+  orgAddress: Bytes! # Useful to get HatchOracleCnofig entity using the GeneralConfig entity
 }
 
 type Contribution @entity {
   id: ID!
-  contributor: Address!
+  contributor: Contributor!
   value: BigInt!
   amount: BigInt!
   vestedPurchaseId: BigInt!
+  createdAt: BigInt!
+  appAddress: Bytes!
 }
 
 type Token @entity {
-  id:ID!
+  id: ID!
   name: String!
   symbol: String!
   decimals: Int!
 }
 
-enum PresaleState {
+type AragonInfo @entity {
+  id: ID!
+  orgs: [Bytes!]!
+  apps: [Bytes!]!
+  tokens: [Bytes!]!
+}
+
+enum HatchState {
   Pending
   Funding
   Refunding

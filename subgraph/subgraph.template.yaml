@@ -1,8 +1,8 @@
 # Do not edit subgraph.yaml, this is a generated file.
 # Instead, edit subgraph.template.yaml and run `yarn manifest-<network>-[staging]`
 specVersion: 0.0.2
-description: Subgraph made by TECommons for the Aragon Marketplace presale app.
-repository: https://github.com/aragon/connect
+description: Subgraph made by TECommons for the Aragon hatch contracts.
+repository: https://github.com/TECommons/hatch-connector
 schema:
   file: ./schema.graphql
 dataSources:
@@ -13,31 +13,8 @@ dataSources:
 {{> TokenFactories.yaml}}
 {{> Tokens.yaml}}
 templates:
-  {{> Kernel.template.yaml}}
-  {{> MiniMeToken.template.yaml}}
-  - kind: ethereum/contract
-    name: Presale
-    network: {{network}}
-    source:
-      abi: Presale
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - Config
-        - Contribution
-        - Token
-      abis:
-        - name: Presale
-          file: ./abis/Presale.json
-      eventHandlers:
-        - event: SetOpenDate(uint64)
-          handler: handleSetOpenDate
-        - event: Close()
-          handler: handleClose
-        - event: Contribute(indexed address,uint256,uint256,uint256)
-          handler: handleContribute
-        - event: Refund(indexed address,uint256,uint256,uint256)
-          handler: handleRefund
-      file: ./src/Presale.ts
+{{> Kernel.template.yaml}}
+{{> MiniMeToken.template.yaml}}
+{{> Hatch.template.yaml}}
+{{> HatchOracle.template.yaml}}
+{{> ERC20.template.yaml}}

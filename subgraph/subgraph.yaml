@@ -1,8 +1,8 @@
 # Do not edit subgraph.yaml, this is a generated file.
 # Instead, edit subgraph.template.yaml and run `yarn manifest-<network>-[staging]`
 specVersion: 0.0.2
-description: Subgraph made by TECommons for the Aragon Marketplace presale contract.
-repository: https://github.com/aragon/connect
+description: Subgraph made by TECommons for the Aragon hatch contracts.
+repository: https://github.com/TECommons/hatch-connector
 schema:
   file: ./schema.graphql
 dataSources:
@@ -24,10 +24,10 @@ dataSources:
       abis:
         - name: Token
           file: ./abis/Token.json
-        - name: Presale
-          file: ./abis/Presale.json
-        - name: PresaleOracle
-          file: ./abis/PresaleOracle.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
         - name: DAOFactory
           file: ./abis/DAOFactory.json
         - name: DAOKit
@@ -61,10 +61,10 @@ dataSources:
       abis:
         - name: Token
           file: ./abis/Token.json
-        - name: Presale
-          file: ./abis/Presale.json
-        - name: PresaleOracle
-          file: ./abis/PresaleOracle.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
         - name: DAOFactory
           file: ./abis/DAOFactory.json
         - name: DAOKit
@@ -98,10 +98,10 @@ dataSources:
       abis:
         - name: Token
           file: ./abis/Token.json
-        - name: Presale
-          file: ./abis/Presale.json
-        - name: PresaleOracle
-          file: ./abis/PresaleOracle.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
         - name: DAOFactory
           file: ./abis/DAOFactory.json
         - name: DAOKit
@@ -124,7 +124,7 @@ dataSources:
     network: xdai
     source:
       abi: Kernel
-      address: '0xc67303034639ad3f09342798b444e2a673060141'
+      address: '0x050a0f7c5b1c5c003aba77ef1f8d065749e5a358'
       startBlock: 14729307
     mapping:
       kind: ethereum/events
@@ -135,10 +135,84 @@ dataSources:
       abis:
         - name: Token
           file: ./abis/Token.json
-        - name: Presale
-          file: ./abis/Presale.json
-        - name: PresaleOracle
-          file: ./abis/PresaleOracle.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: 6-03 tDai Hatch
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0xc818827a8c978ff9a2a823415fd1f09c85e464b7'
+      startBlock: 14867956
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
+        - name: DAOFactory
+          file: ./abis/DAOFactory.json
+        - name: DAOKit
+          file: ./abis/DAOKit.json
+        - name: DAOTemplate
+          file: ./abis/DAOTemplate.json
+        - name: Kernel
+          file: ./abis/Kernel.json
+        - name: MiniMeToken
+          file: ./abis/MiniMeToken.json
+        - name: MiniMeTokenFactory
+          file: ./abis/MiniMeTokenFactory.json
+      eventHandlers:
+        - event: NewAppProxy(address,bool,bytes32)
+          handler: handleNewAppProxy
+      file: ./src/aragon/mappings/Kernel.ts
+  # Kernel
+  - kind: ethereum/contract
+    name: 7-03 tDai Hatch
+    network: xdai
+    source:
+      abi: Kernel
+      address: '0xc021e4b518ba03d60b712364190c626d6dbadebd'
+      startBlock: 14894422
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - NoEnt
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+        - name: Hatch
+          file: ./abis/Hatch.json
+        - name: HatchOracle
+          file: ./abis/HatchOracle.json
         - name: DAOFactory
           file: ./abis/DAOFactory.json
         - name: DAOKit
@@ -182,10 +256,10 @@ templates:
     abis:
       - name: Token
         file: ./abis/Token.json
-      - name: Presale
-        file: ./abis/Presale.json
-      - name: PresaleOracle
-        file: ./abis/PresaleOracle.json
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
       - name: DAOFactory
         file: ./abis/DAOFactory.json
       - name: DAOKit
@@ -238,12 +312,12 @@ templates:
         handler: handleApproval
     file: ./src/aragon/mappings/MiniMeToken.ts
 
-# Presale
+# Hatch
 - kind: ethereum/contract
-  name: Presale
+  name: Hatch
   network: xdai
   source:
-    abi: Presale
+    abi: Hatch
   mapping:
     kind: ethereum/events
     apiVersion: 0.0.4
@@ -253,8 +327,8 @@ templates:
       - Contribution
       - Token
     abis:
-      - name: Presale
-        file: ./abis/Presale.json
+      - name: Hatch
+        file: ./abis/Hatch.json
       - name: Token
         file: ./abis/Token.json
     eventHandlers:
@@ -266,23 +340,23 @@ templates:
         handler: handleContribute
       - event: Refund(indexed address,uint256,uint256,uint256)
         handler: handleRefund
-    file: ./src/Presale.ts
-# PresaleOracle
+    file: ./src/Hatch.ts
+# HatchOracle
 - kind: ethereum/contract
-  name: PresaleOracle
+  name: HatchOracle
   network: xdai
   source:
-    abi: PresaleOracle
+    abi: HatchOracle
   mapping:
     kind: ethereum/events
     apiVersion: 0.0.4
     language: wasm/assemblyscript
     entities:
-      - PresaleOracleConfig
+      - HatchOracleConfig
       - Token
     abis:
-      - name: PresaleOracle
-        file: ./abis/PresaleOracle.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
       - name: Token
         file: ./abis/Token.json
     eventHandlers:
@@ -290,4 +364,4 @@ templates:
         handler: handleScoreTokenSet
       - event: RatioSet(uint256)
         handler: handleRatioSet
-    file: ./src/PresaleOracle.ts
+    file: ./src/HatchOracle.ts

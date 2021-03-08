@@ -1,10 +1,10 @@
 type GeneralConfig @entity {
   id: ID!
-  presale: PresaleConfig
-  presaleOracle: PresaleOracleConfig
+  hatch: HatchConfig
+  hatchOracle: HatchOracleConfig
 }
 
-type PresaleConfig @entity {
+type HatchConfig @entity {
   id: ID!
   token: Token!
   reserve: Bytes!
@@ -22,14 +22,14 @@ type PresaleConfig @entity {
   vestingCliffDate: BigInt!
   vestingCompleteDate: BigInt!
   totalRaised: BigInt!
-  state: PresaleState
+  state: HatchState
   stateInt: Int!
   PPM: BigInt!
   appAddress: Bytes!
   orgAddress: Bytes!
 }
 
-type PresaleOracleConfig @entity {
+type HatchOracleConfig @entity {
   id: ID!
   scoreToken: Token!
   ratio: BigInt!
@@ -44,7 +44,7 @@ type Contributor @entity {
   totalValue: BigInt!
   contributions: [Contribution!] @derivedFrom(field: "contributor")
   appAddress: Bytes!
-  orgAddress: Bytes! # Useful to get PresaleOracleCnofig entity using the GeneralConfig entity
+  orgAddress: Bytes! # Useful to get HatchOracleCnofig entity using the GeneralConfig entity
 }
 
 type Contribution @entity {
@@ -71,7 +71,7 @@ type AragonInfo @entity {
   tokens: [Bytes!]!
 }
 
-enum PresaleState {
+enum HatchState {
   Pending
   Funding
   Refunding

@@ -19,8 +19,18 @@
       },
       {
         "name": "deployment with ih token",
-        "address": "0xc67303034639ad3f09342798b444e2a673060141",
+        "address": "0x050a0f7c5b1c5c003aba77ef1f8d065749e5a358",
         "startBlock": "14729307"
+      },
+      {
+        "name": "6-03 tDai Hatch",
+        "address": "0xc818827a8c978ff9a2a823415fd1f09c85e464b7",
+        "startBlock": "14867956"
+      },
+      {
+        "name": "7-03 tDai Hatch",
+        "address": "0xc021e4b518ba03d60b712364190c626d6dbadebd",
+        "startBlock": "14894422"
       }
     ],
     "OrganizationFactories": [],

@@ -1,9 +1,9 @@
-# Presale
+# Hatch
 - kind: ethereum/contract
-  name: Presale
+  name: Hatch
   network: {{network}}
   source:
-    abi: Presale
+    abi: Hatch
   mapping:
     kind: ethereum/events
     apiVersion: 0.0.1
@@ -13,8 +13,8 @@
       - Contribution
       - Token
     abis:
-      - name: Presale
-        file: ./abis/Presale.json
+      - name: Hatch
+        file: ./abis/Hatch.json
       - name: Token
         file: ./abis/Token.json
     eventHandlers:
@@ -26,4 +26,4 @@
         handler: handleContribute
       - event: Refund(indexed address,uint256,uint256,uint256)
         handler: handleRefund
-    file: ./src/Presale.ts
+    file: ./src/Hatch.ts

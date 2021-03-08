@@ -4,12 +4,12 @@ import {
   Close as CloseEvent,
   Contribute as ContributeEvent,
   Refund as RefundEvent,
-} from '../generated/templates/Presale/Presale'
+} from '../generated/templates/Hatch/Hatch'
 import {
-  getPresaleConfigEntity,
+  getHatchConfigEntity,
   getContributionEntity,
   getContributorEntity,
-  getPresaleState,
+  getHatchState,
 } from './helpers'
 import {
   STATE_CLOSED,
@@ -20,11 +20,11 @@ import {
   getStateByKey,
   STATE_REFUNDING,
   STATE_REFUNDING_NUM,
-} from './presale-states'
+} from './hatch-states'
 
 export function handleSetOpenDate(event: SetOpenDateEvent): void {
-  const config = getPresaleConfigEntity(event.address)
-  const stateKey = getPresaleState(event.address)
+  const config = getHatchConfigEntity(event.address)
+  const stateKey = getHatchState(event.address)
 
   log.debug('SetOpenDate event received. date: {}', [
     event.params.date.toString(),
@@ -38,7 +38,7 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
 }
 
 export function handleClose(event: CloseEvent): void {
-  const config = getPresaleConfigEntity(event.address)
+  const config = getHatchConfigEntity(event.address)
 
   log.debug('Closed event received.', [])
 
@@ -56,7 +56,7 @@ export function handleContribute(event: ContributeEvent): void {
     params.vestedPurchaseId
   )
   const contributor = getContributorEntity(event.address, params.contributor)
-  const config = getPresaleConfigEntity(event.address)
+  const config = getHatchConfigEntity(event.address)
 
   contributor.totalValue = contributor.totalValue.plus(params.value)
   contributor.totalAmount = contributor.totalAmount.plus(params.amount)
@@ -88,7 +88,7 @@ export function handleContribute(event: ContributeEvent): void {
 
 export function handleRefund(event: RefundEvent): void {
   const params = event.params
-  const config = getPresaleConfigEntity(event.address)
+  const config = getHatchConfigEntity(event.address)
   const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,

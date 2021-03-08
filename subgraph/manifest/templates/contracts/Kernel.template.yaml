@@ -24,10 +24,10 @@
     abis:
       - name: Token
         file: ./abis/Token.json
-      - name: Presale
-        file: ./abis/Presale.json
-      - name: PresaleOracle
-        file: ./abis/PresaleOracle.json
+      - name: Hatch
+        file: ./abis/Hatch.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
       - name: DAOFactory
         file: ./abis/DAOFactory.json
       - name: DAOKit

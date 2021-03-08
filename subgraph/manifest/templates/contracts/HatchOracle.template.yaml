@@ -1,19 +1,19 @@
-# PresaleOracle
+# HatchOracle
 - kind: ethereum/contract
-  name: PresaleOracle
+  name: HatchOracle
   network: {{network}}
   source:
-    abi: PresaleOracle
+    abi: HatchOracle
   mapping:
     kind: ethereum/events
     apiVersion: 0.0.1
     language: wasm/assemblyscript
     entities:
-      - PresaleOracleConfig
+      - HatchOracleConfig
       - Token
     abis:
-      - name: PresaleOracle
-        file: ./abis/PresaleOracle.json
+      - name: HatchOracle
+        file: ./abis/HatchOracle.json
       - name: Token
         file: ./abis/Token.json
     eventHandlers:
@@ -21,4 +21,4 @@
         handler: handleScoreTokenSet
       - event: RatioSet(uint256)
         handler: handleRatioSet
-    file: ./src/PresaleOracle.ts
+    file: ./src/HatchOracle.ts

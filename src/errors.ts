@@ -1,7 +1,5 @@
-/**
- * Had to copy-paste error ts file from aragon connect core because
- *  the aragon-connect package doesn't export it.
- */
+// Had to copy-paste error ts file from aragon connect core because
+// the aragon-connect package doesn't export it.
 
 function defineNonEnumerable(instance: object, name: string, value: any) {
   Object.defineProperty(instance, name, { value, enumerable: false })

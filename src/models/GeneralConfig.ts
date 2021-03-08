@@ -1,15 +1,15 @@
 import { GeneralConfigData } from '../types'
-import PresaleConfig from './PresaleConfig'
-import PresaleOracleConfig from './PresaleOracleConfig'
+import HatchConfig from './HatchConfig'
+import HatchOracleConfig from './HatchOracleConfig'
 
 export default class GeneralConfig {
   readonly id: string
-  readonly presaleConfig: PresaleConfig
-  readonly presaleOracleConfig: PresaleOracleConfig
+  readonly hatchConfig: HatchConfig
+  readonly hatchOracleConfig: HatchOracleConfig
 
   constructor(data: GeneralConfigData) {
     this.id = data.id
-    this.presaleConfig = data.presale
-    this.presaleOracleConfig = data.presaleOracle
+    this.hatchConfig = data.hatch
+    this.hatchOracleConfig = data.hatchOracle
   }
 }

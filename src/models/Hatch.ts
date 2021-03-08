@@ -5,20 +5,19 @@ import {
   SubscriptionHandler,
   ForwardingPath,
 } from '@aragon/connect-core'
-import { SubscriptionCallback, IPresaleConnector } from '../types'
-import PresaleConfig from './PresaleConfig'
+import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from './Contribution'
 import Contributor from './Contributor'
 import GeneralConfig from './GeneralConfig'
 import { buildContributorId } from '../helpers'
 
-const PRESALE_ORACLE_APP = 'hatch-oracle'
+const HATCH_ORACLE_APP = 'hatch-oracle'
 
-export default class Presale {
+export default class Hatch {
   #app: App
-  #connector: IPresaleConnector
+  #connector: IHatchConnector
 
-  constructor(connector: IPresaleConnector, app: App) {
+  constructor(connector: IHatchConnector, app: App) {
     this.#connector = connector
     this.#app = app
   }
@@ -139,7 +138,7 @@ export default class Presale {
       actAs: contributor,
     })
     const {
-      presaleConfig: {
+      hatchConfig: {
         contributionToken: { id: tokenAddress },
       },
     } = await this.#connector.generalConfig(this.#app.organization.address)
@@ -167,17 +166,15 @@ export default class Presale {
   }
 
   async tokenBalance(entity: Address): Promise<BigNumber> {
-    const presale = this.#app.contract()
+    const hatch = this.#app.contract()
 
-    return presale.balanceOf(entity)
+    return hatch.balanceOf(entity)
   }
 
   async getAllowedContributionAmount(contributor: Address): Promise<BigNumber> {
-    const presaleOracleApp = await this.#app.organization.app(
-      PRESALE_ORACLE_APP
-    )
-    const presaleOracle = presaleOracleApp.contract()
+    const hatchOracleApp = await this.#app.organization.app(HATCH_ORACLE_APP)
+    const hatchOracle = hatchOracleApp.contract()
 
-    return presaleOracle.allowance(contributor)
+    return hatchOracle.allowance(contributor)
   }
 }

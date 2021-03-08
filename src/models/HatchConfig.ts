@@ -1,7 +1,7 @@
-import { PresaleConfigData } from '../types'
+import { HatchConfigData } from '../types'
 import Token from './Token'
 
-export default class PresaleConfig {
+export default class HatchConfig {
   readonly id: string
   readonly token: Token
   readonly reserve: string
@@ -21,7 +21,7 @@ export default class PresaleConfig {
   readonly totalRaised: string
   readonly state: string
 
-  constructor(data: PresaleConfigData) {
+  constructor(data: HatchConfigData) {
     this.id = data.id
     this.token = new Token(data.token)
     this.reserve = data.reserve

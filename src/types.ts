@@ -1,8 +1,6 @@
 import { SubscriptionHandler } from '@aragon/connect-core'
-import PresaleConfig from './models/PresaleConfig'
 import Contribution from './models/Contribution'
 import Contributor from './models/Contributor'
-import PresaleOracleConfig from './models/PresaleOracleConfig'
 import GeneralConfig from './models/GeneralConfig'
 
 /**
@@ -12,7 +10,7 @@ import GeneralConfig from './models/GeneralConfig'
  * GoalReached
  * Closed
  */
-export const PRESALE_STATES = [0, 1, 2, 3, 4]
+export const HATCH_STATES = [0, 1, 2, 3, 4]
 
 export type SubscriptionCallback<T> = (error: Error | null, data?: T) => void
 
@@ -23,19 +21,13 @@ export interface TokenData {
   decimals: number
 }
 
-export interface GeneralConfigData {
-  id: string
-  presale: PresaleConfigData
-  presaleOracle: PresaleOracleConfigData
-}
-
-export interface PresaleOracleConfigData {
+export interface HatchOracleConfigData {
   id: string
   scoreToken: TokenData
   ratio: number
 }
 
-export interface PresaleConfigData {
+export interface HatchConfigData {
   id: string
   token: TokenData
   reserve: string
@@ -56,6 +48,12 @@ export interface PresaleConfigData {
   state: string
 }
 
+export interface GeneralConfigData {
+  id: string
+  hatch: HatchConfigData
+  hatchOracle: HatchOracleConfigData
+}
+
 export interface ContributorData {
   id: string
   account: string
@@ -73,7 +71,7 @@ export interface ContributionData {
 }
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-export interface IPresaleConnector {
+export interface IHatchConnector {
   disconnect(): Promise<void>
   generalConfig(orgAddress: string): Promise<GeneralConfig>
   onGeneralConfig(

@@ -12,8 +12,8 @@ Below there are a few ways to show how to query the Subgraph for data.  The quer
 
 This query fetches configuration data related to the hatch.
 
-```
-hatchConfig(id: "0x2CA2...") {
+```graphql
+hatchConfig(id: HATCH_ADDRESS) {
     id
     token {
         id
@@ -41,7 +41,7 @@ hatchConfig(id: "0x2CA2...") {
 
 This query fetches all the contributors who have contributed more than 45000 contribution tokens. It returns the contributor data and all his contributions.
 
-```
+```graphql
 contributors(where: { totalValue_gt: "45000000000000000000000" }) {
     id
     totalValue
@@ -56,9 +56,9 @@ contributors(where: { totalValue_gt: "45000000000000000000000" }) {
 
 ### Querying Contributions Data
 
-This query fetches the first 10 biggest contributions
+This query fetches the first 10 biggest contributions.
 
-```
+```graphql
 contributions(first: 10, orderBy: value, orderDirection: desc) {
     id
     contributor {

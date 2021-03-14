@@ -44,7 +44,7 @@ Name | Type | Description
 
 **Returns:** The Hatch instance that interacts both with the contract and the subgraph.
 
-Defined in: [Hatch.ts:20](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L20)
+Defined in: [Hatch.ts:20](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L20)
 
 ## Properties
 
@@ -52,7 +52,7 @@ Defined in: [Hatch.ts:20](https://github.com/TECommons/hatch-connector/blob/a656
 
 • `Private` **#app**: App
 
-Defined in: [Hatch.ts:19](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L19)
+Defined in: [Hatch.ts:17](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L17)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • `Private` **#connector**: IHatchConnector
 
-Defined in: [Hatch.ts:20](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L20)
+Defined in: [Hatch.ts:18](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L18)
 
 ## Methods
 
@@ -82,7 +82,7 @@ A promise that resolves to a ForwardingPath
 object which contains all the transactions needed to be signed in order to close
 the hatch.
 
-Defined in: [Hatch.ts:202](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L202)
+Defined in: [Hatch.ts:199](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L199)
 
 ___
 
@@ -104,7 +104,7 @@ Name | Type | Description |
 A promise that resolves to a ForwardingPath object
 which contains all the transactions needed to be signed in order to contribute to the hatch.
 
-Defined in: [Hatch.ts:214](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L214)
+Defined in: [Hatch.ts:211](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L211)
 
 ___
 
@@ -129,7 +129,7 @@ Name | Type | Description
 
 A promise that resolves to an array of Contribution objects.
 
-Defined in: [Hatch.ts:138](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L138)
+Defined in: [Hatch.ts:135](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L135)
 
 ___
 
@@ -149,7 +149,7 @@ Name | Type | Default value | Description |
 
 A promise that resolves to the searched contributor.
 
-Defined in: [Hatch.ts:109](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L109)
+Defined in: [Hatch.ts:106](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L106)
 
 ___
 
@@ -173,7 +173,7 @@ Name | Type | Description
 
 A promise which resolves to an array of Contributor objects.
 
-Defined in: [Hatch.ts:67](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L67)
+Defined in: [Hatch.ts:64](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L64)
 
 ___
 
@@ -185,7 +185,7 @@ Disconnect the connector from the subgraph.
 
 **Returns:** *Promise*<void\>
 
-Defined in: [Hatch.ts:30](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L30)
+Defined in: [Hatch.ts:28](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L28)
 
 ___
 
@@ -201,7 +201,7 @@ the hatch and the hatch oracle.
 A promise that resolves to a GeneralConfig
 entity object.
 
-Defined in: [Hatch.ts:40](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L40)
+Defined in: [Hatch.ts:38](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L38)
 
 ___
 
@@ -223,7 +223,7 @@ Name | Type | Description |
 A promise that resolves to the allowed
 contribution token amount.
 
-Defined in: [Hatch.ts:276](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L276)
+Defined in: [Hatch.ts:273](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L273)
 
 ___
 
@@ -250,7 +250,7 @@ Name | Type | Description
 A function handler used to cancel the subscription
 at any time.
 
-Defined in: [Hatch.ts:163](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L163)
+Defined in: [Hatch.ts:160](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L160)
 
 ___
 
@@ -272,7 +272,7 @@ Name | Type | Default value | Description |
 A function handler used to cancel the subscription
 at any time.
 
-Defined in: [Hatch.ts:123](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L123)
+Defined in: [Hatch.ts:120](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L120)
 
 ___
 
@@ -298,7 +298,7 @@ Name | Type | Description
 A function handler used to cancel the
 subscription at any time.
 
-Defined in: [Hatch.ts:90](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L90)
+Defined in: [Hatch.ts:87](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L87)
 
 ___
 
@@ -320,7 +320,7 @@ Name | Type | Description |
 A function handler use to cancel the
 subscription at any time.
 
-Defined in: [Hatch.ts:52](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L52)
+Defined in: [Hatch.ts:50](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L50)
 
 ___
 
@@ -342,7 +342,7 @@ A promise that resolves to a ForwardingPath
 object which contains all the transactions needed to be signed in order to open
 the hatch.
 
-Defined in: [Hatch.ts:191](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L191)
+Defined in: [Hatch.ts:188](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L188)
 
 ___
 
@@ -365,7 +365,7 @@ A promise that resolves to a ForwardingPath
 object which contains all the transactions needed to be signed in order to get
 a refund from the hatch.
 
-Defined in: [Hatch.ts:248](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L248)
+Defined in: [Hatch.ts:245](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L245)
 
 ___
 
@@ -386,4 +386,4 @@ Name | Type | Description |
 A promise that resolves to the holder
 token balance.
 
-Defined in: [Hatch.ts:263](https://github.com/TECommons/hatch-connector/blob/a656ae6/src/models/Hatch.ts#L263)
+Defined in: [Hatch.ts:260](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L260)

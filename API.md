@@ -110,7 +110,7 @@ ___
 
 ### contributions
 
-▸ **contributions**(`__namedParameters?`: { `contributor`:  ; `first`:  ; `orderBy`:  ; `orderDirection`:  ; `skip`:   }): *Promise*<Contribution[]\>
+▸ **contributions**(`__namedParameters?`: { `contributor` ; `first` ; `orderBy` ; `orderDirection` ; `skip`  }): *Promise*<Contribution[]\>
 
 Fetch multiple contributions.
 
@@ -155,7 +155,7 @@ ___
 
 ### contributors
 
-▸ **contributors**(`__namedParameters?`: { `first`:  ; `orderBy`:  ; `orderDirection`:  ; `skip`:   }): *Promise*<Contributor[]\>
+▸ **contributors**(`__namedParameters?`: { `first` ; `orderBy` ; `orderDirection` ; `skip`  }): *Promise*<Contributor[]\>
 
 Fetch multiple contributors.
 
@@ -229,7 +229,7 @@ ___
 
 ### onContributions
 
-▸ **onContributions**(`__namedParameters?`: { `contributor`:  ; `first`:  ; `orderBy`:  ; `orderDirection`:  ; `skip`:   }, `callback`: *SubscriptionCallback*<Contribution[]\>): *SubscriptionHandler*
+▸ **onContributions**(`__namedParameters?`: { `contributor` ; `first` ; `orderBy` ; `orderDirection` ; `skip`  }, `callback`: *SubscriptionCallback*<Contribution[]\>): *SubscriptionHandler*
 
 Subscribe to multiple contributions data updates.
 
@@ -278,7 +278,7 @@ ___
 
 ### onContributors
 
-▸ **onContributors**(`__namedParameters?`: { `first`:  ; `orderBy`:  ; `orderDirection`:  ; `skip`:   }, `callback`: *SubscriptionCallback*<Contributor[]\>): *SubscriptionHandler*
+▸ **onContributors**(`__namedParameters?`: { `first` ; `orderBy` ; `orderDirection` ; `skip`  }, `callback`: *SubscriptionCallback*<Contributor[]\>): *SubscriptionHandler*
 
 Subscribe to multiple contributors data updates.
 

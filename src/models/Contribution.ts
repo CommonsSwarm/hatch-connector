@@ -1,6 +1,6 @@
 import { ContributionData } from '../types'
 
-export default class Contribution {
+class Contribution {
   readonly id: string
   readonly contributorId: string
   readonly value: string
@@ -17,3 +17,5 @@ export default class Contribution {
     this.createdAt = data.createdAt
   }
 }
+
+export default Contribution

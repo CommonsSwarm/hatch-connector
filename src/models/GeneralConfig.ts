@@ -2,7 +2,7 @@ import { GeneralConfigData } from '../types'
 import HatchConfig from './HatchConfig'
 import HatchOracleConfig from './HatchOracleConfig'
 
-export default class GeneralConfig {
+class GeneralConfig {
   readonly id: string
   readonly hatchConfig: HatchConfig
   readonly hatchOracleConfig: HatchOracleConfig
@@ -13,3 +13,5 @@ export default class GeneralConfig {
     this.hatchOracleConfig = data.hatchOracle
   }
 }
+
+export default GeneralConfig

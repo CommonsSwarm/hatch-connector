@@ -1,7 +1,7 @@
 import { HatchOracleConfigData } from '../types'
 import Token from './Token'
 
-export default class HatchOracleConfig {
+class HatchOracleConfig {
   readonly id: string
   readonly scoreToken: Token
   readonly ratio: number
@@ -12,3 +12,5 @@ export default class HatchOracleConfig {
     this.ratio = data.ratio
   }
 }
+
+export default HatchOracleConfig

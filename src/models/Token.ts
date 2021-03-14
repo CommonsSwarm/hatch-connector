@@ -1,6 +1,6 @@
 import { TokenData } from '../types'
 
-export default class Token {
+class Token {
   readonly id: string
   readonly name: string
   readonly symbol: string
@@ -13,3 +13,5 @@ export default class Token {
     this.decimals = data.decimals
   }
 }
+
+export default Token

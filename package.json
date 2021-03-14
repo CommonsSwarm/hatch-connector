@@ -36,6 +36,8 @@
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.0",
+    "typedoc": "^0.20.31",
+    "typedoc-plugin-markdown": "^3.6.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {

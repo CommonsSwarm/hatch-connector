@@ -1,7 +1,7 @@
 import { HatchConfigData } from '../types'
 import Token from './Token'
 
-export default class HatchConfig {
+class HatchConfig {
   readonly id: string
   readonly token: Token
   readonly reserve: string
@@ -42,3 +42,5 @@ export default class HatchConfig {
     this.state = data.state
   }
 }
+
+export default HatchConfig

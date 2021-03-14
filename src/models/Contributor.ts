@@ -1,6 +1,6 @@
 import { ContributorData } from '../types'
 
-export default class Contributor {
+class Contributor {
   readonly id: string
   readonly account: string
   readonly totalAmount: string
@@ -13,3 +13,5 @@ export default class Contributor {
     this.totalValue = data.totalValue
   }
 }
+
+export default Contributor

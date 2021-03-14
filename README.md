@@ -1,6 +1,6 @@
 # Hatch Connector
 
-Connector for the Hatch frontend implemented using [Aragon Connect](https://aragon.org/connect). It connects to a hatch subgraph created using [The Graph](https://thegraph.com/) indexing protocol. 
+Connector for the Hatch frontend implemented using [Aragon Connect](https://aragon.org/connect). It connects to a [hatch subgraph](https://github.com/TECommons/hatch-connector/tree/main/subgraph) created using [The Graph](https://thegraph.com/) indexing protocol.
 
 The hatch subgraph collects, store and index hatch-related data from the blockchain and serves it through a [GraphQL](https://graphql.org/) endpoint. The connector is an abstraction over this subgraph which offers an API that can be use by any client to fetch data.
 
@@ -14,23 +14,23 @@ See [API.md](./API.md)
 
 1.  Add the following dependencies to your project:
 
-    ```
+    ```sh
     yarn add @aragon/connect
     yarn add @tecommons/connect-hatch
     ```
 
 2.  Import them:
 
-    ```
+    ```js
     import connect from '@aragon/connect'
     import connectHatch from '@tecommons/connect-hatch'
     ```
 
 3.  Set up the connector:
 
-    ```
-    const org = await connect(<daoAddress | daoEns>, 'thegraph', { network: <chainId> })
-
+    ```js
+    const org = await connect(DAO_ADDRESS_OR_ENS, 'thegraph', { network: CHAIN_ID })
+    
     const hatchApp = await org.app('marketplace-hatch')
 
     const hatchConnector = await connectHatch(hatchApp)
@@ -41,21 +41,21 @@ See [API.md](./API.md)
 
 1.  Add the following dependencies to your project:
 
-    ```
+    ```sh
     yarn add @aragon/connect-react
     yarn add @tecommons/connect-hatch
     ```
 
 2.  Wrap your main `<App/>` component in the `<Connect/>` component provided by the `@aragon/connect-react` library.
 
-    ```
+    ```jsx
     import { Connect } from '@aragon/connect-react'
 
     <Connect
-        location={<daoAddress | daoEns>}
+        location={DAO_ADDRESS_OR_ENS}
         connector="thegraph"
         options={{
-        network: <chainId>,
+        network: CHAIN_ID,
         }}
     >
         <App />
@@ -64,7 +64,7 @@ See [API.md](./API.md)
 
 3.  Set up the connector:
 
-    ```
+    ```js
     import {
         useApp,
     } from '@aragon/connect-react'
@@ -103,7 +103,7 @@ See [API.md](./API.md)
 
 ### Data fetch example
 
-```
+```js
 const contributors = await hatchConnector.contributors({
     first: 100,
     skip: 50,
@@ -114,7 +114,7 @@ const contributors = await hatchConnector.contributors({
 
 ### Data updates subscription example
 
-```
+```js
 const handler = hatchConnector.onContributors(
     {
         first: 20,
@@ -134,7 +134,7 @@ handler.unsubscribe()
 
 ### Contract call example
 
-```
+```js
 const signer = ethers.getSigner()
 
 const intent = await hatchConnector.open()

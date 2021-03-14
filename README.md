@@ -71,7 +71,7 @@ See [API.md](./API.md)
 
     function App() {
         const [hatchConnector, setHatchConnector] = useState(null)
-        const [hatchApp] = useApp('marketplace-hatch)
+        const [hatchApp] = useApp('marketplace-hatch')
 
         useEffect(() => {
             if (!hatchApp) {
@@ -103,23 +103,27 @@ See [API.md](./API.md)
 
 ### Data fetch example
 
+Below there is an example of how to fetch 100 contributors, sorted in ascending order by their total contribution amount and skipping the first 50.
+
 ```js
 const contributors = await hatchConnector.contributors({
     first: 100,
     skip: 50,
-    orderBy: 'value',
+    orderBy: 'totalValue',
     orderDirection: 'asc',
 })
 ```
 
 ### Data updates subscription example
 
+This is an example of how to set a contributors data subscription of the first 20 contributors, sorted in descending order by their total hatch token amount and skipping the first 5.
+
 ```js
 const handler = hatchConnector.onContributors(
     {
         first: 20,
         skip: 5,
-        orderBy: 'amount',
+        orderBy: 'totalAmount',
         orderDirection: 'desc',
     },
     contributors => {
@@ -133,6 +137,8 @@ handler.unsubscribe()
 ```
 
 ### Contract call example
+
+Below there is an example of how to call the contract using the connector to open the hatch.
 
 ```js
 const signer = ethers.getSigner()

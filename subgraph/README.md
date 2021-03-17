@@ -6,7 +6,7 @@ Currently there are Subgraphs deployed on the [xdai](https://thegraph.com/explor
 
 ## Queries
 
-Below there are a few ways to show how to query the Subgraph for data.  The queries show most of the information that is queryable, but there are many other filtering options that can be used, just check out the [querying api](https://thegraph.com/docs/graphql-api). These queries can be used locally or in The Graph Explorer playground.
+Below there are a few ways to show how to query the Subgraph for data. The queries show most of the information that can be queried. But there are also many filter options that can be used. Just check out the [querying api](https://thegraph.com/docs/graphql-api). These queries can be used locally or in The Graph Explorer playground.
 
 ### Querying the Hatch data
 
@@ -74,4 +74,3 @@ contributions(first: 10, orderBy: value, orderDirection: desc) {
 
 
 For more information see The Graph [docs](https://thegraph.com/docs/) and the Aragon Connect [docs](https://connect.aragon.org/advanced/app-subgraphs).
-

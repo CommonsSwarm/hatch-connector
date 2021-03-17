@@ -44,7 +44,7 @@ class Hatch {
    * of the hatch and the hatch oracle.
    * @param {SubscriptionCallback<GeneralConfig>} callback A callback function that
    * receives the updated general configuration data.
-   * @returns {SubscriptionHandler} A function handler use to cancel the
+   * @returns {SubscriptionHandler} A function handler used to cancel the
    * subscription at any time.
    */
   onGeneralConfig(

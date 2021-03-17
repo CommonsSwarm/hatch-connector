@@ -2,7 +2,7 @@
 
 Connector for the Hatch frontend implemented using [Aragon Connect](https://aragon.org/connect). It connects to a [hatch subgraph](https://github.com/TECommons/hatch-connector/tree/main/subgraph) created using [The Graph](https://thegraph.com/) indexing protocol.
 
-The hatch subgraph collects, store and index hatch-related data from the blockchain and serves it through a [GraphQL](https://graphql.org/) endpoint. The connector is an abstraction over this subgraph which offers an API that can be use by any client to fetch data.
+The hatch subgraph collects, stores and indexes hatch-related data from the blockchain and serves it through a [GraphQL](https://graphql.org/) endpoint. The connector is an abstraction over this subgraph which offers an API that can be use by any client to fetch data.
 
 ## API Reference
 

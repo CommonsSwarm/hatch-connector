@@ -8,8 +8,8 @@
 
 ### Properties
 
-- [#app](API.md##app)
-- [#connector](API.md##connector)
+- [#app](API.md#app)
+- [#connector](API.md#connector)
 
 ### Methods
 
@@ -317,7 +317,7 @@ Name | Type | Description |
 
 **Returns:** *SubscriptionHandler*
 
-A function handler use to cancel the
+A function handler used to cancel the
 subscription at any time.
 
 Defined in: [Hatch.ts:50](https://github.com/TECommons/hatch-connector/blob/main/src/models/Hatch.ts#L50)

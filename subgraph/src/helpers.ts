@@ -93,8 +93,7 @@ export function getHatchConfigEntity(
   if (!hatchConfig) {
     hatchConfig = new HatchConfigEntity(hatchConfigEntityId)
 
-    hatchConfig.appAddress = appAddress
-    hatchConfig.orgAddress = getOrgAddress(appAddress)
+    hatchConfig.generalConfig = getOrgAddress(appAddress).toHexString()
   }
 
   return hatchConfig
@@ -111,8 +110,7 @@ export function getHatchOracleConfigEntity(
   if (!hatchOracleConfig) {
     hatchOracleConfig = new HatchOracleConfigEntity(hatchOracleConfigEntityId)
 
-    hatchOracleConfig.appAddress = appAddress
-    hatchOracleConfig.orgAddress = getOrgAddress(appAddress)
+    hatchOracleConfig.generalConfig = getOrgAddress(appAddress).toHexString()
   }
 
   return hatchOracleConfig
@@ -131,8 +129,8 @@ export function getContributorEntity(
     contributorEntity.account = contributor
     contributorEntity.totalValue = BigInt.fromI32(0)
     contributorEntity.totalAmount = BigInt.fromI32(0)
-    contributorEntity.appAddress = appAddress
-    contributorEntity.orgAddress = getOrgAddress(appAddress)
+
+    contributorEntity.hatchConfig = appAddress.toHexString()
   }
 
   return contributorEntity
@@ -156,7 +154,7 @@ export function getContributionEntity(
     contribution.value = BigInt.fromI32(0)
     contribution.amount = BigInt.fromI32(0)
     contribution.vestedPurchaseId = vestedPurchaseId
-    contribution.appAddress = appAddress
+    contribution.hatchConfig = appAddress.toHexString()
   }
 
   return contribution

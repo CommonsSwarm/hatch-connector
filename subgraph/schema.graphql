@@ -1,11 +1,11 @@
 type GeneralConfig @entity {
-  id: ID!
+  id: ID!  # dao address
   hatch: HatchConfig
   hatchOracle: HatchOracleConfig
 }
 
 type HatchConfig @entity {
-  id: ID!
+  id: ID! # hatch address
   token: Token!
   reserve: Bytes!
   beneficiary: Bytes!
@@ -25,40 +25,38 @@ type HatchConfig @entity {
   state: HatchState
   stateInt: Int!
   PPM: BigInt!
-  appAddress: Bytes!
-  orgAddress: Bytes!
+  generalConfig: GeneralConfig!
 }
 
 type HatchOracleConfig @entity {
-  id: ID!
+  id: ID! # hatch oracle address
   scoreToken: Token!
   ratio: BigInt!
-  appAddress: Bytes!
-  orgAddress: Bytes!
+  generalConfig: GeneralConfig!
 }
 
 type Contributor @entity {
-  id: ID!
+  id: ID! # hatch address - contributor address
   account: Bytes!
   totalAmount: BigInt!
   totalValue: BigInt!
   contributions: [Contribution!] @derivedFrom(field: "contributor")
-  appAddress: Bytes!
-  orgAddress: Bytes! # Useful to get HatchOracleCnofig entity using the GeneralConfig entity
+  hatchConfig: HatchConfig
+  # orgAddress: Bytes! # Useful to get HatchOracleConfig entity using the GeneralConfig entity
 }
 
 type Contribution @entity {
-  id: ID!
+  id: ID! # hatch address - contributor address - vested purchase id
   contributor: Contributor!
   value: BigInt!
   amount: BigInt!
   vestedPurchaseId: BigInt!
   createdAt: BigInt!
-  appAddress: Bytes!
+  hatchConfig: HatchConfig
 }
 
 type Token @entity {
-  id: ID!
+  id: ID! # token address
   name: String!
   symbol: String!
   decimals: Int!

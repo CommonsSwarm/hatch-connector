@@ -22,11 +22,11 @@ export function parseContributors(result: QueryResult): Contributor[] {
   return datas.map((data: ContributorData) => new Contributor(data))
 }
 
-export function parseContributor(result: QueryResult): Contributor {
+export function parseContributor(result: QueryResult): Contributor | null {
   const contributor = result.data.contributor
 
   if (!contributor) {
-    throw new ErrorUnexpectedResult('Unable to parse contributor')
+    return null
   }
 
   const data: ContributorData = {

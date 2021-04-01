@@ -12,6 +12,7 @@ import HatchConnectorTheGraph, {
 
 type Config = {
   subgraphUrl?: string
+  staging?: boolean
   pollInterval?: number
 }
 
@@ -32,7 +33,7 @@ export default createAppConnector<Hatch, Config>(
 
     const subgraphUrl =
       config?.subgraphUrl ??
-      subgraphUrlFromChainId(network.chainId) ??
+      subgraphUrlFromChainId(network.chainId, config?.staging) ??
       undefined
 
     if (!subgraphUrl) {
@@ -48,8 +49,7 @@ export default createAppConnector<Hatch, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
-    const connectorTheGraph = new HatchConnectorTheGraph({
-      appAddress: app.address,
+    const connectorTheGraph = new HatchConnectorTheGraph(app.contract(), {
       pollInterval,
       subgraphUrl,
       verbose,

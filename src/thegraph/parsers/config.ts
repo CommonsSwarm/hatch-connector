@@ -1,15 +1,26 @@
-import { ErrorUnexpectedResult } from '../../errors'
 import { QueryResult } from '@aragon/connect-thegraph'
+import { Contract } from 'ethers'
 import { HatchConfigData } from '../../types'
 import GeneralConfig from '../../models/GeneralConfig'
+import { getStateByKey } from '../../hatch-states'
 
-export function parseGeneralConfig(result: QueryResult): GeneralConfig {
+export async function parseGeneralConfig(
+  result: QueryResult,
+  hatchContract: Contract
+): Promise<GeneralConfig | null> {
   const generalConfig = result.data.generalConfig
-  const hatchConfig = generalConfig.hatch
 
   if (!generalConfig) {
-    throw new ErrorUnexpectedResult('Unable to parse general config.')
+    return null
   }
+
+  const hatchConfig = generalConfig.hatch
+
+  /**
+   * Need to fetch hatch state calling contract directly because
+   * the state isn't updated after hatching period is over.
+   */
+  const updatedState = getStateByKey(await hatchContract.state())
 
   /**
    * BigInt values are always received as string. Need to convert some
@@ -17,6 +28,7 @@ export function parseGeneralConfig(result: QueryResult): GeneralConfig {
    */
   const hatchConfigData: HatchConfigData = {
     ...hatchConfig,
+    state: updatedState,
     openDate: Number(hatchConfig.openDate),
     period: Number(hatchConfig.period),
     vestingCliffPeriod: Number(hatchConfig.vestingCliffPeriod),

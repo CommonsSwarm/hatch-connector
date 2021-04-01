@@ -3,10 +3,14 @@
     "dataSources": {
       "Organizations": [
         {
-          "name": "tecHatch",
-          "address": "0xd022cf11617114c31fa80f73cc754e701d8c46b6",
-          "startBlock": "13634930"
-
+          "name": "hatch-template dao",
+          "address": "0xb12aA06F3D18E5b2402EF6a674d744A125374F73",
+          "startBlock": "15209452"
+        },
+        {
+          "name": "hatch-template dao 2",
+          "address": "0xD3F3D84A3Da7E32eB8D17d695C87c9eF03F08495",
+          "startBlock": "15213023"
         }
       ],
       "OrganizationFactories": [],

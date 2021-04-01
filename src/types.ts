@@ -3,18 +3,9 @@ import Contribution from './models/Contribution'
 import Contributor from './models/Contributor'
 import GeneralConfig from './models/GeneralConfig'
 
-/**
- * Pending
- * Funding
- * Refunding
- * GoalReached
- * Closed
- */
-export const HATCH_STATES = [0, 1, 2, 3, 4]
-
 export type SubscriptionCallback<T> = (error: Error | null, data?: T) => void
 
-export interface TokenData {
+export interface ERC20TokenData {
   id: string
   name: string
   symbol: string
@@ -23,16 +14,16 @@ export interface TokenData {
 
 export interface HatchOracleConfigData {
   id: string
-  scoreToken: TokenData
+  scoreToken: ERC20TokenData
   ratio: number
 }
 
 export interface HatchConfigData {
   id: string
-  token: TokenData
+  token: ERC20TokenData
   reserve: string
   beneficiary: string
-  contributionToken: TokenData
+  contributionToken: ERC20TokenData
   minGoal: string
   maxGoal: string
   period: number
@@ -46,6 +37,7 @@ export interface HatchConfigData {
   vestingCompleteDate: number
   totalRaised: string
   state: string
+  PPM: string
 }
 
 export interface GeneralConfigData {

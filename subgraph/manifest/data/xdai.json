@@ -3,26 +3,6 @@
   "dataSources": {
     "Organizations": [
       {
-        "name": "tecommons",
-        "address": "0x83b60d521da97431bb4464fd16ea1bc6ad8ad02e",
-        "startBlock": "13656239"
-      },
-      {
-        "name": "new dao",
-        "address": "0x96705fc7c4742e5b97719f9870efaa5b041127e9",
-        "startBlock": "14112409"
-      },
-      {
-        "name": "dao without ih",
-        "address": "0x016e745dfe569aa3a77b5cfbb15f04901fe132b2",
-        "startBlock": "13656239"
-      },
-      {
-        "name": "deployment with ih token",
-        "address": "0x050a0f7c5b1c5c003aba77ef1f8d065749e5a358",
-        "startBlock": "14729307"
-      },
-      {
         "name": "6-03 tDai Hatch",
         "address": "0xc818827a8c978ff9a2a823415fd1f09c85e464b7",
         "startBlock": "14867956"
@@ -31,6 +11,16 @@
         "name": "7-03 tDai Hatch",
         "address": "0xc021e4b518ba03d60b712364190c626d6dbadebd",
         "startBlock": "14894422"
+      },
+      {
+        "name": "hatch-template dao",
+        "address": "0xb12aA06F3D18E5b2402EF6a674d744A125374F73",
+        "startBlock": "15209452"
+      },
+      {
+        "name": "hatch-template dao 2",
+        "address": "0xD3F3D84A3Da7E32eB8D17d695C87c9eF03F08495",
+        "startBlock": "15213023"
       }
     ],
     "OrganizationFactories": [],

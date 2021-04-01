@@ -1,12 +1,12 @@
-import { TokenData } from '../types'
+import { ERC20TokenData } from '../types'
 
-class Token {
+class ERC20Token {
   readonly id: string
   readonly name: string
   readonly symbol: string
   readonly decimals: number
 
-  constructor(data: TokenData) {
+  constructor(data: ERC20TokenData) {
     this.id = data.id
     this.name = data.name
     this.symbol = data.symbol
@@ -14,4 +14,4 @@ class Token {
   }
 }
 
-export default Token
+export default ERC20Token

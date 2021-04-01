@@ -1,17 +1,19 @@
-import { BigNumber } from 'ethers'
 import {
   Address,
   App,
   SubscriptionHandler,
   ForwardingPath,
 } from '@aragon/connect-core'
+import { BigNumber } from 'ethers'
 import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from './Contribution'
 import Contributor from './Contributor'
 import GeneralConfig from './GeneralConfig'
-import { buildContributorId } from '../helpers'
-
-const HATCH_ORACLE_APP = 'hatch-oracle'
+import {
+  buildContributorId,
+  HATCH_ORACLE_APP,
+  IMPACT_HOURS_APP,
+} from '../helpers'
 
 class Hatch {
   #app: App
@@ -252,29 +254,53 @@ class Hatch {
   }
 
   /**
+   * Return hatch state.
+   * @returns {string} Hatch state index
+   */
+  async state(): Promise<string> {
+    return this.#app.contract().state()
+  }
+
+  /**
    * Fetch a holder's contribution token balance.
-   * @param {Address} entity A string that contains the token holder address.
+   * @param {Address} account The account address.
    * @returns {Promise<BigNumber>} A promise that resolves to the holder
    * token balance.
    */
-  async tokenBalance(entity: Address): Promise<BigNumber> {
+  async contributionTokenBalance(account: Address): Promise<BigNumber> {
     const hatch = this.#app.contract()
 
-    return hatch.balanceOf(entity)
+    return hatch.balanceOf(account)
   }
 
   /**
    * Return the allowed amount of contribution tokens someone can contribute to the
    * hatch based on how much score tokens he has.
-   * @param {Address} contributor A string which contains the address of the contributor.
+   * @param {Address} account The account address.
    * @returns {Promise<BigNumber>} A promise that resolves to the allowed
    * contribution token amount.
    */
-  async getAllowedContributionAmount(contributor: Address): Promise<BigNumber> {
-    const hatchOracleApp = await this.#app.organization.app(HATCH_ORACLE_APP)
-    const hatchOracle = hatchOracleApp.contract()
+  async allowedContributionAmount(account: Address): Promise<BigNumber> {
+    const hatchOracle = (
+      await this.#app.organization.app(HATCH_ORACLE_APP)
+    ).contract()
 
-    return hatchOracle.allowance(contributor)
+    return hatchOracle.allowance(account)
+  }
+
+  /**
+   * Fetch awarded hatch token amount based on the
+   * impact hours formula.
+   * @param {Address} account The account address.
+   * @returns {Promise<BigNumber>} A promise that resolves to the
+   * contributor's awarded tokens amount
+   */
+  async awardedTokenAmount(account: Address): Promise<BigNumber> {
+    const impactHours = (
+      await this.#app.organization.app(IMPACT_HOURS_APP)
+    ).contract()
+
+    return impactHours.reward(await this.#app.contract().totalRaised(), account)
   }
 }
 

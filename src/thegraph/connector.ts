@@ -1,4 +1,5 @@
 import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
+import { Contract } from 'ethers'
 import { SubscriptionHandler, Address } from '@aragon/connect-core'
 import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from '../models/Contribution'
@@ -14,14 +15,19 @@ import Contributor from '../models/Contributor'
 import { ErrorException } from '../errors'
 import GeneralConfig from 'src/models/GeneralConfig'
 
-export function subgraphUrlFromChainId(chainId: number): string | null {
+export function subgraphUrlFromChainId(
+  chainId: number,
+  staging = false
+): string | null {
+  const stagingFragment = staging ? '-staging' : ''
+
   // Rinkeby
   if (chainId === 4) {
-    return 'https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-rinkeby-staging'
+    return `https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-rinkeby${stagingFragment}`
   }
   // xDai
   if (chainId === 100) {
-    return 'https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-xdai'
+    return `https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-xdai${stagingFragment}`
   }
   return null
 }
@@ -30,27 +36,22 @@ export const APP_NAMES_WHITELIST = ['marketplace-hatch']
 
 type HatchConnectorTheGraphConfig = {
   pollInterval?: number
-  appAddress?: Address
   subgraphUrl?: string
   verbose?: boolean
 }
 
 export default class HatchConnectorTheGraph implements IHatchConnector {
   #gql: GraphQLWrapper
+  #appContract: Contract
 
-  constructor(config: HatchConnectorTheGraphConfig) {
+  constructor(appContract: Contract, config: HatchConnectorTheGraphConfig) {
     if (!config.subgraphUrl) {
       throw new Error(
         'HatchConnectorTheGraph requires subgraphUrl to be passed.'
       )
     }
 
-    if (!config.appAddress) {
-      throw new ErrorException(
-        'HatchConnectorTheGraph requires appAddress to be passed.'
-      )
-    }
-
+    this.#appContract = appContract
     this.#gql = new GraphQLWrapper(config.subgraphUrl, {
       pollInterval: config.pollInterval,
       verbose: config.verbose,
@@ -65,7 +66,8 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
     return this.#gql.performQueryWithParser(
       queries.GENERAL_CONFIG('query'),
       { id },
-      (result: QueryResult) => parseGeneralConfig(result)
+      async (result: QueryResult) =>
+        await parseGeneralConfig(result, this.#appContract)
     )
   }
 
@@ -77,7 +79,8 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
       queries.GENERAL_CONFIG('subscription'),
       { id },
       callback,
-      (result: QueryResult) => parseGeneralConfig(result)
+      async (result: QueryResult) =>
+        await parseGeneralConfig(result, this.#appContract)
     )
   }
 
@@ -115,7 +118,7 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
     return this.#gql.performQueryWithParser(
       queries.CONTRIBUTOR('query'),
       { id },
-      (result: QueryResult) => parseContributor(result)
+      (result: QueryResult) => parseContributions(result)
     )
   }
 

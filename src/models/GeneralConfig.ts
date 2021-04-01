@@ -9,8 +9,8 @@ class GeneralConfig {
 
   constructor(data: GeneralConfigData) {
     this.id = data.id
-    this.hatchConfig = data.hatch
-    this.hatchOracleConfig = data.hatchOracle
+    this.hatchConfig = new HatchConfig(data.hatch)
+    this.hatchOracleConfig = new HatchOracleConfig(data.hatchOracle)
   }
 }
 

@@ -1,12 +1,12 @@
 import { HatchConfigData } from '../types'
-import Token from './Token'
+import ERC20Token from './ERC20Token'
 
 class HatchConfig {
   readonly id: string
-  readonly token: Token
+  readonly token: ERC20Token
   readonly reserve: string
   readonly beneficiary: string
-  readonly contributionToken: Token
+  readonly contributionToken: ERC20Token
   readonly minGoal: string
   readonly maxGoal: string
   readonly period: number
@@ -20,13 +20,14 @@ class HatchConfig {
   readonly vestingCompleteDate: number
   readonly totalRaised: string
   readonly state: string
+  readonly PPM: string
 
   constructor(data: HatchConfigData) {
     this.id = data.id
-    this.token = new Token(data.token)
+    this.token = new ERC20Token(data.token)
     this.reserve = data.reserve
     this.beneficiary = data.beneficiary
-    this.contributionToken = new Token(data.contributionToken)
+    this.contributionToken = new ERC20Token(data.contributionToken)
     this.minGoal = data.minGoal
     this.maxGoal = data.maxGoal
     this.period = data.period
@@ -40,6 +41,7 @@ class HatchConfig {
     this.vestingCompleteDate = data.vestingCompleteDate
     this.totalRaised = data.totalRaised
     this.state = data.state
+    this.PPM = data.PPM
   }
 }
 

@@ -5,12 +5,27 @@
         {
           "name": "hatch-template dao",
           "address": "0xb12aA06F3D18E5b2402EF6a674d744A125374F73",
-          "startBlock": "15209452"
+          "startBlock": 15209452
         },
         {
           "name": "hatch-template dao 2",
           "address": "0xD3F3D84A3Da7E32eB8D17d695C87c9eF03F08495",
-          "startBlock": "15213023"
+          "startBlock": 15213023
+        },
+        {
+          "name": "hatch with xdai params (04/01)",
+          "address": "0x610f47Ece09Da2367f295950E5E4Aea581Bc7A23",
+          "startBlock": 15319590
+        },
+        {
+          "name": "hatch with localhost params (04/01)",
+          "address": "0x9c32aA3984E479E1b9702BdB2d8951Afb36254E5",
+          "startBlock": 15319380
+        },
+        {
+          "name": "hatch with xdai params 1 day hatch period (04/01)",
+          "address": "0x74472ddd12F051a35C8a91A594C865e2fF3588B8",
+          "startBlock": 15319651
         }
       ],
       "OrganizationFactories": [],

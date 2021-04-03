@@ -268,9 +268,7 @@ class Hatch {
    * token balance.
    */
   async contributionTokenBalance(account: Address): Promise<BigNumber> {
-    const hatch = this.#app.contract()
-
-    return hatch.balanceOf(account)
+    return this.#app.contract().balanceOf(account)
   }
 
   /**
@@ -299,8 +297,9 @@ class Hatch {
     const impactHours = (
       await this.#app.organization.app(IMPACT_HOURS_APP)
     ).contract()
+    const totalRaised = await this.#app.contract().totalRaised()
 
-    return impactHours.reward(await this.#app.contract().totalRaised(), account)
+    return impactHours.reward(totalRaised, account)
   }
 }
 

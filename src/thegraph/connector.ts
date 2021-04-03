@@ -1,6 +1,6 @@
 import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
 import { Contract } from 'ethers'
-import { SubscriptionHandler, Address } from '@aragon/connect-core'
+import { SubscriptionHandler } from '@aragon/connect-core'
 import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
@@ -12,7 +12,6 @@ import {
   parseGeneralConfig,
 } from './parsers'
 import Contributor from '../models/Contributor'
-import { ErrorException } from '../errors'
 import GeneralConfig from 'src/models/GeneralConfig'
 
 export function subgraphUrlFromChainId(

@@ -1,4 +1,4 @@
-import { QueryResult } from '@aragon/connect-thegraph'
+import { QueryResult } from '@1hive/connect-thegraph'
 import { Contract } from 'ethers'
 import { HatchConfigData } from '../../types'
 import GeneralConfig from '../../models/GeneralConfig'

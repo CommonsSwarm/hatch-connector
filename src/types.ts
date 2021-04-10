@@ -1,4 +1,4 @@
-import { SubscriptionHandler } from '@aragon/connect-core'
+import { SubscriptionHandler } from '@1hive/connect-core'
 import Contribution from './models/Contribution'
 import Contributor from './models/Contributor'
 import GeneralConfig from './models/GeneralConfig'

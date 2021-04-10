@@ -15,14 +15,14 @@ See [API.md](./API.md)
 1.  Add the following dependencies to your project:
 
     ```sh
-    yarn add @aragon/connect
+    yarn add @1hive/connect
     yarn add @tecommons/connect-hatch
     ```
 
 2.  Import them:
 
     ```js
-    import connect from '@aragon/connect'
+    import connect from '@1hive/connect'
     import connectHatch from '@tecommons/connect-hatch'
     ```
 
@@ -42,14 +42,14 @@ See [API.md](./API.md)
 1.  Add the following dependencies to your project:
 
     ```sh
-    yarn add @aragon/connect-react
+    yarn add @1hive/connect-react
     yarn add @tecommons/connect-hatch
     ```
 
-2.  Wrap your main `<App/>` component in the `<Connect/>` component provided by the `@aragon/connect-react` library.
+2.  Wrap your main `<App/>` component in the `<Connect/>` component provided by the `@1hive/connect-react` library.
 
     ```jsx
-    import { Connect } from '@aragon/connect-react'
+    import { Connect } from '@1hive/connect-react'
 
     <Connect
         location={DAO_ADDRESS_OR_ENS}
@@ -67,7 +67,7 @@ See [API.md](./API.md)
     ```js
     import {
         useApp,
-    } from '@aragon/connect-react'
+    } from '@1hive/connect-react'
 
     function App() {
         const [hatchConnector, setHatchConnector] = useState(null)

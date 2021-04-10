@@ -1,4 +1,4 @@
-import { createAppConnector } from '@aragon/connect-core'
+import { createAppConnector } from '@1hive/connect-core'
 import {
   ErrorInvalidApp,
   ErrorInvalidConnector,
@@ -49,7 +49,7 @@ export default createAppConnector<Hatch, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
-    const connectorTheGraph = new HatchConnectorTheGraph(app.contract(), {
+    const connectorTheGraph = new HatchConnectorTheGraph(app.ethersContract(), {
       pollInterval,
       subgraphUrl,
       verbose,

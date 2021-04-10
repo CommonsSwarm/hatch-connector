@@ -3,7 +3,7 @@ import {
   App,
   SubscriptionHandler,
   ForwardingPath,
-} from '@aragon/connect-core'
+} from '@1hive/connect-core'
 import { BigNumber } from 'ethers'
 import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from './Contribution'
@@ -258,7 +258,7 @@ class Hatch {
    * @returns {string} Hatch state index
    */
   async state(): Promise<string> {
-    return this.#app.contract().state()
+    return this.#app.ethersContract().state()
   }
 
   /**
@@ -268,7 +268,7 @@ class Hatch {
    * token balance.
    */
   async contributionTokenBalance(account: Address): Promise<BigNumber> {
-    return this.#app.contract().balanceOf(account)
+    return this.#app.ethersContract().balanceOf(account)
   }
 
   /**
@@ -281,7 +281,7 @@ class Hatch {
   async allowedContributionAmount(account: Address): Promise<BigNumber> {
     const hatchOracle = (
       await this.#app.organization.app(HATCH_ORACLE_APP)
-    ).contract()
+    ).ethersContract()
 
     return hatchOracle.allowance(account)
   }
@@ -296,8 +296,8 @@ class Hatch {
   async awardedTokenAmount(account: Address): Promise<BigNumber> {
     const impactHours = (
       await this.#app.organization.app(IMPACT_HOURS_APP)
-    ).contract()
-    const totalRaised = await this.#app.contract().totalRaised()
+    ).ethersContract()
+    const totalRaised = await this.#app.ethersContract().totalRaised()
 
     return impactHours.reward(totalRaised, account)
   }

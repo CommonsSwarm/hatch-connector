@@ -1,6 +1,6 @@
 {
   "name": "@tecommons/connect-hatch",
-  "version": "2.1.2",
+  "version": "2.1.4",
   "license": "GPL-3.0",
   "description": "Aragon connector to access and interact with the hatch contract",
   "author": "TECommons",
@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk ../../node_modules/jest/bin/jest.js --runInBand --watch",
     "clean": "rm -rf ./dist ./tsconfig.tsbuildinfo",
     "lint": "eslint --ext .ts ./src",
-    "publish-yalc-local-package": "yarn build && yalc push"
+    "publish:local": "yarn build && yalc push"
   },
   "files": [
     "dist"
@@ -41,8 +41,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@aragon/connect-core": "^0.8.0-alpha.6",
-    "@aragon/connect-thegraph": "^0.8.0-alpha.6",
+    "@1hive/connect-core": "^0.8.5",
+    "@1hive/connect-thegraph": "^0.8.5",
     "ethers": "^5.0.23",
     "graphql-tag": "^2.10.3"
   },

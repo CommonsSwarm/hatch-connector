@@ -1,4 +1,4 @@
-import { QueryResult } from '@aragon/connect-thegraph'
+import { QueryResult } from '@1hive/connect-thegraph'
 import { ErrorUnexpectedResult } from '../../errors'
 import Contributor from '../../models/Contributor'
 import { ContributorData } from '../../types'

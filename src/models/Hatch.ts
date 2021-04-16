@@ -13,7 +13,7 @@ import {
   buildContributorId,
   HATCH_ORACLE_APP,
   IMPACT_HOURS_APP,
-} from '../helpers'
+} from '../utils'
 
 class Hatch {
   #app: App

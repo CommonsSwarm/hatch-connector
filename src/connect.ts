@@ -49,7 +49,7 @@ export default createAppConnector<Hatch, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
-    const connectorTheGraph = new HatchConnectorTheGraph(app.ethersContract(), {
+    const connectorTheGraph = new HatchConnectorTheGraph({
       pollInterval,
       subgraphUrl,
       verbose,

@@ -4,7 +4,7 @@ import ERC20Token from './ERC20Token'
 class HatchOracleConfig {
   readonly id: string
   readonly scoreToken: ERC20Token
-  readonly ratio: number
+  readonly ratio: string
 
   constructor(data: HatchOracleConfigData) {
     this.id = data.id

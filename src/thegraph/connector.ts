@@ -41,16 +41,14 @@ type HatchConnectorTheGraphConfig = {
 
 export default class HatchConnectorTheGraph implements IHatchConnector {
   #gql: GraphQLWrapper
-  #appContract: Contract
 
-  constructor(appContract: Contract, config: HatchConnectorTheGraphConfig) {
+  constructor(config: HatchConnectorTheGraphConfig) {
     if (!config.subgraphUrl) {
       throw new Error(
         'HatchConnectorTheGraph requires subgraphUrl to be passed.'
       )
     }
 
-    this.#appContract = appContract
     this.#gql = new GraphQLWrapper(config.subgraphUrl, {
       pollInterval: config.pollInterval,
       verbose: config.verbose,
@@ -65,8 +63,7 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
     return this.#gql.performQueryWithParser(
       queries.GENERAL_CONFIG('query'),
       { id },
-      async (result: QueryResult) =>
-        await parseGeneralConfig(result, this.#appContract)
+      async (result: QueryResult) => await parseGeneralConfig(result)
     )
   }
 
@@ -78,8 +75,7 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
       queries.GENERAL_CONFIG('subscription'),
       { id },
       callback,
-      async (result: QueryResult) =>
-        await parseGeneralConfig(result, this.#appContract)
+      async (result: QueryResult) => await parseGeneralConfig(result)
     )
   }
 

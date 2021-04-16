@@ -15,7 +15,7 @@ export interface ERC20TokenData {
 export interface HatchOracleConfigData {
   id: string
   scoreToken: ERC20TokenData
-  ratio: number
+  ratio: string
 }
 
 export interface HatchConfigData {
@@ -32,7 +32,7 @@ export interface HatchConfigData {
   vestingCompletePeriod: number
   supplyOfferedPct: string
   fundingForBeneficiaryPct: string
-  openDate: string
+  openDate: number
   vestingCliffDate: number
   vestingCompleteDate: number
   totalRaised: string

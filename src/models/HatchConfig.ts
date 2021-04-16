@@ -1,5 +1,6 @@
 import { HatchConfigData } from '../types'
 import ERC20Token from './ERC20Token'
+import { calculateHatchState } from '../utils'
 
 class HatchConfig {
   readonly id: string
@@ -15,7 +16,7 @@ class HatchConfig {
   readonly vestingCompletePeriod: number
   readonly supplyOfferedPct: string
   readonly fundingForBeneficiaryPct: string
-  readonly openDate: string
+  readonly openDate: number
   readonly vestingCliffDate: number
   readonly vestingCompleteDate: number
   readonly totalRaised: string
@@ -42,6 +43,9 @@ class HatchConfig {
     this.totalRaised = data.totalRaised
     this.state = data.state
     this.PPM = data.PPM
+
+    const state = calculateHatchState(this, data.state)
+    this.state = state.toUpperCase()
   }
 }
 

@@ -1,8 +1,8 @@
 # Do not edit subgraph.yaml, this is a generated file.
 # Instead, edit subgraph.template.yaml and run `yarn manifest-<network>-[staging]`
 specVersion: 0.0.2
-description: Subgraph made by TECommons for the Aragon hatch contracts.
-repository: https://github.com/TECommons/hatch-connector
+description: Subgraph made by Commons Swarm for the hatch contracts.
+repository: https://github.com/CommonsSwarm/hatch-connector/tree/main/subgraph
 schema:
   file: ./schema.graphql
 dataSources:

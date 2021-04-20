@@ -26,6 +26,11 @@
           "name": "hatch with xdai params 1 day hatch period (04/01)",
           "address": "0x74472ddd12F051a35C8a91A594C865e2fF3588B8",
           "startBlock": 15319651
+        },
+        {
+          "name": "hatch to test redemption (04/20)",
+          "address": "0x759Bacd4eC25AA520AC61b19e5e21E4a0E5df6b3",
+          "startBlock": 15627525
         }
       ],
       "OrganizationFactories": [],

@@ -20,13 +20,9 @@ export function subgraphUrlFromChainId(
 ): string | null {
   const stagingFragment = staging ? '-staging' : ''
 
-  // Rinkeby
-  if (chainId === 4) {
-    return `https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-rinkeby${stagingFragment}`
-  }
   // xDai
   if (chainId === 100) {
-    return `https://api.thegraph.com/subgraphs/name/tecommons/aragon-hatch-xdai${stagingFragment}`
+    return `https://api.thegraph.com/subgraphs/name/commonsswarm/aragon-hatch-xdai${stagingFragment}`
   }
   return null
 }

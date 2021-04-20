@@ -1,6 +1,6 @@
 # Hatch Connector
 
-Connector for the Hatch frontend implemented using [Aragon Connect](https://aragon.org/connect). It connects to a [hatch subgraph](https://github.com/TECommons/hatch-connector/tree/main/subgraph) created using [The Graph](https://thegraph.com/) indexing protocol.
+Connector for the Hatch frontend implemented using [Aragon Connect](https://aragon.org/connect). It connects to a [hatch subgraph](https://github.com/CommonsSwarm/hatch-connector/tree/main/subgraph) created using [The Graph](https://thegraph.com/) indexing protocol.
 
 The hatch subgraph collects, stores and indexes hatch-related data from the blockchain and serves it through a [GraphQL](https://graphql.org/) endpoint. The connector is an abstraction over this subgraph which offers an API that can be use by any client to fetch data.
 
@@ -16,14 +16,14 @@ See [API.md](./API.md)
 
     ```sh
     yarn add @1hive/connect
-    yarn add @tecommons/connect-hatch
+    yarn add @commonsswarm/connect-hatch
     ```
 
 2.  Import them:
 
     ```js
     import connect from '@1hive/connect'
-    import connectHatch from '@tecommons/connect-hatch'
+    import connectHatch from '@commonsswarm/connect-hatch'
     ```
 
 3.  Set up the connector:
@@ -43,7 +43,7 @@ See [API.md](./API.md)
 
     ```sh
     yarn add @1hive/connect-react
-    yarn add @tecommons/connect-hatch
+    yarn add @commonsswarm/connect-hatch
     ```
 
 2.  Wrap your main `<App/>` component in the `<Connect/>` component provided by the `@1hive/connect-react` library.
@@ -159,6 +159,6 @@ For more information check out the Aragon Connect [docs](https://connect.aragon.
 
 We welcome community contributions!
 
-Please check out our open [Issues](https://github.com/TECommons/hatch-connector/issues) to get started.
+Please check out our open [Issues](https://github.com/CommonsSwarm/hatch-connector/issues) to get started.
 
 

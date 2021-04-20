@@ -1,8 +1,8 @@
 # Hatch Subgraph
 
-Subgraph that indexes data from the [Hatch app](https://github.com/TECommons/hatch-app). It tracks any hatch, token and hatch oracle configuration data as well as any contributor and their contributions.
+Subgraph that indexes data from the [Hatch app](https://github.com/CommonsSwarm/hatch-app). It tracks any hatch, token and hatch oracle configuration data as well as any contributor and their contributions.
 
-Currently there are Subgraphs deployed on the [xdai](https://thegraph.com/explorer/subgraph/tecommons/aragon-hatch-xdai) and [rinkeby](https://thegraph.com/explorer/subgraph/tecommons/aragon-hatch-rinkeby-staging) networks.
+Currently there is a subgraph deployed on the [xdai](https://thegraph.com/explorer/subgraph/commonsswarm/aragon-hatch-xdai-staging) network.
 
 ## Queries
 

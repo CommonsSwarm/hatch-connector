@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@commonsswarm/connect-hatch": {
+      "signature": "55c67d2cd43470c2d3b73bd749e9b206",
+      "file": true,
+      "replaced": "^0.0.1"
+    }
+  }
+}

@@ -7,6 +7,7 @@ import {
   STATE_FUNDING,
   STATE_REFUNDING,
 } from '../hatch-states'
+
 export const IMPACT_HOURS_APP = 'impact-hours-beta'
 export const HATCH_APP = 'marketplace-hatch'
 export const HATCH_ORACLE_APP = 'hatch-oracle'
@@ -16,12 +17,17 @@ export function calculateHatchState(
   subgraphState: string
 ): string {
   const now = Date.now() / 1000
+  const totalRaised = BigNumber.from(hatch.totalRaised)
+  const maxGoal = BigNumber.from(hatch.maxGoal)
+  const minGoal = BigNumber.from(hatch.minGoal)
+  const openDate = Number(hatch.openDate)
+  const period = Number(hatch.period)
 
-  if (hatch.openDate === 0 || hatch.openDate > now) {
+  if (openDate === 0 || openDate > now) {
     return STATE_PENDING
   }
 
-  if (hatch.totalRaised >= hatch.maxGoal) {
+  if (totalRaised.gte(maxGoal)) {
     if (subgraphState === STATE_CLOSED) {
       return STATE_CLOSED
     } else {
@@ -29,9 +35,9 @@ export function calculateHatchState(
     }
   }
 
-  if (now - hatch.openDate < hatch.period) {
+  if (now - openDate < period) {
     return STATE_FUNDING
-  } else if (BigNumber.from(hatch.totalRaised).gte(hatch.minGoal)) {
+  } else if (totalRaised.gte(minGoal)) {
     if (subgraphState === STATE_CLOSED) {
       return STATE_CLOSED
     } else {

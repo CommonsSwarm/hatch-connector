@@ -4,7 +4,7 @@ class ERC20Token {
   readonly id: string
   readonly name: string
   readonly symbol: string
-  readonly decimals: number
+  readonly decimals: string
 
   constructor(data: ERC20TokenData) {
     this.id = data.id

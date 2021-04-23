@@ -1,5 +1,4 @@
 import { GraphQLWrapper, QueryResult } from '@1hive/connect-thegraph'
-import { Contract } from 'ethers'
 import { SubscriptionHandler } from '@1hive/connect-core'
 import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from '../models/Contribution'

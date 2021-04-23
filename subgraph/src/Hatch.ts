@@ -11,16 +11,7 @@ import {
   getContributorEntity,
   getHatchState,
 } from './helpers'
-import {
-  STATE_CLOSED,
-  STATE_CLOSED_NUM,
-  STATE_GOAL_REACHED,
-  STATE_GOAL_REACHED_NUM,
-  getIntStateByKey,
-  getStateByKey,
-  STATE_REFUNDING,
-  STATE_REFUNDING_NUM,
-} from './hatch-states'
+import { getIntStateByKey, getStateByKey } from './hatch-states'
 
 export function handleSetOpenDate(event: SetOpenDateEvent): void {
   const config = getHatchConfigEntity(event.address)
@@ -31,6 +22,7 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
   ])
 
   config.openDate = event.params.date
+
   config.state = getStateByKey(stateKey)
   config.stateInt = getIntStateByKey(stateKey)
 
@@ -39,11 +31,12 @@ export function handleSetOpenDate(event: SetOpenDateEvent): void {
 
 export function handleClose(event: CloseEvent): void {
   const config = getHatchConfigEntity(event.address)
+  const stateKey = getHatchState(event.address)
 
   log.debug('Closed event received.', [])
 
-  config.state = STATE_CLOSED
-  config.stateInt = STATE_CLOSED_NUM
+  config.state = getStateByKey(stateKey)
+  config.stateInt = getIntStateByKey(stateKey)
 
   config.save()
 }
@@ -57,15 +50,14 @@ export function handleContribute(event: ContributeEvent): void {
   )
   const contributor = getContributorEntity(event.address, params.contributor)
   const config = getHatchConfigEntity(event.address)
+  const stateKey = getHatchState(event.address)
 
   contributor.totalValue = contributor.totalValue.plus(params.value)
   contributor.totalAmount = contributor.totalAmount.plus(params.amount)
-  config.totalRaised = config.totalRaised.plus(params.value)
 
-  if (config.totalRaised.ge(config.minGoal)) {
-    config.state = STATE_GOAL_REACHED
-    config.stateInt = STATE_GOAL_REACHED_NUM
-  }
+  config.totalRaised = config.totalRaised.plus(params.value)
+  config.stateInt = getIntStateByKey(stateKey)
+  config.state = getStateByKey(stateKey)
 
   contribution.value = params.value
   contribution.amount = params.amount
@@ -95,9 +87,10 @@ export function handleRefund(event: RefundEvent): void {
     params.contributor,
     params.vestedPurchaseId
   )
+  const stateKey = getHatchState(event.address)
 
-  config.state = STATE_REFUNDING
-  config.stateInt = STATE_REFUNDING_NUM
+  config.state = getStateByKey(stateKey)
+  config.stateInt = getIntStateByKey(stateKey)
   contributor.totalValue = contributor.totalValue.minus(params.value)
   contributor.totalAmount = contributor.totalAmount.minus(params.amount)
 

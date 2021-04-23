@@ -10,15 +10,15 @@ class HatchConfig {
   readonly contributionToken: ERC20Token
   readonly minGoal: string
   readonly maxGoal: string
-  readonly period: number
+  readonly period: string
   readonly exchangeRate: string
-  readonly vestingCliffPeriod: number
-  readonly vestingCompletePeriod: number
+  readonly vestingCliffPeriod: string
+  readonly vestingCompletePeriod: string
   readonly supplyOfferedPct: string
   readonly fundingForBeneficiaryPct: string
-  readonly openDate: number
-  readonly vestingCliffDate: number
-  readonly vestingCompleteDate: number
+  readonly openDate: string
+  readonly vestingCliffDate: string
+  readonly vestingCompleteDate: string
   readonly totalRaised: string
   readonly state: string
   readonly PPM: string

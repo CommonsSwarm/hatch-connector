@@ -9,7 +9,7 @@ export interface ERC20TokenData {
   id: string
   name: string
   symbol: string
-  decimals: number
+  decimals: string
 }
 
 export interface HatchOracleConfigData {
@@ -26,15 +26,15 @@ export interface HatchConfigData {
   contributionToken: ERC20TokenData
   minGoal: string
   maxGoal: string
-  period: number
+  period: string
   exchangeRate: string
-  vestingCliffPeriod: number
-  vestingCompletePeriod: number
+  vestingCliffPeriod: string
+  vestingCompletePeriod: string
   supplyOfferedPct: string
   fundingForBeneficiaryPct: string
-  openDate: number
-  vestingCliffDate: number
-  vestingCompleteDate: number
+  openDate: string
+  vestingCliffDate: string
+  vestingCompleteDate: string
   totalRaised: string
   state: string
   PPM: string

@@ -21,4 +21,4 @@
         handler: handleScoreTokenSet
       - event: RatioSet(uint256)
         handler: handleRatioSet
-    file: ./src/HatchOracle.ts
+    file: ./src/mappings/HatchOracle.ts

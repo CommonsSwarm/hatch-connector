@@ -26,4 +26,4 @@
         handler: handleContribute
       - event: Refund(indexed address,uint256,uint256,uint256)
         handler: handleRefund
-    file: ./src/Hatch.ts
+    file: ./src/mappings/Hatch.ts

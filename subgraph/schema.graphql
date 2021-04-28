@@ -6,10 +6,11 @@ type GeneralConfig @entity {
 
 type HatchConfig @entity {
   id: ID! # hatch address
+  address: Bytes!
   token: Token!
   reserve: Bytes!
   beneficiary: Bytes!
-  contributionToken: Token!
+  contributionToken: Token # if null then the Hatch uses ETH as contribution token.
   minGoal: BigInt!
   maxGoal: BigInt!
   period: BigInt!

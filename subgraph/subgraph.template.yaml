@@ -14,7 +14,6 @@ dataSources:
 {{> Tokens.yaml}}
 templates:
 {{> Kernel.template.yaml}}
-{{> MiniMeToken.template.yaml}}
+{{> HatchToken.template.yaml}}
 {{> Hatch.template.yaml}}
 {{> HatchOracle.template.yaml}}
-{{> ERC20.template.yaml}}

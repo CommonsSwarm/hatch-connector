@@ -1,5 +1,7 @@
 import { Address, log } from '@graphprotocol/graph-ts'
-import { loadHatchConfig, loadHatchOracleConfig } from './helpers'
+import { HatchToken as HatchTokenTemplate } from '../generated/templates'
+import { populateHatchConfig, populateHatchOracleConfig } from './utils'
+import { getHatchConfigEntity } from './utils'
 
 const HATCH_APP_IDS: string[] = [
   '0x0733919f45ce3305724ccf3354aac9d84f477baa23fbeabcaca5d97ff39acd54', // marketplace-hatch.open.aragonpm.eth
@@ -45,12 +47,16 @@ export function onAppTemplateCreated(appAddress: Address, appId: string): void {
   log.debug('Loading app config of app: {} ', [appAddress.toHexString()])
 
   if (isHatchIncluded) {
-    loadHatchConfig(appAddress)
+    populateHatchConfig(appAddress)
+
+    const hatchTokenAddress = Address.fromString(
+      getHatchConfigEntity(appAddress).token
+    )
+    HatchTokenTemplate.create(hatchTokenAddress)
   } else if (isHatchOracleIncluded) {
-    loadHatchOracleConfig(appAddress)
+    populateHatchOracleConfig(appAddress)
   }
 
   return
-
 }
 export function onTokenTemplateCreated(tokenAddress: Address): void {}

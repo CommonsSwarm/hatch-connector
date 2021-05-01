@@ -1,4 +1,5 @@
-import { createAppConnector } from '@1hive/connect-core'
+import { App, createAppConnector } from '@1hive/connect-core'
+import { Contract } from '@ethersproject/contracts'
 import {
   ErrorInvalidApp,
   ErrorInvalidConnector,
@@ -9,6 +10,14 @@ import HatchConnectorTheGraph, {
   subgraphUrlFromChainId,
   APP_NAMES_WHITELIST,
 } from './thegraph/connector'
+import { HatchContractSettings } from './types'
+import { HATCH_ORACLE_APP, IMPACT_HOURS_APP } from './utils'
+
+import hatchAbi from './abis/Hatch.json'
+import hatchOracleAbi from './abis/HatchOracle.json'
+import impactHoursAbi from './abis/ImpactHours.json'
+import erc20Abi from './abis/ERC20.json'
+import agentAbi from './abis/Agent.json'
 
 type Config = {
   subgraphUrl?: string
@@ -16,8 +25,34 @@ type Config = {
   pollInterval?: number
 }
 
+async function createHatchContractSettings({
+  address,
+  provider,
+  organization,
+}: App): Promise<HatchContractSettings> {
+  const hatchContract = new Contract(address, hatchAbi, provider)
+  const tokenAddress = await hatchContract.token()
+  const contributionTokenAddress = await hatchContract.contributionToken()
+  const hatchOracleAddress = (await organization.app(HATCH_ORACLE_APP)).address
+  const impactHoursAddress = (await organization.app(IMPACT_HOURS_APP)).address
+  const reserveAgentAddress = await hatchContract.reserve()
+
+  return {
+    hatch: hatchContract,
+    token: new Contract(tokenAddress, erc20Abi, provider),
+    contributionToken: new Contract(
+      contributionTokenAddress,
+      erc20Abi,
+      provider
+    ),
+    hatchOracle: new Contract(hatchOracleAddress, hatchOracleAbi, provider),
+    impactHours: new Contract(impactHoursAddress, impactHoursAbi, provider),
+    reserveAgent: new Contract(reserveAgentAddress, agentAbi, provider),
+  }
+}
+
 export default createAppConnector<Hatch, Config>(
-  ({ app, config, connector, network, orgConnector, verbose }) => {
+  async ({ app, config, connector, network, orgConnector, verbose }) => {
     if (connector !== 'thegraph') {
       throw new ErrorInvalidConnector(
         `Connector unsupported: ${connector}. Please use a The Graph connector.`
@@ -49,12 +84,16 @@ export default createAppConnector<Hatch, Config>(
         config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
+    const hatchContractSettings: HatchContractSettings = await createHatchContractSettings(
+      app
+    )
+
     const connectorTheGraph = new HatchConnectorTheGraph({
       pollInterval,
       subgraphUrl,
       verbose,
     })
 
-    return new Hatch(connectorTheGraph, app)
+    return new Hatch(connectorTheGraph, app, hatchContractSettings)
   }
 )

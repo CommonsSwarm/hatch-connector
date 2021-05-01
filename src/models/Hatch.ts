@@ -5,23 +5,29 @@ import {
   ForwardingPath,
 } from '@1hive/connect-core'
 import { BigNumber } from 'ethers'
-import { SubscriptionCallback, IHatchConnector } from '../types'
+import {
+  SubscriptionCallback,
+  IHatchConnector,
+  HatchContractSettings,
+} from '../types'
 import Contribution from './Contribution'
 import Contributor from './Contributor'
 import GeneralConfig from './GeneralConfig'
-import {
-  buildContributorId,
-  HATCH_ORACLE_APP,
-  IMPACT_HOURS_APP,
-} from '../utils'
+import { buildContributorId } from '../utils'
 
 class Hatch {
   #app: App
   #connector: IHatchConnector
+  #hatchContractSettings: HatchContractSettings
 
-  constructor(connector: IHatchConnector, app: App) {
+  constructor(
+    connector: IHatchConnector,
+    app: App,
+    hatchContractSettings: HatchContractSettings
+  ) {
     this.#connector = connector
     this.#app = app
+    this.#hatchContractSettings = hatchContractSettings
   }
 
   /**
@@ -38,7 +44,10 @@ class Hatch {
    * entity object.
    */
   generalConfig(): Promise<GeneralConfig> {
-    return this.#connector.generalConfig(this.#app.organization.address)
+    return this.#connector.generalConfig(
+      this.#app.organization.address,
+      this.#hatchContractSettings
+    )
   }
 
   /**
@@ -54,7 +63,8 @@ class Hatch {
   ): SubscriptionHandler {
     return this.#connector.onGeneralConfig(
       this.#app.organization.address,
-      callback
+      callback,
+      this.#hatchContractSettings
     )
   }
 
@@ -221,7 +231,10 @@ class Hatch {
       hatchConfig: {
         contributionToken: { id: tokenAddress },
       },
-    } = await this.#connector.generalConfig(this.#app.organization.address)
+    } = await this.#connector.generalConfig(
+      this.#app.organization.address,
+      this.#hatchContractSettings
+    )
     const preTransactions = []
 
     const collateralPreTransactions = await intent.buildApprovePreTransactions({
@@ -258,7 +271,15 @@ class Hatch {
    * @returns {string} Hatch state index
    */
   async state(): Promise<string> {
-    return this.#app.ethersContract().state()
+    const hatch = this.#hatchContractSettings.hatch
+
+    return hatch.state()
+  }
+
+  async reserveTokenBalance(): Promise<BigNumber> {
+    const { reserveAgent, contributionToken } = this.#hatchContractSettings
+
+    return reserveAgent.balance(contributionToken.address)
   }
 
   /**
@@ -268,7 +289,9 @@ class Hatch {
    * token balance.
    */
   async contributionTokenBalance(account: Address): Promise<BigNumber> {
-    return this.#app.ethersContract().balanceOf(account)
+    const hatch = this.#hatchContractSettings.hatch
+
+    return hatch.balanceOf(account)
   }
 
   /**
@@ -279,9 +302,7 @@ class Hatch {
    * contribution token amount.
    */
   async allowedContributionAmount(account: Address): Promise<BigNumber> {
-    const hatchOracle = (
-      await this.#app.organization.app(HATCH_ORACLE_APP)
-    ).ethersContract()
+    const hatchOracle = this.#hatchContractSettings.hatchOracle
 
     return hatchOracle.allowance(account)
   }
@@ -294,10 +315,8 @@ class Hatch {
    * contributor's awarded tokens amount
    */
   async awardedTokenAmount(account: Address): Promise<BigNumber> {
-    const impactHours = (
-      await this.#app.organization.app(IMPACT_HOURS_APP)
-    ).ethersContract()
-    const totalRaised = await this.#app.ethersContract().totalRaised()
+    const { impactHours, hatch } = this.#hatchContractSettings
+    const totalRaised = await hatch.totalRaised()
 
     return impactHours.reward(totalRaised, account)
   }

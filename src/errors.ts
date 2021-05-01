@@ -140,3 +140,15 @@ export class ErrorUnsufficientBalance extends ErrorException {
     super(message, { code, name })
   }
 }
+
+export class ErrorUndefinedContract extends ErrorException {
+  constructor(
+    message = "Can't make the request because there is no contract defined.",
+    {
+      code = 'ErrorUndefinedContract',
+      name = 'ErrorUndefinedContract',
+    }: ErrorOptions = {}
+  ) {
+    super(message, { code, name })
+  }
+}

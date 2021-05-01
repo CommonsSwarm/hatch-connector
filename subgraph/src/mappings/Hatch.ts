@@ -9,6 +9,7 @@ import {
   getHatchConfigEntity,
   getContributionEntity,
   getHatchState,
+  getContributorEntity,
 } from '../utils'
 import { getIntStateByKey, getStateByKey } from '../hatch-states'
 
@@ -42,6 +43,7 @@ export function handleClose(event: CloseEvent): void {
 
 export function handleContribute(event: ContributeEvent): void {
   const params = event.params
+  const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,
     params.contributor,
@@ -53,6 +55,8 @@ export function handleContribute(event: ContributeEvent): void {
   config.totalRaised = config.totalRaised.plus(params.value)
   config.stateInt = getIntStateByKey(stateKey)
   config.state = getStateByKey(stateKey)
+
+  contributor.totalValue = contributor.totalValue.plus(params.value)
 
   contribution.value = params.value
   contribution.amount = params.amount
@@ -69,6 +73,7 @@ export function handleContribute(event: ContributeEvent): void {
   )
 
   config.save()
+  contributor.save()
   contribution.save()
 }
 

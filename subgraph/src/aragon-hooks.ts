@@ -49,10 +49,8 @@ export function onAppTemplateCreated(appAddress: Address, appId: string): void {
   if (isHatchIncluded) {
     populateHatchConfig(appAddress)
 
-    const hatchTokenAddress = Address.fromString(
-      getHatchConfigEntity(appAddress).token
-    )
-    HatchTokenTemplate.create(hatchTokenAddress)
+    const hatchConfig = getHatchConfigEntity(appAddress)
+    HatchTokenTemplate.create(Address.fromString(hatchConfig.token))
   } else if (isHatchOracleIncluded) {
     populateHatchOracleConfig(appAddress)
   }

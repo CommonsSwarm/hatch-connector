@@ -3,7 +3,10 @@ import {
   MiniMeToken as MiniMeTokenContract,
   Transfer as TransferEvent,
 } from '../../generated/templates/HatchToken/MiniMeToken'
-import { HatchConfig as HatchConfigEntity } from '../../generated/schema'
+import {
+  HatchConfig as HatchConfigEntity,
+  Token as TokenEntity,
+} from '../../generated/schema'
 import {
   ZERO_ADDRESS,
   getContributorEntity,
@@ -23,12 +26,10 @@ export function handleTransfer(event: TransferEvent): void {
     const hatchId = getGeneralConfigEntity(getOrgAddress(tokenManagerAddress))
       .hatch
     const hatchConfig = HatchConfigEntity.load(hatchId)
+    const token = TokenEntity.load(hatchConfig.token)
     const contributor = getContributorEntity(
       Address.fromString(hatchConfig.address.toHexString()),
       params._to.equals(ZERO_ADDRESS) ? params._from : params._to
-    )
-    const contributedAmount = params._amount.times(
-      hatchConfig.PPM.div(hatchConfig.exchangeRate)
     )
 
     log.debug('Transfer event received. from: {} to: {} amount: {}', [
@@ -37,18 +38,16 @@ export function handleTransfer(event: TransferEvent): void {
       params._amount.toString(),
     ])
 
-    // Hatch contribution case
+    // Mint case
     if (params._from.equals(tokenManagerAddress)) {
-      contributor.totalValue = contributor.totalValue.plus(contributedAmount)
       contributor.totalAmount = contributor.totalAmount.plus(params._amount)
-
-      contributor.save()
     }
-    // Hatch refund case
+    // Burn case
     else {
-      contributor.totalValue = contributor.totalValue.minus(contributedAmount)
       contributor.totalAmount = contributor.totalAmount.minus(params._amount)
-      contributor.save()
     }
+
+    token.save()
+    contributor.save()
   }
 }

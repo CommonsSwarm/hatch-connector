@@ -43,7 +43,6 @@ type Contributor @entity {
   totalValue: BigInt!
   contributions: [Contribution!] @derivedFrom(field: "contributor")
   hatchConfig: HatchConfig
-  # orgAddress: Bytes! # Useful to get HatchOracleConfig entity using the GeneralConfig entity
 }
 
 type Contribution @entity {

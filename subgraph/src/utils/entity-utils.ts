@@ -11,7 +11,7 @@ import { Hatch as HatchContract } from '../../generated/templates/Hatch/Hatch'
 import { HatchOracle as HatchOracleContract } from '../../generated/templates/HatchOracle/HatchOracle'
 import { Token as TokenContract } from '../../generated/templates/Hatch/Token'
 import { getStateByKey } from '../hatch-states'
-import { getOrgAddress } from './contract-utils'
+import { getOrgAddress, ZERO_ADDRESS } from './contract-utils'
 
 // ENTITY ID BUILDERS
 
@@ -149,12 +149,28 @@ export function getContributionEntity(
 
 // ENTITY SET UP FUNCTIONS
 
+function populateEtherToken(): void {
+  const token = new TokenEntity(ZERO_ADDRESS.toHexString())
+
+  token.symbol = 'ETH'
+  token.name = 'ether'
+  token.decimals = 18
+
+  token.save()
+}
+
 export function populateToken(address: Address): boolean {
   const tokenContract = TokenContract.bind(address)
 
-  /* address may be ETH default address instead of token 
-  contract address so check for reverts 
-  */
+  // It may be using ETH as token.
+  if (address.equals(ZERO_ADDRESS)) {
+    populateEtherToken()
+
+    return true
+  }
+
+  /* Check for an ERC20 token contract.
+   */
   const symbol = tokenContract.try_symbol()
   if (symbol.reverted) {
     return false

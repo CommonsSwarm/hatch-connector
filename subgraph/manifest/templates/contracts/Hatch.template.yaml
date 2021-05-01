@@ -11,6 +11,7 @@
     entities:
       - Config
       - Contribution
+      - Contributor
       - Token
     abis:
       - name: Hatch

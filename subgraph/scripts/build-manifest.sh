@@ -27,6 +27,7 @@ mustache \
   -p manifest/templates/contracts/Kernel.template.yaml \
   -p manifest/templates/contracts/MiniMeToken.template.yaml \
   -p manifest/templates/contracts/MiniMeTokenFactory.template.yaml \
+  -p manifest/templates/contracts/HatchToken.template.yaml \
   -p manifest/templates/contracts/Hatch.template.yaml \
   -p manifest/templates/contracts/HatchOracle.template.yaml \
   $DATA \

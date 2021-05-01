@@ -1,6 +1,10 @@
 import { GraphQLWrapper, QueryResult } from '@1hive/connect-thegraph'
 import { SubscriptionHandler } from '@1hive/connect-core'
-import { SubscriptionCallback, IHatchConnector } from '../types'
+import {
+  SubscriptionCallback,
+  IHatchConnector,
+  HatchContractSettings,
+} from '../types'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
 
@@ -54,23 +58,29 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
     this.#gql.close()
   }
 
-  generalConfig(id: string): Promise<GeneralConfig> {
+  generalConfig(
+    id: string,
+    hatchContractSettings: HatchContractSettings
+  ): Promise<GeneralConfig> {
     return this.#gql.performQueryWithParser(
       queries.GENERAL_CONFIG('query'),
       { id },
-      async (result: QueryResult) => await parseGeneralConfig(result)
+      async (result: QueryResult) =>
+        await parseGeneralConfig(result, hatchContractSettings)
     )
   }
 
   onGeneralConfig(
     id: string,
-    callback: SubscriptionCallback<GeneralConfig>
+    callback: SubscriptionCallback<GeneralConfig>,
+    hatchContractSettings: HatchContractSettings
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser(
       queries.GENERAL_CONFIG('subscription'),
       { id },
       callback,
-      async (result: QueryResult) => await parseGeneralConfig(result)
+      async (result: QueryResult) =>
+        await parseGeneralConfig(result, hatchContractSettings)
     )
   }
 

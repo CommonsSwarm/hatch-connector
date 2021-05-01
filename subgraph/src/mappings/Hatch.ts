@@ -4,14 +4,14 @@ import {
   Close as CloseEvent,
   Contribute as ContributeEvent,
   Refund as RefundEvent,
-} from '../generated/templates/Hatch/Hatch'
+} from '../../generated/templates/Hatch/Hatch'
 import {
   getHatchConfigEntity,
   getContributionEntity,
-  getContributorEntity,
   getHatchState,
-} from './helpers'
-import { getIntStateByKey, getStateByKey } from './hatch-states'
+  getContributorEntity,
+} from '../utils'
+import { getIntStateByKey, getStateByKey } from '../hatch-states'
 
 export function handleSetOpenDate(event: SetOpenDateEvent): void {
   const config = getHatchConfigEntity(event.address)
@@ -43,21 +43,20 @@ export function handleClose(event: CloseEvent): void {
 
 export function handleContribute(event: ContributeEvent): void {
   const params = event.params
+  const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,
     params.contributor,
     params.vestedPurchaseId
   )
-  const contributor = getContributorEntity(event.address, params.contributor)
   const config = getHatchConfigEntity(event.address)
   const stateKey = getHatchState(event.address)
-
-  contributor.totalValue = contributor.totalValue.plus(params.value)
-  contributor.totalAmount = contributor.totalAmount.plus(params.amount)
 
   config.totalRaised = config.totalRaised.plus(params.value)
   config.stateInt = getIntStateByKey(stateKey)
   config.state = getStateByKey(stateKey)
+
+  contributor.totalValue = contributor.totalValue.plus(params.value)
 
   contribution.value = params.value
   contribution.amount = params.amount
@@ -81,7 +80,6 @@ export function handleContribute(event: ContributeEvent): void {
 export function handleRefund(event: RefundEvent): void {
   const params = event.params
   const config = getHatchConfigEntity(event.address)
-  const contributor = getContributorEntity(event.address, params.contributor)
   const contribution = getContributionEntity(
     event.address,
     params.contributor,
@@ -91,8 +89,6 @@ export function handleRefund(event: RefundEvent): void {
 
   config.state = getStateByKey(stateKey)
   config.stateInt = getIntStateByKey(stateKey)
-  contributor.totalValue = contributor.totalValue.minus(params.value)
-  contributor.totalAmount = contributor.totalAmount.minus(params.amount)
 
   log.debug(
     'Refund event received. contributor: {} value: {} amount: {} vestedPurchaseId: {}',
@@ -105,6 +101,5 @@ export function handleRefund(event: RefundEvent): void {
   )
 
   config.save()
-  contributor.save()
   store.remove('Contribution', contribution.id)
 }

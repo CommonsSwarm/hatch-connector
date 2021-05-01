@@ -1,7 +1,7 @@
 import { Address, DataSourceTemplate } from '@graphprotocol/graph-ts'
 import { AragonInfo as AragonInfoEntity } from '../../generated/schema'
 import { Kernel as KernelTemplate } from '../../generated/templates'
-import { MiniMeToken as MiniMeTokenTemplate } from '../../generated/templates'
+import { HatchToken as MiniMeTokenTemplate } from '../../generated/templates'
 import * as hooks from '../aragon-hooks'
 
 function _getAragonInfo(): AragonInfoEntity {

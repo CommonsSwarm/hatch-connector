@@ -1,9 +1,19 @@
 import { SubscriptionHandler } from '@1hive/connect-core'
+import { Contract } from '@ethersproject/contracts'
 import Contribution from './models/Contribution'
 import Contributor from './models/Contributor'
 import GeneralConfig from './models/GeneralConfig'
 
 export type SubscriptionCallback<T> = (error: Error | null, data?: T) => void
+
+export interface HatchContractSettings {
+  hatch: Contract
+  hatchOracle: Contract
+  impactHours: Contract
+  token: Contract
+  contributionToken: Contract
+  reserveAgent: Contract
+}
 
 export interface ERC20TokenData {
   id: string
@@ -65,10 +75,14 @@ export interface ContributionData {
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IHatchConnector {
   disconnect(): Promise<void>
-  generalConfig(orgAddress: string): Promise<GeneralConfig>
+  generalConfig(
+    orgAddress: string,
+    hatchContractSettings: HatchContractSettings
+  ): Promise<GeneralConfig>
   onGeneralConfig(
     orgAddress: string,
-    callback: SubscriptionCallback<GeneralConfig>
+    callback: SubscriptionCallback<GeneralConfig>,
+    hatchContractSettings: HatchContractSettings
   ): SubscriptionHandler
   contributors(
     appAddress: string,

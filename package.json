@@ -1,6 +1,6 @@
 {
   "name": "@commonsswarm/connect-hatch",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "license": "GPL-3.0",
   "description": "Connector to interact with the hatch contract and subgraph",
   "author": "Commons Swarm",
@@ -41,8 +41,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@1hive/connect-core": "^0.8.5",
-    "@1hive/connect-thegraph": "^0.8.5",
+    "@1hive/connect-core": "^0.9.1",
+    "@1hive/connect-thegraph": "^0.9.1",
     "ethers": "^5.0.23",
     "graphql-tag": "^2.10.3"
   },

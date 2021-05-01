@@ -1,6 +1,6 @@
 {
   "name": "@commonsswarm/subgraph-hatch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "GPL-3.0",
   "description": "Subgraph made for the hatch contracts",
   "author": "Commons Swarm",
@@ -12,6 +12,7 @@
     "manifest-rinkeby": "scripts/build-manifest.sh rinkeby",
     "manifest-rinkeby-staging": "env STAGING=true scripts/build-manifest.sh rinkeby",
     "manifest-xdai": "scripts/build-manifest.sh xdai",
+    "manifest-xdai-staging": "env STAGING=true scripts/build-manifest.sh xdai",
     "deploy-mainnet": "scripts/deploy.sh commonsswarm hatch mainnet",
     "deploy-mainnet-staging": "env STAGING=true scripts/deploy.sh commonsswarm hatch mainnet",
     "deploy-rinkeby": "scripts/deploy.sh commonsswarm hatch rinkeby",

@@ -8,7 +8,7 @@ class HatchOracleConfig {
 
   constructor(data: HatchOracleConfigData) {
     this.id = data.id
-    this.scoreToken = new ERC20Token(data.scoreToken)
+    this.scoreToken = new ERC20Token(data.scoreToken, null)
     this.ratio = data.ratio
   }
 }

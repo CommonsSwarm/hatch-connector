@@ -6,29 +6,28 @@ import {
   Contributor as ContributorEntity,
   Contribution as ContributionEntity,
   Token as TokenEntity,
-} from '../generated/schema'
-import { Hatch as HatchContract } from '../generated/templates/Hatch/Hatch'
-import { Token as TokenContract } from '../generated/templates/Hatch/Token'
-import { HatchOracle as HatchOracleContract } from '../generated/templates/HatchOracle/HatchOracle'
-import { getStateByKey } from './hatch-states'
+} from '../../generated/schema'
+import { Hatch as HatchContract } from '../../generated/templates/Hatch/Hatch'
+import { HatchOracle as HatchOracleContract } from '../../generated/templates/HatchOracle/HatchOracle'
+import { Token as TokenContract } from '../../generated/templates/Hatch/Token'
+import { getStateByKey } from '../hatch-states'
+import { getOrgAddress, ZERO_ADDRESS } from './contract-utils'
 
-// const ETH = '0x0000000000000000000000000000000000000000'
+// ENTITY ID BUILDERS
 
-// Entity Id Builders
-
-function getGeneralConfigEntityId(orgAddress: Address): string {
+function buildGeneralConfigEntityId(orgAddress: Address): string {
   return orgAddress.toHexString()
 }
 
-function getHatchConfigEntityId(appAddress: Address): string {
+function buildHatchConfigEntityId(appAddress: Address): string {
   return appAddress.toHexString()
 }
 
-function getHatchOracleConfigEntityId(appAddress: Address): string {
+function buildHatchOracleConfigEntityId(appAddress: Address): string {
   return appAddress.toHexString()
 }
 
-function getContributorEntityId(
+function buildContributorEntityId(
   appAddress: Address,
   contributor: Address
 ): string {
@@ -41,7 +40,7 @@ function getContributorEntityId(
   )
 }
 
-function getContributionEntityId(
+function buildContributionEntityId(
   appAddress: Address,
   contributor: Address,
   vestedPurchaseId: BigInt
@@ -57,24 +56,12 @@ function getContributionEntityId(
   )
 }
 
-// Helpers
-
-export function getOrgAddress(appAddress: Address): Address {
-  const hatch = HatchContract.bind(appAddress)
-  return hatch.kernel()
-}
-
-export function getHatchState(appAddress: Address): i32 {
-  const hatch = HatchContract.bind(appAddress)
-  return hatch.state()
-}
-
-// TheGraph Entities Getters
+// ENTITY GETTERS
 
 export function getGeneralConfigEntity(
   orgAddress: Address
 ): GeneralConfigEntity | null {
-  const generalConfigEntityId = getGeneralConfigEntityId(orgAddress)
+  const generalConfigEntityId = buildGeneralConfigEntityId(orgAddress)
   let generalConfig = GeneralConfigEntity.load(generalConfigEntityId)
 
   if (!generalConfig) {
@@ -87,7 +74,7 @@ export function getGeneralConfigEntity(
 export function getHatchConfigEntity(
   appAddress: Address
 ): HatchConfigEntity | null {
-  const hatchConfigEntityId = getHatchConfigEntityId(appAddress)
+  const hatchConfigEntityId = buildHatchConfigEntityId(appAddress)
   let hatchConfig = HatchConfigEntity.load(hatchConfigEntityId)
 
   if (!hatchConfig) {
@@ -102,7 +89,7 @@ export function getHatchConfigEntity(
 export function getHatchOracleConfigEntity(
   appAddress: Address
 ): HatchOracleConfigEntity | null {
-  const hatchOracleConfigEntityId = getHatchOracleConfigEntityId(appAddress)
+  const hatchOracleConfigEntityId = buildHatchOracleConfigEntityId(appAddress)
   let hatchOracleConfig = HatchOracleConfigEntity.load(
     hatchOracleConfigEntityId
   )
@@ -120,7 +107,7 @@ export function getContributorEntity(
   appAddress: Address,
   contributor: Address
 ): ContributorEntity | null {
-  const contributorEntityId = getContributorEntityId(appAddress, contributor)
+  const contributorEntityId = buildContributorEntityId(appAddress, contributor)
   let contributorEntity = ContributorEntity.load(contributorEntityId)
 
   if (!contributorEntity) {
@@ -141,7 +128,7 @@ export function getContributionEntity(
   contributor: Address,
   vestedPurchaseId: BigInt
 ): ContributionEntity | null {
-  const contributionEntityId = getContributionEntityId(
+  const contributionEntityId = buildContributionEntityId(
     appAddress,
     contributor,
     vestedPurchaseId
@@ -150,7 +137,7 @@ export function getContributionEntity(
 
   if (!contribution) {
     contribution = new ContributionEntity(contributionEntityId)
-    contribution.contributor = getContributorEntityId(appAddress, contributor)
+    contribution.contributor = buildContributorEntityId(appAddress, contributor)
     contribution.value = BigInt.fromI32(0)
     contribution.amount = BigInt.fromI32(0)
     contribution.vestedPurchaseId = vestedPurchaseId
@@ -160,14 +147,30 @@ export function getContributionEntity(
   return contribution
 }
 
-// Loading functions
+// ENTITY SET UP FUNCTIONS
 
-export function loadTokenData(address: Address): boolean {
+function populateEtherToken(): void {
+  const token = new TokenEntity(ZERO_ADDRESS.toHexString())
+
+  token.symbol = 'ETH'
+  token.name = 'ether'
+  token.decimals = 18
+
+  token.save()
+}
+
+export function populateToken(address: Address): boolean {
   const tokenContract = TokenContract.bind(address)
 
-  /* address may be ETH default address instead of token 
-  contract address so check for reverts 
-  */
+  // It may be using ETH as token.
+  if (address.equals(ZERO_ADDRESS)) {
+    populateEtherToken()
+
+    return true
+  }
+
+  /* Check for an ERC20 token contract.
+   */
   const symbol = tokenContract.try_symbol()
   if (symbol.reverted) {
     return false
@@ -183,27 +186,27 @@ export function loadTokenData(address: Address): boolean {
   return true
 }
 
-export function loadHatchConfig(appAddress: Address): void {
+export function populateHatchConfig(appAddress: Address): void {
   const generalConfig = getGeneralConfigEntity(getOrgAddress(appAddress))
   const hatchConfig = getHatchConfigEntity(appAddress)
   const hatch = HatchContract.bind(appAddress)
 
   // Load token data
   const token = hatch.token()
-  const success = loadTokenData(token)
+  const success = populateToken(token)
 
   if (success) {
     hatchConfig.token = token.toHexString()
   }
 
   const contributionToken = hatch.contributionToken()
-
-  // Contribution token can be either a token or ether so we dont
-  // need to check loadTokenData() result
-  loadTokenData(contributionToken)
+  // Contribution token can be either a token or ether so we don't
+  // need to check setUpToken() was successful
+  populateToken(contributionToken)
   hatchConfig.contributionToken = contributionToken.toHexString()
 
   // Load hatch params
+  hatchConfig.address = appAddress
   hatchConfig.reserve = hatch.reserve()
   hatchConfig.beneficiary = hatch.beneficiary()
   hatchConfig.minGoal = hatch.minGoal()
@@ -229,14 +232,14 @@ export function loadHatchConfig(appAddress: Address): void {
   hatchConfig.save()
 }
 
-export function loadHatchOracleConfig(appAddress: Address): void {
+export function populateHatchOracleConfig(appAddress: Address): void {
   const generalConfig = getGeneralConfigEntity(getOrgAddress(appAddress))
   const hatchOracleConfig = getHatchOracleConfigEntity(appAddress)
   const hatchOracle = HatchOracleContract.bind(appAddress)
 
   // Load token data
   const scoreToken = hatchOracle.score()
-  const success = loadTokenData(scoreToken)
+  const success = populateToken(scoreToken)
 
   if (success) {
     hatchOracleConfig.scoreToken = scoreToken.toHexString()

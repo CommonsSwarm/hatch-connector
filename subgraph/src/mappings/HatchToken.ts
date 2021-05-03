@@ -21,6 +21,7 @@ export function handleTransfer(event: TransferEvent): void {
 
   if (
     params._from.equals(tokenManagerAddress) ||
+    params._from.equals(ZERO_ADDRESS) ||
     params._to.equals(ZERO_ADDRESS)
   ) {
     const hatchId = getGeneralConfigEntity(getOrgAddress(tokenManagerAddress))
@@ -39,7 +40,10 @@ export function handleTransfer(event: TransferEvent): void {
     ])
 
     // Mint case
-    if (params._from.equals(tokenManagerAddress)) {
+    if (
+      params._from.equals(tokenManagerAddress) ||
+      params._from.equals(ZERO_ADDRESS)
+    ) {
       contributor.totalAmount = contributor.totalAmount.plus(params._amount)
     }
     // Burn case

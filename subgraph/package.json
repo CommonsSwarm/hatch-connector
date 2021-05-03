@@ -1,6 +1,6 @@
 {
   "name": "@commonsswarm/subgraph-hatch",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "GPL-3.0",
   "description": "Subgraph made for the hatch contracts",
   "author": "Commons Swarm",

@@ -52,6 +52,7 @@ export const ALL_CONTRIBUTORS = (type: string) => gql`
   ${type} Contributors($appAddress: String!, $first: Int!, $skip: Int!, $orderBy: String!, $orderDirection: String!) {
     contributors(where: {
       hatchConfig: $appAddress,
+      totalValue_gt: 0
     }, first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection) {
       id
       account

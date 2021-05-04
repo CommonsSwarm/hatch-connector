@@ -1,10 +1,6 @@
 import { GraphQLWrapper, QueryResult } from '@1hive/connect-thegraph'
 import { SubscriptionHandler } from '@1hive/connect-core'
-import {
-  SubscriptionCallback,
-  IHatchConnector,
-  HatchContractSettings,
-} from '../types'
+import { SubscriptionCallback, IHatchConnector } from '../types'
 import Contribution from '../models/Contribution'
 import * as queries from './queries'
 
@@ -15,7 +11,8 @@ import {
   parseGeneralConfig,
 } from './parsers'
 import Contributor from '../models/Contributor'
-import GeneralConfig from 'src/models/GeneralConfig'
+import GeneralConfig from '../models/GeneralConfig'
+import ContractCache from '../models/helpers/ContractCache'
 
 export function subgraphUrlFromChainId(
   chainId: number,
@@ -60,27 +57,27 @@ export default class HatchConnectorTheGraph implements IHatchConnector {
 
   generalConfig(
     id: string,
-    hatchContractSettings: HatchContractSettings
+    contractCache: ContractCache
   ): Promise<GeneralConfig> {
     return this.#gql.performQueryWithParser(
       queries.GENERAL_CONFIG('query'),
       { id },
       async (result: QueryResult) =>
-        await parseGeneralConfig(result, hatchContractSettings)
+        await parseGeneralConfig(result, contractCache)
     )
   }
 
   onGeneralConfig(
     id: string,
     callback: SubscriptionCallback<GeneralConfig>,
-    hatchContractSettings: HatchContractSettings
+    contractCache: ContractCache
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser(
       queries.GENERAL_CONFIG('subscription'),
       { id },
       callback,
       async (result: QueryResult) =>
-        await parseGeneralConfig(result, hatchContractSettings)
+        await parseGeneralConfig(result, contractCache)
     )
   }
 

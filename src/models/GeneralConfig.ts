@@ -1,4 +1,5 @@
-import { GeneralConfigData, HatchContractSettings } from '../types'
+import { GeneralConfigData } from '../types'
+import ContractCache from './helpers/ContractCache'
 import HatchConfig from './HatchConfig'
 import HatchOracleConfig from './HatchOracleConfig'
 
@@ -7,13 +8,13 @@ class GeneralConfig {
   readonly hatchConfig: HatchConfig
   readonly hatchOracleConfig: HatchOracleConfig
 
-  constructor(
-    data: GeneralConfigData,
-    contractSettings: HatchContractSettings
-  ) {
+  constructor(data: GeneralConfigData, contractCache: ContractCache) {
     this.id = data.id
-    this.hatchConfig = new HatchConfig(data.hatch, contractSettings)
-    this.hatchOracleConfig = new HatchOracleConfig(data.hatchOracle)
+    this.hatchConfig = new HatchConfig(data.hatch, contractCache)
+    this.hatchOracleConfig = new HatchOracleConfig(
+      data.hatchOracle,
+      contractCache
+    )
   }
 }
 

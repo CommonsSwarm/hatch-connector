@@ -1,10 +1,10 @@
 import { QueryResult } from '@1hive/connect-thegraph'
+import ContractCache from '../../models/helpers/ContractCache'
 import GeneralConfig from '../../models/GeneralConfig'
-import { HatchContractSettings } from 'src/types'
 
 export async function parseGeneralConfig(
   result: QueryResult,
-  tokenContracts: HatchContractSettings
+  contractCache: ContractCache
 ): Promise<GeneralConfig | null> {
   const generalConfig = result.data.generalConfig
 
@@ -12,5 +12,5 @@ export async function parseGeneralConfig(
     return null
   }
 
-  return new GeneralConfig(generalConfig, tokenContracts)
+  return new GeneralConfig(generalConfig, contractCache)
 }

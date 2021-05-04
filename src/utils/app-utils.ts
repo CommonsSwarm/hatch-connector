@@ -11,6 +11,9 @@ import {
 export const IMPACT_HOURS_APP = 'impact-hours-beta'
 export const HATCH_APP = 'marketplace-hatch'
 export const HATCH_ORACLE_APP = 'hatch-oracle'
+export const AGENT_APP = 'agent'
+export const ERC20_TOKEN = 'erc20'
+export const MINIME_TOKEN = 'minime'
 
 export function calculateHatchState(
   hatch: HatchConfig,

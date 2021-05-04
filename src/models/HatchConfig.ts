@@ -1,6 +1,7 @@
-import { HatchConfigData, HatchContractSettings } from '../types'
+import { HatchConfigData } from '../types'
 import ERC20Token from './ERC20Token'
 import { calculateHatchState } from '../utils'
+import ContractCache from './helpers/ContractCache'
 
 class HatchConfig {
   readonly id: string
@@ -23,14 +24,15 @@ class HatchConfig {
   readonly state: string
   readonly PPM: string
 
-  constructor(data: HatchConfigData, tokenContracts: HatchContractSettings) {
+  constructor(data: HatchConfigData, contractCache: ContractCache) {
     this.id = data.id
-    this.token = new ERC20Token(data.token, tokenContracts.token)
+    this.token = new ERC20Token(data.token, contractCache, 'token')
     this.reserve = data.reserve
     this.beneficiary = data.beneficiary
     this.contributionToken = new ERC20Token(
       data.contributionToken,
-      tokenContracts.contributionToken
+      contractCache,
+      'contributionToken'
     )
     this.minGoal = data.minGoal
     this.maxGoal = data.maxGoal

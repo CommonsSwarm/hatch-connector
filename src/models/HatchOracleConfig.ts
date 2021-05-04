@@ -1,4 +1,5 @@
 import { HatchOracleConfigData } from '../types'
+import ContractCache from './helpers/ContractCache'
 import ERC20Token from './ERC20Token'
 
 class HatchOracleConfig {
@@ -6,9 +7,13 @@ class HatchOracleConfig {
   readonly scoreToken: ERC20Token
   readonly ratio: string
 
-  constructor(data: HatchOracleConfigData) {
+  constructor(data: HatchOracleConfigData, contractCache: ContractCache) {
     this.id = data.id
-    this.scoreToken = new ERC20Token(data.scoreToken, null)
+    this.scoreToken = new ERC20Token(
+      data.scoreToken,
+      contractCache,
+      'scoreToken'
+    )
     this.ratio = data.ratio
   }
 }

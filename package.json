@@ -1,6 +1,6 @@
 {
   "name": "@commonsswarm/connect-hatch",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "GPL-3.0",
   "description": "Connector to interact with the hatch contract and subgraph",
   "author": "Commons Swarm",

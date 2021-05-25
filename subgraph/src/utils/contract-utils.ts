@@ -1,7 +1,7 @@
 import { Address } from '@graphprotocol/graph-ts'
 import { Hatch as HatchContract } from '../../generated/templates/Hatch/Hatch'
 
-export const ZERO_ADDRESS = Address.fromHexString(
+export const ZERO_ADDRESS = Address.fromString(
   '0x0000000000000000000000000000000000000000'
 )
 
